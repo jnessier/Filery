@@ -3,6 +3,8 @@ import {Item} from './Item';
 
 export class Container extends Control {
 
+    protected selectedItem: Item;
+
     constructor(files: []) {
         super();
 
@@ -10,13 +12,17 @@ export class Container extends Control {
         this.element.classList.add('filery-container');
 
         files.forEach((file) => {
-            this.append(new Item(file));
+            this.append(new Item(file, this.setSelectedItem));
         });
 
     }
 
+    public setSelectedItem(item: Item) {
+        this.selectedItem = item;
+    }
+
     protected getSelectedItem() {
-        let item = Item.select('.selected', this.element);
+        return this.selectedItem;
 
     }
 

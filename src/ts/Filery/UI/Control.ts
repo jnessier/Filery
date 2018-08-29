@@ -4,7 +4,7 @@ export class Control {
 
     protected events = {};
 
-    public static select<T extends Control>(this: { new(): T }, query: string, scope = document): T {
+    protected static select<T extends Control>(this: { new(): T }, query: string, scope = document): T {
         let element = scope.querySelector(query),
             control = new this();
 
@@ -15,7 +15,7 @@ export class Control {
         return control;
     }
 
-    public static create<T extends Control>(this: { new(): T }, tagName: string, attributes?: any): T {
+    protected static create<T extends Control>(this: { new(): T }, tagName: string, attributes?: any): T {
         let element = document.createElement(tagName),
             control = new this();
 
