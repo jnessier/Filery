@@ -4,7 +4,9 @@ export class Control {
 
     protected events = {};
 
-    protected static select<T extends Control>(this: { new(): T }, query: string, scope = document): T {
+    protected children = [];
+
+    public static select<T extends Control>(this: { new(): T }, query: string, scope = document): T {
         let element = scope.querySelector(query),
             control = new this();
 
@@ -15,7 +17,7 @@ export class Control {
         return control;
     }
 
-    protected static create<T extends Control>(this: { new(): T }, tagName: string, attributes?: any): T {
+    public static create<T extends Control>(this: { new(): T }, tagName: string, attributes?: any): T {
         let element = document.createElement(tagName),
             control = new this();
 
@@ -24,6 +26,18 @@ export class Control {
         });
 
         return control.setElement(element);
+    }
+
+    public getChildren() {
+        return this.children;
+    }
+
+    public index() {
+        let index = 0;
+        while ((this.element = this.element.previousElementSibling)) {
+            index++;
+        }
+        return index;
     }
 
     public getElement(): Element {
@@ -40,13 +54,16 @@ export class Control {
         let childElement = control.getElement();
 
         this.element.appendChild(childElement);
+        this.children.push(control);
 
         return this;
     }
 
     public prepend<T extends Control>(control: T) {
         let childElement = control.getElement();
+
         this.element.insertBefore(childElement, this.element.childNodes[0]);
+        this.children.unshift(control);
 
         return this;
     }

@@ -20,16 +20,19 @@
 .filery-item {
   &.selected {
     .filery-item-body {
-      transition: all .3s ease;
-      border-color: #1e6abc;
-      background: #f0f6fd;
+      &, &:hover {
+        transition: all .3s ease;
+        border-color: #1e6abc;
+        background: #f0f6fd;
+      }
     }
   }
 
   .filery-item-body {
     &:hover {
       transition: all .3s ease;
-      border-color: #1e6abc;
+      border-color: transparent;
+      background: #f0f6fd;
     }
   }
 

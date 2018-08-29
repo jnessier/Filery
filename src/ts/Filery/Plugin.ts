@@ -1,7 +1,6 @@
 import {ApiClient} from './ApiClient';
 import {Control} from './UI/Control';
 import {Container} from './UI/Container';
-import * as util from 'util';
 
 declare var tinymce: any;
 
@@ -26,8 +25,11 @@ export class Plugin {
         this.filter = filter;
     }
 
+    private type = 'select';
+
     openDialog(callback: any, type: any) {
 
+        this.type = type;
 
         this.editor.windowManager.open({
             title: 'File manager',
@@ -41,7 +43,7 @@ export class Plugin {
                     icon: 'insert',
                     classes: 'primary',
                     disabled: true,
-                    onClick: function (e) {
+                    onClick: (e) => {
                         e.preventDefault();
                         /* _this.insertFile(callback, "select");*/
                     },
@@ -53,7 +55,7 @@ export class Plugin {
                     text: 'Insert as link',
                     classes: 'primary',
                     disabled: true,
-                    onClick: function (e) {
+                    onClick: (e) => {
                         e.preventDefault();
                         /*    _this.insertFile(callback, "link");*/
                     },
@@ -65,7 +67,7 @@ export class Plugin {
                     text: 'Insert as image',
                     classes: 'primary',
                     disabled: true,
-                    onClick: function (e) {
+                    onClick: (e) => {
                         e.preventDefault();
                         /*  _this.insertFile(callback, "image");*/
                     },
@@ -77,7 +79,7 @@ export class Plugin {
                     icon: 'remove',
                     classes: 'danger',
                     disabled: true,
-                    onClick: function (e) {
+                    onClick: (e) => {
                         e.preventDefault();
                         /*  _this.deleteFile();*/
                     },
@@ -116,7 +118,7 @@ export class Plugin {
         });
     }
 
-    private closeDialogByKey = ((e) => {
+    protected closeDialogByKey = ((e) => {
         if (e.code === 'Escape') {
             this.editor.windowManager.close(window);
         }
@@ -134,7 +136,7 @@ export class Plugin {
                     .then((result) => {
                         if (result.status) {
                             this.editor.windowManager.alert(tinymce.i18n.translate(['"{0}" successfully uploaded', result.data[0].name]), function () {
-                                /*_this.loadDialogContent();*/
+                                this.loadDialogContent();
                             });
                         } else {
                             this.editor.windowManager.alert(tinymce.i18n.translate(['Upload failed: {0}', result.message]));
@@ -225,7 +227,7 @@ export class Plugin {
 
       }
   */
-    loadDialogContent() {
+    public loadDialogContent = () => {
         ApiClient
             .fetchFiles()
             .then((result) => {
@@ -235,13 +237,34 @@ export class Plugin {
 
                     dialogBody.getElement().innerHTML = '';
                     dialogBody.append(container);
+
+                    container.selectListener((item) => {
+                        this.selectedItem = item;
+
+                        this.buttons.delete.disabled(false);
+                        this.buttons.select.disabled(false);
+                        this.buttons.link.disabled(false);
+
+                        if (this.selectedItem.getFile().type === 'image') {
+                            this.buttons.image.disabled(false);
+                        } else {
+                            this.buttons.image.disabled(true);
+                        }
+                    }, (item) => {
+                        this.selectedItem = null;
+                        this.buttons.image.disabled(true);
+                        this.buttons.link.disabled(true);
+                        this.buttons.select.disabled(true);
+                        this.buttons.delete.disabled(true);
+                    });
+
                 } else {
                     this.editor.windowManager.alert(tinymce.i18n.translate(['Load failed: {0}', result.message]));
                 }
             });
     }
 
-    static setSelectedFile(file: File) {
+    static fileSelectListener(file: File) {
 
     }
 }

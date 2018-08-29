@@ -3,7 +3,7 @@
 return [
     'base' => [
         'path' => __DIR__ . '/files',
-        'url' => 'http://localhost/filery2/files',
+        'url' => 'http://localhost/filery/dist/api/files',
     ],
     'keys' => [
         'public' => '...public key here...',

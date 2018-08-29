@@ -1,39 +1,38 @@
 {
-  "name": "filery",
+  "name": "Filery",
   "version": "1.0.0",
-  "description": "filery TinyMCE plugin",
+  "description": "File manager and file picker plugin for TinyMCE.",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --config config/webpack.config.dev.js --progress --open --inline",
-    "lint": "tslint 'src/**/*.js'",
+    "lint": "tslint 'src/**/*.ts'",
     "build": "webpack --config config/webpack.config.prod.js --progress"
   },
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@types/lodash": "^4.14.116",
     "@types/node": "^10.9.3",
+    "@types/superagent": "^3.8.4",
+    "@types/tinymce": "^4.5.16",
     "copy-webpack-plugin": "^4.5.2",
     "css-loader": "^1.0.0",
     "html-webpack-plugin": "^3.2.0",
     "node-sass": "^4.9.3",
     "sass-loader": "^7.1.0",
+    "strict-loader": "^1.2.0",
     "style-loader": "^0.23.0",
     "ts-loader": "^4.5.0",
     "tslint": "^5.11.0",
     "typescript": "^3.0.1",
     "typings": "^2.1.1",
+    "uglifyjs-webpack-plugin": "^1.3.0",
     "url-loader": "^1.1.1",
     "webpack": "^4.17.1",
     "webpack-cli": "^3.1.0",
-    "webpack-dev-server": "^3.1.6"
+    "webpack-dev-server": "^3.1.7"
   },
   "dependencies": {
-    "@types/superagent": "^3.8.4",
-    "lodash": "^4.17.10",
-    "strict-loader": "^1.2.0",
-    "superagent": "^3.8.3",
-    "uglifyjs-webpack-plugin": "^1.3.0"
+    "superagent": "^3.8.3"
   },
   "keywords": []
 }

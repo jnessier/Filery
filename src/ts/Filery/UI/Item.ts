@@ -6,7 +6,7 @@ export class Item extends Control {
 
     protected file: File;
 
-    constructor(file: File, select?: any, deselect?: any) {
+    constructor(file: File) {
         super();
 
         this.element = document.createElement('div');
@@ -16,42 +16,37 @@ export class Item extends Control {
 
         this.setFile(file);
 
-        this
-            .on('click', (e) => {
-                e.preventDefault();
-                this.toggleSelect(select, deselect);
-            });
-
         this.append(new ItemBody(file));
     }
 
-    public toggleSelect(select?: any, deselect?: any): this {
+    public toggleSelect(): this {
         if (this.element.classList.contains('selected')) {
-            this.deselect(deselect);
+            this.deselect();
         } else {
-            this.select(select);
+            this.select();
         }
 
         return this;
     }
 
-    public select(select?: any): this {
+    public select(): this {
         this.element.classList.add('selected');
 
-        if (typeof select === 'function') {
-            select(this);
-        }
+        this.trigger('selected');
 
         return this;
     }
 
-    public deselect(deselect?: any): this {
+    public deselect(): this {
         this.element.classList.remove('selected');
 
-        if (typeof deselect === 'function') {
-            deselect(this);
-        }
+        this.trigger('deselected');
 
+        return this;
+    }
+
+    public reset(): this {
+        this.element.classList.remove('selected');
         return this;
     }
 
