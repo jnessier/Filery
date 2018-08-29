@@ -32,14 +32,6 @@ export class Control {
         return this.children;
     }
 
-    public index() {
-        let index = 0;
-        while ((this.element = this.element.previousElementSibling)) {
-            index++;
-        }
-        return index;
-    }
-
     public getElement(): Element {
         return this.element;
     }

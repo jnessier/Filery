@@ -1,5 +1,6 @@
 import {Control} from './Control';
 import {Item} from './Item';
+import {File} from "../Model/File";
 
 export class Container extends Control {
 
@@ -9,26 +10,22 @@ export class Container extends Control {
         this.element = document.createElement('div');
         this.element.classList.add('filery-container');
 
-        files.forEach((file, index) => {
+        files.forEach((file: File, index) => {
 
             let item = new Item(file);
-
             this.append(item);
 
-            item
+            item.clickListener(c)
                 .on('click', (e) => {
                     e.preventDefault();
-
-                    item.toggleSelect();
-
                     this.children.forEach((child, childIndex) => {
                         if (index !== childIndex) {
-                            child.getElement().classList.remove('selected');
+                            child.deselect();
                         }
                     });
+                    item.toggleSelect();
                 })
         });
-
     }
 
     public selectListener(selectCallback: any, deselectCallback?: any) {

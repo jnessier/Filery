@@ -247,8 +247,6 @@ export class Plugin {
 
                         if (this.selectedItem.getFile().type === 'image') {
                             this.buttons.image.disabled(false);
-                        } else {
-                            this.buttons.image.disabled(true);
                         }
                     }, (item) => {
                         this.selectedItem = null;
