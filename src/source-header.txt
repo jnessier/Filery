@@ -1,0 +1,7 @@
+/*
+ * Filery v{VERSION}
+ * Copyright {YEAR} | File manager for TinyMCE
+ *
+ * Filery is an open-source project of Neoflow and part of the Neoflow CMS, which licensed under MIT.
+ * Please visit https://www.neoflow.ch for more information about Neoflow and our CMS.
+ */

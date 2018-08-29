@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'filery',
+            toolbar: 'filery',
+            filery: {
+                api: {
+                    base_url: 'http://localhost/filery/dist/api/index.php'
+                }
+            }
+        });
+    </script>
+</head>
+<body>
+<textarea>Testing filery.</textarea>
+</body>
+</html>

@@ -1,0 +1,120 @@
+#filery-dialog-body {
+  background: #c5c5c5;
+
+  .filery-container {
+    position: relative;
+    overflow: hidden;
+    padding: 0 10px 0 0;
+  }
+}
+
+.filery-container {
+  .filery-item {
+    width: calc((100% / 2) - 4px);
+    padding: 2px;
+    float: left;
+    display: block;
+  }
+}
+
+.filery-item {
+  &.selected {
+    .filery-item-body {
+      transition: all .3s ease;
+      border-color: #1e6abc;
+      background: #f0f6fd;
+    }
+  }
+
+  .filery-item-body {
+    &:hover {
+      transition: all .3s ease;
+      border-color: #1e6abc;
+    }
+  }
+
+  .filery-item-body {
+    background: #fff;
+    display: block;
+    overflow: hidden;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: all .3s ease;
+  }
+
+  .file-thumbnail {
+    float: left;
+    width: 80px;
+    height: 80px;
+    position: relative;
+    padding: 5px;
+
+    .file-thumbnail-image {
+      background: url('../img/file.png') no-repeat center center;
+      position: absolute;
+      height: 80%;
+      width: 80%;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+
+      &.audio {
+        background-image: url('../img/audio-file.png');
+      }
+
+      &.code {
+        background-image: url('../img/code-file.png');
+      }
+
+      &.text {
+        background-image: url('../img/text-file.png');
+      }
+
+      &.image {
+        background-image: url('../img/image-file.png');
+      }
+
+      &.zip {
+        background-image: url('../img/zip-file.png');
+      }
+
+      &.video {
+        background-image: url('../img/video-file.png');
+      }
+    }
+  }
+
+  .file-title {
+    float: left;
+    width: calc(100% - 100px);
+    height: 80px;
+    padding: 5px;
+
+    .file-title-name {
+      font-weight: bold;
+      height: 20px;
+      margin: 25px 0 0 0;
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .file-title-meta {
+      margin: 0;
+      height: 20px;
+      padding: 0;
+      list-style: none;
+      color: #929292;
+
+      li {
+        margin: 0 5px 0 0;
+        font-size: 12px;
+        display: inline-block;
+      }
+    }
+
+  }
+}
