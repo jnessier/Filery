@@ -1,6 +1,6 @@
 import {Control} from './Control';
 import {Item} from './Item';
-import {File} from "../Model/File";
+import {File} from '../Model/File';
 
 export class Container extends Control {
 
@@ -15,16 +15,16 @@ export class Container extends Control {
             let item = new Item(file);
             this.append(item);
 
-            item.clickListener(c)
-                .on('click', (e) => {
-                    e.preventDefault();
-                    this.children.forEach((child, childIndex) => {
-                        if (index !== childIndex) {
-                            child.deselect();
-                        }
-                    });
-                    item.toggleSelect();
-                })
+            /*    item.clickListener(c)
+                    .on('click', (e) => {
+                        e.preventDefault();
+                        this.children.forEach((child, childIndex) => {
+                            if (index !== childIndex) {
+                                child.deselect();
+                            }
+                        });
+                        item.toggleSelect();
+                    })*/
         });
     }
 

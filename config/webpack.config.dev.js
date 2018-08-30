@@ -12,9 +12,6 @@ module.exports = {
             test: /\.ts$/,
             use: 'ts-loader'
         }, {
-            test: /\.js/,
-            loader: 'strict-loader'
-        }, {
             test: /\.scss$/,
             use: [
                 "style-loader", // creates style nodes from JS strings

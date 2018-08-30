@@ -1,6 +1,7 @@
 import {Control} from './Control';
 import {ItemBody} from './ItemBody';
 import {File} from '../Model/File';
+import * as $ from 'cheerio';
 
 export class Item extends Control {
 
@@ -8,6 +9,8 @@ export class Item extends Control {
 
     constructor(file: File) {
         super();
+
+        console.log(typeof $('<div class="filery-item"></div>'));
 
         this.element = document.createElement('div');
         this.element.classList.add('filery-item');
