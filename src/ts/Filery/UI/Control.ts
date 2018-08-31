@@ -53,6 +53,7 @@ export class Control {
 
     public set(element: HTMLElement) {
         this.element = element;
+
         return this;
     }
 

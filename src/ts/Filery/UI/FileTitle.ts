@@ -1,5 +1,4 @@
 import {Control} from './Control';
-import {FileTitleMeta} from './FileTitleMeta';
 import {File} from '../Model/File';
 
 export class FileTitle extends Control {
