@@ -27,9 +27,7 @@ export class Plugin {
 
     private type = 'select';
 
-    openDialog(callback: any, type: any) {
-
-        this.type = type;
+    public openDialog(insertCallback: any, insertType: any) {
 
         this.editor.windowManager.open({
             title: 'File manager',
@@ -37,98 +35,88 @@ export class Plugin {
             height: 450,
             width: 700,
             autoScroll: true,
-            buttons: [
-                {
-                    text: 'Select',
-                    icon: 'insert',
-                    classes: 'primary',
-                    disabled: true,
-                    onClick: (e) => {
-                        e.preventDefault();
-                        /* _this.insertFile(callback, "select");*/
-                    },
-                    onPostRender: (e) => {
-                        this.buttons.select = e.target;
-                    },
-                }, {
-                    icon: 'link',
-                    text: 'Insert as link',
-                    classes: 'primary',
-                    disabled: true,
-                    onClick: (e) => {
-                        e.preventDefault();
-                        /*    _this.insertFile(callback, "link");*/
-                    },
-                    onPostRender: (e) => {
-                        this.buttons.link = e.target;
-                    },
-                }, {
-                    icon: 'image',
-                    text: 'Insert as image',
-                    classes: 'primary',
-                    disabled: true,
-                    onClick: (e) => {
-                        e.preventDefault();
-                        /*  _this.insertFile(callback, "image");*/
-                    },
-                    onPostRender: (e) => {
-                        this.buttons.image = e.target;
-                    },
-                }, {
-                    text: 'Delete',
-                    icon: 'remove',
-                    classes: 'danger',
-                    disabled: true,
-                    onClick: (e) => {
-                        e.preventDefault();
-                        /*  _this.deleteFile();*/
-                    },
-                    onPostRender: (e) => {
-                        this.buttons.delete = e.target;
-                    },
-                }, {
-                    text: 'Upload',
-                    icon: 'upload',
-                    onClick: (e) => {
-                        e.preventDefault();
-                        this.uploadFile();
-                    },
-                    onPostRender: (e) => {
-                        this.buttons.upload = e.target;
-                    },
-                }, {
-                    text: 'Cancel',
-                    onclick: 'close',
-                }],
+            buttons: [{
+                text: 'Select',
+                icon: 'insert',
+                classes: 'primary',
+                disabled: true,
+                visible: (insertType === 'select'),
+                onClick: (e) => {
+                    e.preventDefault();
+                    this.insertFile(insertCallback, "select");
+                },
+                onPostRender: (e) => {
+                    this.buttons.select = e.target;
+                },
+            }, {
+                icon: 'link',
+                text: 'Insert as link',
+                classes: 'primary',
+                disabled: true,
+                visible: (insertType === 'insert'),
+                onClick: (e) => {
+                    e.preventDefault();
+                    this.insertFile(insertCallback, 'link');
+                },
+                onPostRender: (e) => {
+                    this.buttons.link = e.target;
+                },
+            }, {
+                icon: 'image',
+                text: 'Insert as image',
+                classes: 'primary',
+                disabled: true,
+                visible: (insertType === 'insert'),
+                onClick: (e) => {
+                    e.preventDefault();
+                    this.insertFile(insertCallback, 'image');
+                },
+                onPostRender: (e) => {
+                    this.buttons.image = e.target;
+                },
+            }, {
+                text: 'Delete',
+                icon: 'remove',
+                disabled: true,
+                onClick: (e) => {
+                    e.preventDefault();
+                    this.deleteFile();
+                },
+                onPostRender: (e) => {
+                    this.buttons.delete = e.target;
+                },
+            }, {
+                text: 'Upload',
+                icon: 'upload',
+                onClick: (e) => {
+                    e.preventDefault();
+                    this.uploadFile();
+                },
+                onPostRender: (e) => {
+                    this.buttons.upload = e.target;
+                },
+            }, {
+                text: 'Cancel',
+                onclick: 'close',
+            }],
             onOpen: (e) => {
-                if (type === 'select') {
-                    this.buttons.image.visible(false);
-                    this.buttons.link.visible(false);
-                } else if (type === 'insert') {
-                    this.buttons.select.visible(false);
-                }
-
                 this.loadDialogContent();
 
-                document.addEventListener('keydown', this.closeDialogByKey);
-            },
-            onClose: (e) => {
-                document.removeEventListener('keydown', this.closeDialogByKey);
+                window.addEventListener('keydown', (e) => {
+                    if (e.code === 'Escape') {
+                        this.editor.windowManager.close(window);
+                    }
+                });
             }
         });
     }
 
-    protected closeDialogByKey = ((e) => {
-        if (e.code === 'Escape') {
-            this.editor.windowManager.close(window);
-        }
-    });
-
-    uploadFile() {
-        Control.createByElement('input', {
-            'type': 'file',
-            'accept': this.filter + '/*'
-        })
+    public uploadFile(): this {
+        let a = Control
+            .createByElement('input', {
+                'type': 'file',
+                'accept': this.filter + '/*'
+            })
             .on('change', (e) => {
                 ApiClient
                     .uploadFile(e.target.files[0])
@@ -141,100 +129,107 @@ export class Plugin {
                             this.editor.windowManager.alert(tinymce.i18n.translate(['Upload failed: {0}', result.message]));
                         }
                     });
-
             })
             .trigger('click');
+        return this;
     }
 
 
-    /*  insertFile(callback: any, type: string) {
+    public insertFile(callback: any, type: string): this {
 
-          let selectedFile = this.selectedItem.file;
+        if (this.selectedItem) {
 
-          if (this.selectedItem) {
-              callback(selectedFile, type);
-              this.editor.windowManager.close(window);
+            let file = this.selectedItem.getFile();
 
-              let notificationText = tinymce.i18n.translate(["\"{0}\" successfully inserted", selectedFile.name]);
-              if (type === "image") {
-                  notificationText = tinymce.i18n.translate(["\"{0}\" as image successfully inserted", selectedFile.name]);
-              } else if (type === "link") {
-                  notificationText = tinymce.i18n.translate(["\"{0}\" as link successfully inserted", selectedFile.name]);
-              }
+            if (callback(file, type)) {
+                this.editor.windowManager.close(window);
 
-              this.editor.notificationManager.open({
-                  text: notificationText,
-                  type: "success",
-                  timeout: 3000
-              });
-          } else {
-              this.editor.windowManager.alert(tinymce.i18n.translate(["Insert failed: {0}", "There is no file selected."]));
-          }
-      }
+                let text = tinymce.i18n.translate(["\"{0}\" successfully inserted", file.getName()]);
+                if (type === "image") {
+                    text = tinymce.i18n.translate(["\"{0}\" as image successfully inserted", file.getName()]);
+                } else if (type === "link") {
+                    text = tinymce.i18n.translate(["\"{0}\" as link successfully inserted", file.getName()]);
+                }
 
-      deleteFile() {
-          if (this.selectedItem) {
+                this.editor.notificationManager.open({
+                    text: text,
+                    type: "success",
+                    timeout: 3000
+                });
 
-              let _this = this,
-                  selectedFile = this.selectedItem.file;
+                return this;
+            } else {
+                this.editor.windowManager.alert(tinymce.i18n.translate(["Insert failed: {0}", "Insert callback was not successfully."]));
+            }
+        } else {
+            this.editor.windowManager.alert(tinymce.i18n.translate(["Insert failed: {0}", "There is no file selected."]));
+        }
 
-              this.editor.windowManager.confirm(tinymce.i18n.translate(["Are you sure you want to delete the file \"{0}\"?", selectedFile.name]), function (state) {
-                  if (state) {
-                      Helper.ajaxDelete({
-                          data: {
-                              "name": selectedFile.name
-                          },
-                          success: function (data) {
-                              if (data.deleted) {
-                                  _this.$selectedFileryItem
-                                      .trigger("unselect")
-                                      .fadeOut(function () {
-                                          _this.loadDialogContent();
+        return this;
+    }
 
-                                          _this.editor.windowManager.alert(tinymce.i18n.translate(["\"{0}\" successfully deleted", selectedFile.name]), function () {
-                                              let $content = $(_this.editor.getContent());
-                                              $content
-                                                  .find("[src$=\"" + selectedFile.name + "\"]")
-                                                  .remove();
-                                              $content
-                                                  .find("[href$=\"" + selectedFile.name + "\"]")
-                                                  .each(function () {
-                                                      let $this = $(this);
-                                                      $this.replaceWith($this.html());
-                                                  });
-                                              if ($content.length) {
-                                                  _this.editor.setContent($("<div>").append($content).html());
-                                              } else {
-                                                  _this.editor.setContent("");
-                                              }
 
-                                          });
-                                      });
-                              } else {
-                                  _this.editor.windowManager.alert(tinymce.i18n.translate(["Delete failed"]));
-                              }
-                          }
-                      }, _this.editor);
-                  } else {
-                      _this.$selectedFileryItem.trigger("unselect");
-                  }
-              });
+    public deleteFile(): this {
+        if (this.selectedItem) {
 
-          } else {
-              this.editor.windowManager.alert("Delete failed: There is no file selected.");
-          }
+            let file = this.selectedItem.getFile();
 
-      }
-  */
+            this.editor.windowManager.confirm(tinymce.i18n.translate(['Are you sure you want to delete the file "{0}"?', file.getName()]), (state) => {
+                if (state) {
+                    ApiClient
+                        .deleteFile(file)
+                        .then((result) => {
+                            if (result.status) {
+
+                                this.selectedItem.fadeOut(() => {
+                                    this.loadDialogContent();
+
+                                    this.editor.windowManager.alert(tinymce.i18n.translate(['"{0}" successfully deleted.', file.getName()]), () => {
+                                        /*   let $content = $(_this.editor.getContent());
+                                           $content
+                                               .find("[src$=\"" + selectedFile.name + "\"]")
+                                               .remove();
+                                           $content
+                                               .find("[href$=\"" + selectedFile.name + "\"]")
+                                               .each(function () {
+                                                   let $this = $(this);
+                                                   $this.replaceWith($this.html());
+                                               });
+                                           if ($content.length) {
+                                               _this.editor.setContent($("<div>").append($content).html());
+                                           } else {
+                                               _this.editor.setContent("");
+                                           }*/
+                                    });
+                                }, 30);
+
+                            } else {
+                                this.editor.windowManager.alert(tinymce.i18n.translate(['Delete failed: {0}', result.message]));
+                            }
+                        });
+                } else {
+                    this.selectedItem.unselect();
+                }
+
+            });
+
+        } else {
+            this.editor.windowManager.alert(tinymce.i18n.translate(["Delete failed: {0}", "There is no file selected."]));
+        }
+
+        return this;
+    }
+
     public loadDialogContent = () => {
         ApiClient
             .fetchFiles()
             .then((result) => {
                 if (result.status) {
-                    let container = new Container(result.data),
-                        dialogBody = Control.createBySelector('#filery-dialog-body');
+                    let container = new Container(result.data);
 
-                    dialogBody
+
+                    Control
+                        .createBySelector('#filery-dialog-body')
                         .html('')
                         .append(container);
 
@@ -261,8 +256,4 @@ export class Plugin {
                 }
             });
     };
-
-    static fileSelectListener(file: File) {
-
-    }
 }

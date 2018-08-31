@@ -30,22 +30,10 @@ export class Container extends Control {
 
                 });
 
+            this.items.push(item);
+
             this.append(item);
         });
-    }
-
-    public getSelectedItem(): Item {
-        return;
-    }
-
-    public append<Container>(child: any): this {
-        super.append(child);
-
-        if (child instanceof Item) {
-            this.items.push(child);
-        }
-
-        return this;
     }
 
     public selectListener(selectCallback: any, deselectCallback?: any) {

@@ -9,7 +9,8 @@ return [
         'public' => '...public key here...',
         'private' => '...private key here...'
     ],
-    'allowedDomains' => '*',
+    'allowedOrigin' => '*',
+    'allowedHeaders' => 'Content-Type',
     'fileTypes' => [
         'code' => ['java', 'php', 'html', 'js', 'css', 'htm', 'cpp', 'ts', 'xml', 'json', 'bat'],
         'audio' => ['mp3', 'wav', 'ogg', 'wma'],

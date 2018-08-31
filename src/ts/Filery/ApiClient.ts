@@ -32,8 +32,8 @@ export class ApiClient {
     }
 
     static async uploadFile(fileData: any, dir?: string) {
-        return await request('POST', this.baseUrl)
-            .withCredentials()
+        return await request.post(this.baseUrl)
+            .set('content-type', 'application/json')
             .query({
                 'action': 'upload',
                 'dir': dir,
@@ -49,13 +49,12 @@ export class ApiClient {
                 };
             })
             .then(res => {
-                return JSON.parse(res.body);
+                return res.body;
             });
     }
 
     static async deleteFile(file: File, dir?: string) {
-        return await request('GET', this.baseUrl)
-            .withCredentials()
+        return await request.get(this.baseUrl)
             .query({
                 'action': 'delete',
                 'dir': dir,
@@ -67,6 +66,9 @@ export class ApiClient {
                     message: error,
                     data: {}
                 };
+            })
+            .then(res => {
+                return res.body;
             });
     }
 

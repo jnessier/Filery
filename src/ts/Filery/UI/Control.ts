@@ -1,3 +1,5 @@
+import Mouse = JQuery.Mouse;
+
 export class Control {
 
     protected element: HTMLElement;
@@ -109,10 +111,34 @@ export class Control {
     }
 
     public trigger(type: string, detail?: any): this {
-        let event = new CustomEvent(type, detail);
-        this.element.dispatchEvent(event);
+        if (/^(?:mouse|pointer|contextmenu|drag|drop)|click/.test(type)) {
+            this.element.dispatchEvent(new MouseEvent(type, detail));
+        } else if (/^key/.test(type)) {
+            this.element.dispatchEvent(new KeyboardEvent(type, detail));
+        } else {
+            this.element.dispatchEvent(new CustomEvent(type, detail));
+        }
 
         return this;
+    }
+
+    public fadeOut(callback, time = 100) {
+
+        let opacity = 1;
+        if (this.element.style.opacity) {
+            opacity = Number(this.element.style.opacity);
+        }
+
+        let fadeEffect = setInterval(() => {
+            if (opacity > 0) {
+                opacity -= 0.1;
+                this.element.style.opacity = String(opacity);
+            } else {
+                this.element.style.display = 'none';
+                callback(this);
+                clearInterval(fadeEffect);
+            }
+        }, time);
     }
 
     public addClass(className: string): this {

@@ -18,12 +18,13 @@ export default function (editor: any, url: string) {
 
             let plugin = new Plugin(editor, []);
 
-            plugin.openDialog(function (file, insertType) {
+            plugin.openDialog( (file, insertType) => {
                 if (insertType === 'image') {
                     editor.insertContent('<img src="' + file.url + '" title="' + file.name + '" />');
                 } else {
                     editor.insertContent('<a href="' + file.url + '" title="' + file.name + '">' + file.name + '</a>');
                 }
+                return true;
             }, 'insert');
         }
     });

@@ -69,7 +69,8 @@ abstract class AbstractAPI
             $this->result['message'] = $ex->getMessage();
         }
 
-        header('Access-Control-Allow-Origin: ' . $this->config['allowedDomains']);
+        header('Access-Control-Allow-Origin: ' . $this->config['allowedOrigin']);
+        header('Access-Control-Allow-Headers: ' . $this->config['allowedHeaders']);
         header('Content-Type: application/json');
         echo json_encode($this->result);
         exit;
