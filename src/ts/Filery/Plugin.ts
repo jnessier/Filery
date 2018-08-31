@@ -125,11 +125,10 @@ export class Plugin {
     });
 
     uploadFile() {
-        Control
-            .create('input', {
-                'type': 'file',
-                'accept': this.filter + '/*'
-            })
+        Control.createByElement('input', {
+            'type': 'file',
+            'accept': this.filter + '/*'
+        })
             .on('change', (e) => {
                 ApiClient
                     .uploadFile(e.target.files[0])
@@ -233,10 +232,11 @@ export class Plugin {
             .then((result) => {
                 if (result.status) {
                     let container = new Container(result.data),
-                        dialogBody = Control.select('#filery-dialog-body');
+                        dialogBody = Control.createBySelector('#filery-dialog-body');
 
-                    dialogBody.getElement().innerHTML = '';
-                    dialogBody.append(container);
+                    dialogBody
+                        .html('')
+                        .append(container);
 
                     container.selectListener((item) => {
                         this.selectedItem = item;
@@ -244,12 +244,12 @@ export class Plugin {
                         this.buttons.delete.disabled(false);
                         this.buttons.select.disabled(false);
                         this.buttons.link.disabled(false);
-
                         if (this.selectedItem.getFile().type === 'image') {
                             this.buttons.image.disabled(false);
                         }
                     }, (item) => {
                         this.selectedItem = null;
+
                         this.buttons.image.disabled(true);
                         this.buttons.link.disabled(true);
                         this.buttons.select.disabled(true);
@@ -260,7 +260,7 @@ export class Plugin {
                     this.editor.windowManager.alert(tinymce.i18n.translate(['Load failed: {0}', result.message]));
                 }
             });
-    }
+    };
 
     static fileSelectListener(file: File) {
 

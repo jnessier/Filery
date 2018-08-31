@@ -1,7 +1,7 @@
 import {Control} from './Control';
-import {ItemBody} from './ItemBody';
 import {File} from '../Model/File';
-import * as $ from 'cheerio';
+import {FileThumbnail} from './FileThumbnail';
+import {FileTitle} from './FileTitle';
 
 export class Item extends Control {
 
@@ -10,55 +10,45 @@ export class Item extends Control {
     constructor(file: File) {
         super();
 
-        console.log(typeof $('<div class="filery-item"></div>'));
+        this.file = file;
 
-        this.element = document.createElement('div');
-        this.element.classList.add('filery-item');
+        this.element = Control.createElement('div', {
+            className: 'filery-item'
+        });
 
-        this.element.setAttribute('title', file.getName());
+        let itemBody = Control
+            .createByElement('div', {
+                className: 'filery-item-body'
+            })
+            .append(new FileThumbnail(file))
+            .append(new FileTitle(file));
 
-        this.setFile(file);
 
-        this.append(new ItemBody(file));
+        this.append(itemBody);
     }
 
-    public toggleSelect(): this {
-        if (this.element.classList.contains('selected')) {
+    public select() {
+        this
+            .addClass('selected')
+            .trigger('selected', [this]);
+    }
+
+    public deselect() {
+        this
+            .removeClass('selected')
+            .trigger('deselected', [this]);
+    }
+
+    public toggleSelect() {
+        if (this.hasClass('selected')) {
             this.deselect();
         } else {
             this.select();
         }
-
-        return this;
-    }
-
-    public select(): this {
-        this.element.classList.add('selected');
-
-        this.trigger('selected');
-
-        return this;
-    }
-
-    public deselect(): this {
-        this.element.classList.remove('selected');
-
-        this.trigger('deselected');
-
-        return this;
-    }
-
-    public reset(): this {
-        this.element.classList.remove('selected');
-        return this;
     }
 
     public getFile(): File {
         return this.file;
     }
 
-    public setFile(file: File): this {
-        this.file = file;
-        return this;
-    }
 }
