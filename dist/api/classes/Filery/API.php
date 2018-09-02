@@ -3,72 +3,97 @@
 namespace Filery;
 
 use Exception;
+use Throwable;
 
-class API extends AbstractAPI
+class API
 {
     /**
-     * API actions
+     * API configuration
      * @var array
      */
-    protected $actions = [
-        'fetch' => [],
-        'delete' => [
-            'fileName'
-        ],
-        'upload' => [
-            'file'
-        ],
-        'rename' => [
-            'fileName',
-            'newFileName'
-        ]
-    ];
+    protected $config = [];
 
     /**
-     * API action to fetch files
+     * Registered API actions
+     * @var array
      */
-    protected function fetch()
+    protected $actions = [];
+
+    /**
+     * AbstractAPI constructor.
+     * @param array $config API Configuration
+     */
+    public function __construct($config)
     {
-        $fileNames = scandir($this->config['base']['path']);
-        foreach ($fileNames as $fileName) {
-            $filePath = $this->config['base']['path'] . '/' . $fileName;
-            if (is_file($filePath)) {
+        $this->config = $config;
+    }
 
-                $type = 'file';
-                $extension = pathinfo($filePath, PATHINFO_EXTENSION);
 
-                foreach ($this->config['fileTypes'] as $fileType => $extensions) {
-                    if (in_array($extension, $extensions)) {
-                        $type = $fileType;
-                        break;
-                    }
-                }
+    /**
+     * Register API actions
+     * @param string $method POST, GET, DELETE or PUT
+     * @param array $queryKeys Keys of query parameters
+     * @param callable $callback Callback when API action get called
+     * @return self
+     */
+    public function register($method, $queryKeys, $callback)
+    {
+        $key = $method . implode($queryKeys);
+        $this->acttions[$key] = $callback;
 
-                $this->result['data'][] = [
-                    'url' => $this->config['base']['url'] . '/' . $fileName,
-                    'name' => $fileName,
-                    'extension' => $extension,
-                    'time' => filemtime($filePath),
-                    'size' => filesize($filePath),
-                    'type' => $type
-                ];
-            }
-        }
+        return $this;
     }
 
     /**
-     * API action to delete file.
-     * @param string $fileName File name
-     * @throws Exception
+     * Run API and echo JSON encode result as response.
      */
-    protected function delete($fileName)
+    public function run()
     {
-        $filePath = $this->config['base']['path'] . '/' . basename($fileName);
-        if (basename($fileName) === $fileName && is_readable($filePath) && is_file($filePath)) {
-            if (unlink($filePath)) {
-                return;
+        try {
+            if (!is_readable($this->config['base']['path'])) {
+                throw new Exception('Base path does not exist or is not readable.');
+            }
+
+            $output = call_user_func($this->getCallback(), [
+                'input' => json_decode(file_get_contents('php://input'), true)
+            ]);
+        } catch (StatusException $ex) {
+            http_response_code($ex->getCode());
+            $output = [
+                'message' => $ex->getMessage()
+            ];
+        } catch (Throwable $ex) {
+            http_response_code(500);
+            $output = [
+                'message' => $ex->getMessage()
+            ];
+        }
+
+        header('Access-Control-Allow-Origin: ' . $this->config['allowedOrigin']);
+        header('Access-Control-Allow-Headers: ' . $this->config['allowedHeaders']);
+        header('Content-Type: application/json');
+        echo json_encode($output);
+        exit;
+    }
+
+    /**
+     * Get callback of registered API actions
+     * @return mixed
+     * @throws HttpException
+     */
+    protected function getCallback()
+    {
+
+
+        $key = $_SERVER['REQUEST_METHOD'] . implode(array_keys($_GET));
+        if (isset($this->actions[$key])) {
+            $callback = $this->actions[$key];
+            if (is_callable($callback)) {
+                return call_user_func($callback, [
+                    'input' => json_decode(file_get_contents('php://input'), true)
+                ]);
             }
         }
-        throw new Exception('File does not exist or is not deletable.');
+        throw new StatusException('', 404);
     }
 }
