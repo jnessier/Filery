@@ -1,5 +1,3 @@
-import Mouse = JQuery.Mouse;
-
 export class Control {
 
     protected element: HTMLElement;
@@ -18,6 +16,28 @@ export class Control {
         control.set(document.querySelector(query));
 
         return control;
+    }
+
+    public static createByHtml(html: string): Control {
+        let control = new Control(),
+            template = document.createElement('template');
+
+        template.innerHTML = html.trim();
+
+        control.set(template.firstElementChild as HTMLElement);
+
+        return control;
+    }
+
+    public find(query: string): Control {
+        let control = new Control(),
+            element = this.element.querySelector(query);
+
+        if (element) {
+            return control.set(element as HTMLElement);
+        }
+        return null;
+
     }
 
     protected static createElement(tagName: string, attributes?: {}): HTMLElement {
