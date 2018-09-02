@@ -186,11 +186,11 @@ export class Plugin {
 
                                     this.editor.windowManager.alert(tinymce.i18n.translate(['"{0}" successfully deleted.', file.getName()]), () => {
 
-                                        let content = this.editor.getContent();
+                                        let content = Control.createByHtml(this.editor.getContent());
 
-                                        console.log(Control.createByHtml(content));
+                                        console.log(content);
 
-                                        content.find('[src$="' + file.getName() + '"]').remove();
+                                        content.find('[src$="' + file.getName() + '"]').get().remove();
 
                                         /*   let $content = $(_);
                                            $content
