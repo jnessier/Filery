@@ -17,7 +17,7 @@ export class Item extends Control {
         });
 
         let itemBody = Control
-            .createByElement('div', {
+            .createByTag('div', {
                 className: 'filery-item-body'
             })
             .append(new FileThumbnail(file))

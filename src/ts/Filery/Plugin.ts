@@ -113,7 +113,7 @@ export class Plugin {
 
     public uploadFile(): this {
         Control
-            .createByElement('input', {
+            .createByTag('input', {
                 'type': 'file',
                 'accept': this.filter + '/*'
             })
@@ -182,32 +182,21 @@ export class Plugin {
                                 this.loadDialogContent();
 
                                 this.editor.windowManager.alert(tinymce.i18n.translate(['"{0}" successfully deleted.', file.getName()]), () => {
+                                    Control
+                                        .createBySelector('img', this.editor.getBody())
+                                        .forEach((img) => {
+                                            if (img.getAttribute('src').endsWith(file.getName())) {
+                                                img.remove();
+                                            }
+                                        });
 
-                                    let element = this.editor.getBody();
-
-                                    element.querySelectorAll('img').forEach((img) => {
-                                        if (img.getAttribute('src').endsWith(file.getName())) {
-                                            img.remove();
-                                        }
-                                    });
-                                    console.log(element);
-                                    element.querySelectorAll('a').forEach((a) => {
-                                        if (a.getAttribute('href').endsWith(file.getName())) {
-                                            a.setAttribute('href', '#')
-                                            //    a.parentNode.replaceChild(a.innerHTML, a);
-                                        }
-                                    })
-
-
-                                    /*
-
-
-                                    /*
-                                       if ($content.length) {
-                                           _this.editor.setContent($("<div>").append($content).html());
-                                       } else {
-                                           _this.editor.setContent("");
-                                       }*/
+                                    Control
+                                        .createBySelector('a', this.editor.getBody())
+                                        .forEach((a) => {
+                                            if (a.getAttribute('href').endsWith(file.getName())) {
+                                                a.unwrap();
+                                            }
+                                        });
                                 });
                             }, 30);
 
@@ -236,7 +225,7 @@ export class Plugin {
                 let container = new Container(files);
 
                 Control
-                    .createBySelector('#filery-dialog-body')
+                    .createBySelector('#filery-dialog-body')[0]
                     .html('')
                     .append(container);
 

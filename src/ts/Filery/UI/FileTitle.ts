@@ -10,7 +10,7 @@ export class FileTitle extends Control {
         });
 
         let fileTitleName = Control
-            .createByElement('span', {
+            .createByTag('span', {
                 className: 'file-title-name'
             })
             .text(file.getName());
@@ -18,7 +18,7 @@ export class FileTitle extends Control {
         this.append(fileTitleName);
 
         let fileTitleMeta = Control
-            .createByElement('ul', {
+            .createByTag('ul', {
                 className: 'file-title-meta'
             })
             .append('<li>' + file.getFormattedSize() + '</li>')

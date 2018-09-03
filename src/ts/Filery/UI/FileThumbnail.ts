@@ -11,13 +11,13 @@ export class FileThumbnail extends Control {
         });
 
         let fileThumbnailImage = Control
-            .createByElement('span', {
+            .createByTag('span', {
                 className: 'file-thumbnail-image'
             })
             .addClass(file.getType());
 
         if (file.getType() === 'image') {
-            fileThumbnailImage.css('background-image: url(\'' + encodeURI(file.getUrl()) + '\'); background-size: contain');
+            fileThumbnailImage.css('background-image: url("' + encodeURI(file.getUrl()) + '"); background-size: contain');
         }
 
         this.append(fileThumbnailImage);
