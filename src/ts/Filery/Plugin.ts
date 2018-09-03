@@ -43,7 +43,7 @@ export class Plugin {
                 visible: (insertType === 'select'),
                 onClick: (e) => {
                     e.preventDefault();
-                    this.insertFile(insertCallback, "select");
+                    this.insertFile(insertCallback, 'select');
                 },
                 onPostRender: (e) => {
                     this.buttons.select = e.target;
@@ -112,7 +112,7 @@ export class Plugin {
     }
 
     public uploadFile(): this {
-        let a = Control
+        Control
             .createByElement('input', {
                 'type': 'file',
                 'accept': this.filter + '/*'
@@ -144,25 +144,25 @@ export class Plugin {
             if (callback(file, type)) {
                 this.editor.windowManager.close(window);
 
-                let text = tinymce.i18n.translate(["\"{0}\" successfully inserted", file.getName()]);
-                if (type === "image") {
-                    text = tinymce.i18n.translate(["\"{0}\" as image successfully inserted", file.getName()]);
-                } else if (type === "link") {
-                    text = tinymce.i18n.translate(["\"{0}\" as link successfully inserted", file.getName()]);
+                let text = tinymce.i18n.translate(['"{0}" successfully inserted', file.getName()]);
+                if (type === 'image') {
+                    text = tinymce.i18n.translate(['"{0}" as image successfully inserted', file.getName()]);
+                } else if (type === 'link') {
+                    text = tinymce.i18n.translate(['"{0}" as link successfully inserted', file.getName()]);
                 }
 
                 this.editor.notificationManager.open({
                     text: text,
-                    type: "success",
+                    type: 'success',
                     timeout: 3000
                 });
 
                 return this;
             } else {
-                this.editor.windowManager.alert(tinymce.i18n.translate(["Insert failed: {0}", "Insert callback was not successfully."]));
+                this.editor.windowManager.alert(tinymce.i18n.translate(['Insert failed: {0}', 'Insert callback was not successfully.']));
             }
         } else {
-            this.editor.windowManager.alert(tinymce.i18n.translate(["Insert failed: {0}", "There is no file selected."]));
+            this.editor.windowManager.alert(tinymce.i18n.translate(['Insert failed: {0}', 'There is no file selected.']));
         }
 
         return this;
@@ -178,41 +178,52 @@ export class Plugin {
                 if (state) {
                     ApiClient
                         .deleteFile(file)
-                        .then((result) => {
-                            if (result.status) {
+                        .then(() => {
+                            this.selectedItem.fadeOut(() => {
+                                this.loadDialogContent();
 
-                                this.selectedItem.fadeOut(() => {
-                                    this.loadDialogContent();
+                                this.editor.windowManager.alert(tinymce.i18n.translate(['"{0}" successfully deleted.', file.getName()]), () => {
 
-                                    this.editor.windowManager.alert(tinymce.i18n.translate(['"{0}" successfully deleted.', file.getName()]), () => {
+                                    let element = this.editor.getContentAreaContainer();
 
-                                        let content = Control.createByHtml(this.editor.getContent());
-
-                                        console.log(content);
-
-                                        content.find('[src$="' + file.getName() + '"]').get().remove();
-
-                                        /*   let $content = $(_);
-                                           $content
-                                               .find("[src$=\"" + selectedFile.name + "\"]")
-                                               .remove();
-                                           $content
-                                               .find("[href$=\"" + selectedFile.name + "\"]")
-                                               .each(function () {
-                                                   let $this = $(this);
-                                                   $this.replaceWith($this.html());
-                                               });
-                                           if ($content.length) {
-                                               _this.editor.setContent($("<div>").append($content).html());
-                                           } else {
-                                               _this.editor.setContent("");
-                                           }*/
+                                    element.querySelectorAll('[src$="' + file.getName() + '"]').forEach(function () {
+                                        this.remove();
                                     });
-                                }, 30);
 
-                            } else {
-                                this.editor.windowManager.alert(tinymce.i18n.translate(['Delete failed: {0}', result.message]));
-                            }
+
+                                    /*
+                                                                        content.find('[src$="' + file.getName() + '"]')
+                                                                            .get().forEach()
+                                                                            .remove(function () {
+                                                                                console.log(this);
+                                                                                //  let $this = $(this);
+                                                                                //  $this.replaceWith($this.html());
+                                                                            });
+                                                                    )
+                                                                        ;*/
+
+
+                                    /*   let $content = $(_);
+                                       $content
+                                           .find("[src$=\"" + selectedFile.name + "\"]")
+                                           .remove();
+                                       $content
+                                           .find("[href$=\"" + selectedFile.name + "\"]")
+                                           .each(function () {
+                                               let $this = $(this);
+                                               $this.replaceWith($this.html());
+                                           });
+                                       if ($content.length) {
+                                           _this.editor.setContent($("<div>").append($content).html());
+                                       } else {
+                                           _this.editor.setContent("");
+                                       }*/
+                                });
+                            }, 30);
+
+                        })
+                        .catch((error) => {
+                            this.editor.windowManager.alert(tinymce.i18n.translate(['Delete failed: {0}', error]));
                         });
                 } else {
                     this.selectedItem.unselect();
@@ -221,46 +232,45 @@ export class Plugin {
             });
 
         } else {
-            this.editor.windowManager.alert(tinymce.i18n.translate(["Delete failed: {0}", "There is no file selected."]));
+            this.editor.windowManager.alert(tinymce.i18n.translate(['Delete failed: {0}', 'There is no file selected.']));
         }
 
         return this;
     }
 
-    public loadDialogContent = () => {
+    public loadDialogContent() {
         ApiClient
             .fetchFiles()
-            .then((result) => {
-                if (result.status) {
-                    let container = new Container(result.data);
+            .then((files) => {
 
+                let container = new Container(files);
 
-                    Control
-                        .createBySelector('#filery-dialog-body')
-                        .html('')
-                        .append(container);
+                Control
+                    .createBySelector('#filery-dialog-body')
+                    .html('')
+                    .append(container);
 
-                    container.selectListener((item) => {
-                        this.selectedItem = item;
+                container.selectListener((item) => {
+                    this.selectedItem = item;
 
-                        this.buttons.delete.disabled(false);
-                        this.buttons.select.disabled(false);
-                        this.buttons.link.disabled(false);
-                        if (this.selectedItem.getFile().type === 'image') {
-                            this.buttons.image.disabled(false);
-                        }
-                    }, (item) => {
-                        this.selectedItem = null;
+                    this.buttons.delete.disabled(false);
+                    this.buttons.select.disabled(false);
+                    this.buttons.link.disabled(false);
+                    if (this.selectedItem.getFile().type === 'image') {
+                        this.buttons.image.disabled(false);
+                    }
+                }, (item) => {
+                    this.selectedItem = null;
 
-                        this.buttons.image.disabled(true);
-                        this.buttons.link.disabled(true);
-                        this.buttons.select.disabled(true);
-                        this.buttons.delete.disabled(true);
-                    });
+                    this.buttons.image.disabled(true);
+                    this.buttons.link.disabled(true);
+                    this.buttons.select.disabled(true);
+                    this.buttons.delete.disabled(true);
+                });
 
-                } else {
-                    this.editor.windowManager.alert(tinymce.i18n.translate(['Load failed: {0}', result.message]));
-                }
+            })
+            .catch((error) => {
+                this.editor.windowManager.alert(tinymce.i18n.translate(['Load failed: {0}', error]));
             });
-    };
+    }
 }

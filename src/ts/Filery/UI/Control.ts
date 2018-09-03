@@ -12,10 +12,15 @@ export class Control {
     }
 
     public static createBySelector(query: string): Control {
-        let control = new Control();
-        control.set(document.querySelector(query));
+        let control = new Control(),
+            element = document.querySelector(query);
 
-        return control;
+        if (element) {
+            control.set(element as HTMLElement);
+
+            return control;
+        }
+        return null;
     }
 
     public static createByHtml(html: string): Control {
@@ -24,19 +29,25 @@ export class Control {
 
         template.innerHTML = html.trim();
 
-        control.set(template.firstElementChild as HTMLElement);
+        let element = template.content.firstChild;
 
-        return control;
+        if (element) {
+            control.set(element as HTMLElement);
+
+            return control;
+        }
+        return null;
     }
 
     public find(query: string): Control {
-        let control = new Control(),
-            element = this.element.querySelector(query);
-
-        if (element) {
-            return control.set(element as HTMLElement);
+        let control = new Control();
+        if (this.element) {
+            let element = this.element.querySelector(query);
+            if (element) {
+                return control.set(element as HTMLElement);
+            }
         }
-        return null;
+        return control;
 
     }
 
@@ -75,6 +86,14 @@ export class Control {
 
     public set(element: HTMLElement) {
         this.element = element;
+
+        return this;
+    }
+
+    public remove(): this {
+        if (this.element) {
+            this.element.remove();
+        }
 
         return this;
     }

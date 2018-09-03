@@ -9,7 +9,7 @@ export default function (editor: any, url: string) {
 
     tinymce.DOM.loadCSS(url + '/plugin.min.css');
 
-    ApiClient.setBaseUrl(editor.settings.filery.api.base_url);
+    ApiClient.setUrl(editor.settings.filery.api.url);
 
     editor.addButton('filery', {
         icon: 'browse',
@@ -18,7 +18,7 @@ export default function (editor: any, url: string) {
 
             let plugin = new Plugin(editor, []);
 
-            plugin.openDialog( (file, insertType) => {
+            plugin.openDialog((file, insertType) => {
                 if (insertType === 'image') {
                     editor.insertContent('<img src="' + file.url + '" title="' + file.name + '" />');
                 } else {

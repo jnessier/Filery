@@ -1,37 +1,36 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: Jonathan Nessier
+ * Date: 03.09.2018
+ * Time: 13:09
+ */
 
 namespace Filery;
+
 
 use Exception;
 
 class API extends AbstractAPI
 {
-    /**
-     * API actions
-     * @var array
-     */
-    protected $actions = [
-        'fetch' => [],
-        'delete' => [
-            'fileName'
-        ],
-        'upload' => [
-            'file'
-        ],
-        'rename' => [
-            'fileName',
-            'newFileName'
-        ]
-    ];
 
-
-    /**
-     * API action to fetch files
-     */
-    protected function fetch()
+    public function __construct(array $config)
     {
+        parent::__construct($config);
+
+        $this
+            ->register('GET', [], [$this, 'read'])
+            ->register('DELETE', ['fileName'], [$this, 'delete']);
+    }
+
+
+    protected function read()
+    {
+        $data = [];
         $fileNames = scandir($this->config['base']['path']);
+
         foreach ($fileNames as $fileName) {
+            $fileUrl = $this->config['base']['url'] . '/' . $fileName;
             $filePath = $this->config['base']['path'] . '/' . $fileName;
             if (is_file($filePath)) {
 
@@ -45,8 +44,8 @@ class API extends AbstractAPI
                     }
                 }
 
-                $this->result['data'][] = [
-                    'url' => $this->config['base']['url'] . '/' . $fileName,
+                $data[] = [
+                    'url' => $fileUrl,
                     'name' => $fileName,
                     'extension' => $extension,
                     'time' => filemtime($filePath),
@@ -55,21 +54,21 @@ class API extends AbstractAPI
                 ];
             }
         }
+        return $data;
     }
 
-    /**
-     * API action to delete file.
-     * @param string $fileName File name
-     * @throws Exception
-     */
-    protected function delete($fileName)
+    protected function delete()
     {
+        $fileName = $_GET['fileName'];
         $filePath = $this->config['base']['path'] . '/' . basename($fileName);
+
         if (basename($fileName) === $fileName && is_readable($filePath) && is_file($filePath)) {
             if (unlink($filePath)) {
-                return;
+                return [];
             }
         }
         throw new Exception('File does not exist or is not deletable.');
     }
+
+
 }

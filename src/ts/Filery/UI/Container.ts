@@ -7,7 +7,7 @@ export class Container extends Control {
 
     protected selectedIndex: number;
 
-    constructor(files: []) {
+    constructor(files: Array<File> = []) {
         super();
 
         this.element = Control.createElement('div', {

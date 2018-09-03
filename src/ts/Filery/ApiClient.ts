@@ -3,39 +3,42 @@ import {File} from './Model/File';
 
 export class ApiClient {
 
-    static baseUrl: string;
+    static url: string;
 
-    static setBaseUrl(url: string) {
-        this.baseUrl = url;
+    static setUrl(url: string) {
+        this.url = url;
+    }
+
+    protected static handleError(error) {
+        try {
+            return Promise.reject(JSON.parse(error.response.text).error);
+        } finally {
+            // Nothing
+        }
+        return Promise.reject(error.message);
     }
 
     static async fetchFiles(dir?: string) {
-        return await request.get(this.baseUrl)
+        return await request
+            .get(this.url)
             .query({
-                'action': 'fetch',
                 'dir': dir,
             })
-            .on('error', (error) => {
-                return {
-                    status: false,
-                    message: error,
-                    data: {}
-                };
-            })
-            .then(res => {
-                let result = res.body;
-                result.data.forEach((value, index) => {
-                    result.data[index] = new File(value.url, value.name, value.size, value.time, value.extension, value.type);
+            .then((response) => {
+                let files = new Array<File>();
+                response.body.forEach((value) => {
+                    files.push(new File(value.url, value.name, value.size, value.time, value.extension, value.type));
                 });
-                return result;
-            });
+                return files;
+            })
+            .catch(this.handleError);
     }
 
     static async uploadFile(fileData: any, dir?: string) {
-        return await request.post(this.baseUrl)
+        return await request
+            .post(this.url)
             .set('content-type', 'application/json')
             .query({
-                'action': 'upload',
                 'dir': dir,
             })
             .send({
@@ -54,22 +57,16 @@ export class ApiClient {
     }
 
     static async deleteFile(file: File, dir?: string) {
-        return await request.get(this.baseUrl)
+        return await request
+            .delete(this.url)
             .query({
-                'action': 'delete',
                 'dir': dir,
                 'fileName': file.getName(),
             })
-            .on('error', (error) => {
-                return {
-                    status: false,
-                    message: error,
-                    data: {}
-                };
+            .then((response) => {
+                return true;
             })
-            .then(res => {
-                return res.body;
-            });
+            .catch(this.handleError);
     }
 
 }

@@ -5,7 +5,7 @@ namespace Filery;
 use Exception;
 use Throwable;
 
-class API
+abstract class AbstractAPI
 {
     /**
      * API configuration
@@ -36,10 +36,10 @@ class API
      * @param callable $callback Callback when API action get called
      * @return self
      */
-    public function register($method, $queryKeys, $callback)
+    protected function register($method, $queryKeys, $callback)
     {
         $key = $method . implode($queryKeys);
-        $this->acttions[$key] = $callback;
+        $this->actions[$key] = $callback;
 
         return $this;
     }
@@ -50,30 +50,56 @@ class API
     public function run()
     {
         try {
+            $this->cors();
+
             if (!is_readable($this->config['base']['path'])) {
                 throw new Exception('Base path does not exist or is not readable.');
             }
 
-            $output = call_user_func($this->getCallback(), [
-                'input' => json_decode(file_get_contents('php://input'), true)
-            ]);
-        } catch (StatusException $ex) {
+            $output = call_user_func($this->getCallback(),
+                json_decode(file_get_contents('php://input'), true),
+                $this->config
+            );
+        } catch (HttpException $ex) {
             http_response_code($ex->getCode());
             $output = [
-                'message' => $ex->getMessage()
+                'error' => $ex->getMessage()
             ];
         } catch (Throwable $ex) {
             http_response_code(500);
             $output = [
-                'message' => $ex->getMessage()
+                'error' => $ex->getMessage()
             ];
+        } finally {
+            header('Content-Type: application/json');
+            echo json_encode($output);
+            exit;
         }
 
-        header('Access-Control-Allow-Origin: ' . $this->config['allowedOrigin']);
-        header('Access-Control-Allow-Headers: ' . $this->config['allowedHeaders']);
-        header('Content-Type: application/json');
-        echo json_encode($output);
-        exit;
+
+    }
+
+    /**
+     * CORS handling
+     * @see https://stackoverflow.com/a/9866124/2338829
+     */
+    protected function cors()
+    {
+        header("Access-Control-Allow-Origin: " . $this->config['accessControl']['allowedOrigin']);
+        header('Access-Control-Allow-Credentials: true');
+        header('Access-Control-Max-Age: 86400');
+
+        if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+            if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'])) {
+                header("Access-Control-Allow-Methods: " . $this->config['accessControl']['allowedMethods']);
+            }
+
+            if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS'])) {
+                header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
+            }
+
+            exit(0);
+        }
     }
 
     /**
@@ -83,17 +109,13 @@ class API
      */
     protected function getCallback()
     {
-
-
         $key = $_SERVER['REQUEST_METHOD'] . implode(array_keys($_GET));
         if (isset($this->actions[$key])) {
             $callback = $this->actions[$key];
             if (is_callable($callback)) {
-                return call_user_func($callback, [
-                    'input' => json_decode(file_get_contents('php://input'), true)
-                ]);
+                return $callback;
             }
         }
-        throw new StatusException('', 404);
+        throw new HttpException(404);
     }
 }

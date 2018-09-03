@@ -4,7 +4,7 @@ namespace Filery;
 
 use Exception;
 
-class StatusException extends Exception
+class HttpException extends Exception
 {
     /**
      * List of HTTP status codes
@@ -71,15 +71,18 @@ class StatusException extends Exception
         599 => 'Network connect timeout error', // Unknown
     ];
 
-    public function __construct($message = '', $code = 500)
+    /**
+     * Constructor
+     * @param int $code HTTP status code
+     * @throws Exception
+     */
+    public function __construct($code = 500)
     {
         if (!isset($this->status[$code])) {
             throw new Exception('Status code of HTTP exception is invalid.');
         }
 
-        if (!$message) {
-            $message = $this->status[$code];
-        }
+        $message = $this->status[$code];
 
         parent::__construct($message, $code);
     }
