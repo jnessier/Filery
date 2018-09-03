@@ -119,15 +119,14 @@ export class Plugin {
             })
             .on('change', (e) => {
                 ApiClient
-                    .uploadFile(e.target.files[0])
-                    .then((result) => {
-                        if (result.status) {
-                            this.editor.windowManager.alert(tinymce.i18n.translate(['"{0}" successfully uploaded', result.data[0].name]), function () {
-                                this.loadDialogContent();
-                            });
-                        } else {
-                            this.editor.windowManager.alert(tinymce.i18n.translate(['Upload failed: {0}', result.message]));
-                        }
+                    .upload(e.target.files[0])
+                    .then((file) => {
+                        this.editor.windowManager.alert(tinymce.i18n.translate(['"{0}" successfully uploaded', file.getName()]), function () {
+                            this.loadDialogContent();
+                        });
+                    })
+                    .catch((error) => {
+                        this.editor.windowManager.alert(tinymce.i18n.translate(['Upload failed: {0}', error]));
                     });
             })
             .trigger('click');
@@ -177,42 +176,33 @@ export class Plugin {
             this.editor.windowManager.confirm(tinymce.i18n.translate(['Are you sure you want to delete the file "{0}"?', file.getName()]), (state) => {
                 if (state) {
                     ApiClient
-                        .deleteFile(file)
+                        .delete(file)
                         .then(() => {
                             this.selectedItem.fadeOut(() => {
                                 this.loadDialogContent();
 
                                 this.editor.windowManager.alert(tinymce.i18n.translate(['"{0}" successfully deleted.', file.getName()]), () => {
 
-                                    let element = this.editor.getContentAreaContainer();
+                                    let element = this.editor.getBody();
 
-                                    element.querySelectorAll('[src$="' + file.getName() + '"]').forEach(function () {
-                                        this.remove();
+                                    element.querySelectorAll('img').forEach((img) => {
+                                        if (img.getAttribute('src').endsWith(file.getName())) {
+                                            img.remove();
+                                        }
                                     });
+                                    console.log(element);
+                                    element.querySelectorAll('a').forEach((a) => {
+                                        if (a.getAttribute('href').endsWith(file.getName())) {
+                                            a.setAttribute('href', '#')
+                                            //    a.parentNode.replaceChild(a.innerHTML, a);
+                                        }
+                                    })
 
 
                                     /*
-                                                                        content.find('[src$="' + file.getName() + '"]')
-                                                                            .get().forEach()
-                                                                            .remove(function () {
-                                                                                console.log(this);
-                                                                                //  let $this = $(this);
-                                                                                //  $this.replaceWith($this.html());
-                                                                            });
-                                                                    )
-                                                                        ;*/
 
 
-                                    /*   let $content = $(_);
-                                       $content
-                                           .find("[src$=\"" + selectedFile.name + "\"]")
-                                           .remove();
-                                       $content
-                                           .find("[href$=\"" + selectedFile.name + "\"]")
-                                           .each(function () {
-                                               let $this = $(this);
-                                               $this.replaceWith($this.html());
-                                           });
+                                    /*
                                        if ($content.length) {
                                            _this.editor.setContent($("<div>").append($content).html());
                                        } else {
@@ -240,7 +230,7 @@ export class Plugin {
 
     public loadDialogContent() {
         ApiClient
-            .fetchFiles()
+            .read()
             .then((files) => {
 
                 let container = new Container(files);

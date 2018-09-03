@@ -10,15 +10,16 @@ export class ApiClient {
     }
 
     protected static handleError(error) {
+        let message = error.message;
         try {
-            return Promise.reject(JSON.parse(error.response.text).error);
+            message = JSON.parse(error.response.text).error;
         } finally {
             // Nothing
         }
-        return Promise.reject(error.message);
+        return Promise.reject(message);
     }
 
-    static async fetchFiles(dir?: string) {
+    static async read(dir?: string) {
         return await request
             .get(this.url)
             .query({
@@ -34,7 +35,7 @@ export class ApiClient {
             .catch(this.handleError);
     }
 
-    static async uploadFile(fileData: any, dir?: string) {
+    static async upload(fileData: any, dir?: string) {
         return await request
             .post(this.url)
             .set('content-type', 'application/json')
@@ -44,19 +45,13 @@ export class ApiClient {
             .send({
                 'file': fileData,
             })
-            .on('error', (error) => {
-                return {
-                    status: false,
-                    message: error,
-                    data: {}
-                };
+            .then((response) => {
+                return new File(response.body.url, response.body.name, response.body.size, response.body.time, response.body.extension, response.body.type);
             })
-            .then(res => {
-                return res.body;
-            });
+            .catch(this.handleError);
     }
 
-    static async deleteFile(file: File, dir?: string) {
+    static async delete(file: File, dir?: string) {
         return await request
             .delete(this.url)
             .query({
