@@ -3,29 +3,8 @@ import {ApiClient} from './Filery/ApiClient';
 
 declare var tinymce: any;
 
-
 import '../sass/plugin.scss';
 
-function fileryFilePicker(callback, value, meta): void {
-    let filter = [];
-    if (meta.filetype === 'image') {
-        filter = [
-            'omage'
-        ];
-    } else if (meta.filetype === 'media') {
-        filter = [
-            'video',
-            'audio'
-        ];
-    }
-    let plugin = new Plugin(tinymce.activeEditor, filter);
-    plugin.openDialog(function (file) {
-        callback(file.url, {
-            text: file.name,
-            title: file.name
-        });
-    }, 'select');
-}
 
 export default function (editor: any, url: string) {
 
@@ -50,6 +29,27 @@ export default function (editor: any, url: string) {
             }, 'insert');
         }
     });
+
+    editor.settings.filery.filePickerCallback = function (callback, value, meta) {
+        let filter = [];
+        if (meta.filetype === 'image') {
+            filter = [
+                'image'
+            ];
+        } else if (meta.filetype === 'media') {
+            filter = [
+                'video',
+                'audio'
+            ];
+        }
+        let plugin = new Plugin(tinymce.activeEditor, filter);
+        plugin.openDialog(function (file) {
+            callback(file.url, {
+                text: file.name,
+                title: file.name
+            });
+        }, 'select');
+    }
 
     return {
         getMetadata: function () {
