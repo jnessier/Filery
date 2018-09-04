@@ -56,10 +56,7 @@ abstract class AbstractAPI
                 throw new Exception('Base path does not exist or is not readable.');
             }
 
-            $output = call_user_func($this->getCallback(),
-                json_decode(file_get_contents('php://input'), true),
-                $this->config
-            );
+            $output = $this->call();
         } catch (HttpException $ex) {
             http_response_code($ex->getCode());
             $output = [
@@ -103,17 +100,19 @@ abstract class AbstractAPI
     }
 
     /**
-     * Get callback of registered API actions
+     * Call registered API action
      * @return mixed
      * @throws HttpException
      */
-    protected function getCallback()
+    protected function call()
     {
         $key = $_SERVER['REQUEST_METHOD'] . implode(array_keys($_GET));
         if (isset($this->actions[$key])) {
             $callback = $this->actions[$key];
             if (is_callable($callback)) {
-                return $callback;
+                return call_user_func($callback,
+                    json_decode(file_get_contents('php://input'), true)
+                );
             }
         }
         throw new HttpException(404);

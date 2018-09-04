@@ -74,15 +74,18 @@ class HttpException extends Exception
     /**
      * Constructor
      * @param int $code HTTP status code
+     * @param string $message Custom status message
      * @throws Exception
      */
-    public function __construct($code = 500)
+    public function __construct($code = 500, $message = '')
     {
         if (!isset($this->status[$code])) {
             throw new Exception('Status code of HTTP exception is invalid.');
         }
 
-        $message = $this->status[$code];
+        if ($message === '') {
+            $message = $this->status[$code];
+        }
 
         parent::__construct($message, $code);
     }

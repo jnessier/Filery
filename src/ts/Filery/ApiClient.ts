@@ -1,6 +1,8 @@
 import * as request from 'superagent';
 import {File} from './Model/File';
 
+declare var tinymce: any;
+
 export class ApiClient {
 
     static url: string;
@@ -16,7 +18,9 @@ export class ApiClient {
         } finally {
             // Nothing
         }
-        return Promise.reject(message);
+        return Promise.reject(
+            tinymce.i18n.translate(message)
+        );
     }
 
     static async read(dir?: string) {
@@ -36,15 +40,17 @@ export class ApiClient {
     }
 
     static async upload(fileData: any, dir?: string) {
+
+        let formData = new FormData();
+        formData.append('file', fileData);
+
         return await request
             .post(this.url)
-            .set('content-type', 'application/json')
+            //  .set('content-type', 'application/json')
             .query({
                 'dir': dir,
             })
-            .send({
-                'file': fileData,
-            })
+            .send(formData)
             .then((response) => {
                 return new File(response.body.url, response.body.name, response.body.size, response.body.time, response.body.extension, response.body.type);
             })

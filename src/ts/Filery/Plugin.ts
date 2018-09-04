@@ -32,7 +32,7 @@ export class Plugin {
         this.editor.windowManager.open({
             title: 'File manager',
             id: 'filery-dialog',
-            height: 450,
+            height: 250,
             width: 700,
             autoScroll: true,
             buttons: [{
@@ -49,8 +49,20 @@ export class Plugin {
                     this.buttons.select = e.target;
                 },
             }, {
+                icon: 'image',
+                text: 'Insert image',
+                classes: 'primary',
+                visible: false,
+                onClick: (e) => {
+                    e.preventDefault();
+                    this.insertFile(insertCallback, 'image');
+                },
+                onPostRender: (e) => {
+                    this.buttons.image = e.target;
+                },
+            }, {
                 icon: 'link',
-                text: 'Insert as link',
+                text: 'Insert link',
                 classes: 'primary',
                 disabled: true,
                 visible: (insertType === 'insert'),
@@ -62,20 +74,6 @@ export class Plugin {
                     this.buttons.link = e.target;
                 },
             }, {
-                icon: 'image',
-                text: 'Insert as image',
-                classes: 'primary',
-                disabled: true,
-                visible: (insertType === 'insert'),
-                onClick: (e) => {
-                    e.preventDefault();
-                    this.insertFile(insertCallback, 'image');
-                },
-                onPostRender: (e) => {
-                    this.buttons.image = e.target;
-                },
-            }, {
-                text: 'Delete',
                 icon: 'remove',
                 disabled: true,
                 onClick: (e) => {
@@ -118,15 +116,16 @@ export class Plugin {
                 'accept': this.filter + '/*'
             })
             .on('change', (e) => {
+                console.log(e.target.files[0]);
                 ApiClient
                     .upload(e.target.files[0])
                     .then((file) => {
-                        this.editor.windowManager.alert(tinymce.i18n.translate(['"{0}" successfully uploaded', file.getName()]), function () {
+                        this.editor.windowManager.alert(tinymce.i18n.translate(['"{0}" successfully uploaded.', file.getName()]), () => {
                             this.loadDialogContent();
                         });
                     })
                     .catch((error) => {
-                        this.editor.windowManager.alert(tinymce.i18n.translate(['Upload failed: {0}', error]));
+                        this.editor.windowManager.alert(tinymce.i18n.translate('Upload failed.') + ' ' + error);
                     });
             })
             .trigger('click');
@@ -143,11 +142,9 @@ export class Plugin {
             if (callback(file, type)) {
                 this.editor.windowManager.close(window);
 
-                let text = tinymce.i18n.translate(['"{0}" successfully inserted', file.getName()]);
+                let text = tinymce.i18n.translate(['"{0}" as link successfully inserted.', file.getName()]);
                 if (type === 'image') {
-                    text = tinymce.i18n.translate(['"{0}" as image successfully inserted', file.getName()]);
-                } else if (type === 'link') {
-                    text = tinymce.i18n.translate(['"{0}" as link successfully inserted', file.getName()]);
+                    text = tinymce.i18n.translate(['"{0}" as image successfully inserted.', file.getName()]);
                 }
 
                 this.editor.notificationManager.open({
@@ -158,10 +155,10 @@ export class Plugin {
 
                 return this;
             } else {
-                this.editor.windowManager.alert(tinymce.i18n.translate(['Insert failed: {0}', 'Insert callback was not successfully.']));
+                console.error('Insert callback failed (or returned false/null).');
             }
         } else {
-            this.editor.windowManager.alert(tinymce.i18n.translate(['Insert failed: {0}', 'There is no file selected.']));
+            console.error('Insert failed. There is no file selected.');
         }
 
         return this;
@@ -173,7 +170,7 @@ export class Plugin {
 
             let file = this.selectedItem.getFile();
 
-            this.editor.windowManager.confirm(tinymce.i18n.translate(['Are you sure you want to delete the file "{0}"?', file.getName()]), (state) => {
+            this.editor.windowManager.confirm(tinymce.i18n.translate(['Are you sure you want to delete "{0}"?', file.getName()]), (state) => {
                 if (state) {
                     ApiClient
                         .delete(file)
@@ -181,22 +178,24 @@ export class Plugin {
                             this.selectedItem.fadeOut(() => {
                                 this.loadDialogContent();
 
-                                this.editor.windowManager.alert(tinymce.i18n.translate(['"{0}" successfully deleted.', file.getName()]), () => {
-                                    Control
-                                        .createBySelector('img', this.editor.getBody())
-                                        .forEach((img) => {
-                                            if (img.getAttribute('src').endsWith(file.getName())) {
-                                                img.remove();
-                                            }
-                                        });
+                                this.editor.windowManager.confirm(tinymce.i18n.translate(['"{0}" successfully deleted. Do you want to remove the content with reference to the deleted file?', file.getName()]), (state) => {
+                                    if (state) {
+                                        Control
+                                            .createBySelector('img', this.editor.getBody())
+                                            .forEach((img) => {
+                                                if (img.getAttribute('src').endsWith(file.getName())) {
+                                                    img.remove();
+                                                }
+                                            });
 
-                                    Control
-                                        .createBySelector('a', this.editor.getBody())
-                                        .forEach((a) => {
-                                            if (a.getAttribute('href').endsWith(file.getName())) {
-                                                a.unwrap();
-                                            }
-                                        });
+                                        Control
+                                            .createBySelector('a', this.editor.getBody())
+                                            .forEach((a) => {
+                                                if (a.getAttribute('href').endsWith(file.getName())) {
+                                                    a.unwrap();
+                                                }
+                                            });
+                                    }
                                 });
                             }, 30);
 
@@ -236,12 +235,12 @@ export class Plugin {
                     this.buttons.select.disabled(false);
                     this.buttons.link.disabled(false);
                     if (this.selectedItem.getFile().type === 'image') {
-                        this.buttons.image.disabled(false);
+                        this.buttons.image.visible(true);
                     }
                 }, (item) => {
                     this.selectedItem = null;
 
-                    this.buttons.image.disabled(true);
+                    this.buttons.image.visible(false);
                     this.buttons.link.disabled(true);
                     this.buttons.select.disabled(true);
                     this.buttons.delete.disabled(true);

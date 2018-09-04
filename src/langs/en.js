@@ -15,4 +15,7 @@ tinymce.addI18n('en.filery', {
     '"{0}" successfully inserted': '"{0}" successfully inserted',
     '"{0}" as image successfully inserted': '"{0}" as image successfully inserted',
     '"{0}" as link successfully inserted': '"{0}" as link successfully inserted',
+
+
+
 });

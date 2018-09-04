@@ -16,13 +16,14 @@ export class Item extends Control {
             className: 'filery-item'
         });
 
+        this.setAttribute('title', file.getName());
+
         let itemBody = Control
             .createByTag('div', {
                 className: 'filery-item-body'
             })
             .append(new FileThumbnail(file))
             .append(new FileTitle(file));
-
 
         this.append(itemBody);
     }

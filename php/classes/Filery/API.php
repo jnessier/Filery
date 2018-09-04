@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Jonathan Nessier
- * Date: 03.09.2018
- * Time: 13:09
- */
 
 namespace Filery;
 
@@ -14,13 +8,18 @@ use Exception;
 class API extends AbstractAPI
 {
 
+    protected $fileFactory;
+
     public function __construct(array $config)
     {
         parent::__construct($config);
 
+        $this->fileFactory = new FileFactory($config);
+
         $this
             ->register('GET', [], [$this, 'read'])
-            ->register('DELETE', ['fileName'], [$this, 'delete']);
+            ->register('DELETE', ['fileName'], [$this, 'delete'])
+            ->register('POST', [], [$this, 'upload']);
     }
 
 
@@ -30,28 +29,9 @@ class API extends AbstractAPI
         $fileNames = scandir($this->config['base']['path']);
 
         foreach ($fileNames as $fileName) {
-            $fileUrl = $this->config['base']['url'] . '/' . $fileName;
             $filePath = $this->config['base']['path'] . '/' . $fileName;
             if (is_file($filePath)) {
-
-                $type = 'file';
-                $extension = pathinfo($filePath, PATHINFO_EXTENSION);
-
-                foreach ($this->config['fileTypes'] as $fileType => $extensions) {
-                    if (in_array($extension, $extensions)) {
-                        $type = $fileType;
-                        break;
-                    }
-                }
-
-                $data[] = [
-                    'url' => $fileUrl,
-                    'name' => $fileName,
-                    'extension' => $extension,
-                    'time' => filemtime($filePath),
-                    'size' => filesize($filePath),
-                    'type' => $type
-                ];
+                $data[] = $this->fileFactory->create($filePath);
             }
         }
         return $data;
@@ -68,6 +48,34 @@ class API extends AbstractAPI
             }
         }
         throw new Exception('File does not exist or is not deletable.');
+    }
+
+    protected function upload($input)
+    {
+        $fileData = $_FILES['file'];
+
+        $fileName = basename($fileData['name']);
+        $filePath = $this->config['base']['path'] . '/' . $fileName;
+        $fileExtension = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
+
+        // Check if file already exists
+        if (file_exists($filePath) && !$this->config['upload']['overwrite']) {
+            throw new HttpException(409, 'File already exists.');
+        }
+
+        if ($fileData['size'] > $this->config['upload']['maxFileSize']) {
+            throw new HttpException(413, 'File is too large.');
+        }
+
+        if (!in_array($fileExtension, $this->config['upload']['allowedFileExtensions'])) {
+            throw new HttpException(415, 'File extension is not allowed.');
+        }
+
+        if (move_uploaded_file($fileData['tmp_name'], $filePath)) {
+            return $this->fileFactory->create($filePath);
+        }
+        throw new Exception('File upload failed.');
+
     }
 
 
