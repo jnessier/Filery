@@ -25,14 +25,16 @@ export class Plugin {
         this.filter = filter;
     }
 
-    private type = 'select';
+    private insertType = 'select';
 
     public openDialog(insertCallback: any, insertType: any) {
+
+        this.insertType = insertType;
 
         this.editor.windowManager.open({
             title: 'File manager',
             id: 'filery-dialog',
-            height: 250,
+            height: 400,
             width: 700,
             autoScroll: true,
             buttons: [{
@@ -116,7 +118,6 @@ export class Plugin {
                 'accept': this.filter + '/*'
             })
             .on('change', (e) => {
-                console.log(e.target.files[0]);
                 ApiClient
                     .upload(e.target.files[0])
                     .then((file) => {
@@ -131,7 +132,6 @@ export class Plugin {
             .trigger('click');
         return this;
     }
-
 
     public insertFile(callback: any, type: string): this {
 
@@ -176,9 +176,12 @@ export class Plugin {
                         .delete(file)
                         .then(() => {
                             this.selectedItem.fadeOut(() => {
-                                this.loadDialogContent();
 
-                                this.editor.windowManager.confirm(tinymce.i18n.translate(['"{0}" successfully deleted. Do you want to remove the content with reference to the deleted file?', file.getName()]), (state) => {
+                                this.selectedItem.deselect();
+                                this.loadDialogContent();
+                                this.editor.windowManager.alert(tinymce.i18n.translate(['"{0}" successfully deleted.', file.getName()]));
+
+                                /*this.editor.windowManager.confirm(tinymce.i18n.translate(['"{0}" successfully deleted. Do you want to remove the content with reference to the deleted file?', file.getName()]), (state) => {
                                     if (state) {
                                         Control
                                             .createBySelector('img', this.editor.getBody())
@@ -196,7 +199,7 @@ export class Plugin {
                                                 }
                                             });
                                     }
-                                });
+                                });*/
                             }, 30);
 
                         })
@@ -221,6 +224,12 @@ export class Plugin {
             .read()
             .then((files) => {
 
+                if (this.filter.length > 0) {
+                    files = files.filter((file) => {
+                        return this.filter.indexOf(file.getType()) > -1;
+                    });
+                }
+
                 let container = new Container(files);
 
                 Control
@@ -228,27 +237,28 @@ export class Plugin {
                     .html('')
                     .append(container);
 
-                container.selectListener((item) => {
-                    this.selectedItem = item;
+                container
+                    .selectListener((item) => {
+                        this.selectedItem = item;
 
-                    this.buttons.delete.disabled(false);
-                    this.buttons.select.disabled(false);
-                    this.buttons.link.disabled(false);
-                    if (this.selectedItem.getFile().type === 'image') {
-                        this.buttons.image.visible(true);
-                    }
-                }, (item) => {
-                    this.selectedItem = null;
+                        this.buttons.delete.disabled(false);
+                        this.buttons.select.disabled(false);
+                        this.buttons.link.disabled(false);
+                        if (this.insertType === 'insert' && this.selectedItem.getFile().type === 'image') {
+                            this.buttons.image.visible(true);
+                        }
+                    }, (item) => {
+                        this.selectedItem = null;
 
-                    this.buttons.image.visible(false);
-                    this.buttons.link.disabled(true);
-                    this.buttons.select.disabled(true);
-                    this.buttons.delete.disabled(true);
-                });
+                        this.buttons.image.visible(false);
+                        this.buttons.link.disabled(true);
+                        this.buttons.select.disabled(true);
+                        this.buttons.delete.disabled(true);
+                    });
 
             })
             .catch((error) => {
-                this.editor.windowManager.alert(tinymce.i18n.translate(['Load failed: {0}', error]));
+                this.editor.windowManager.alert(tinymce.i18n.translate('Load failed.') + ' ' + error);
             });
     }
 }

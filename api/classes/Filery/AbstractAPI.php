@@ -95,7 +95,7 @@ abstract class AbstractAPI
                 header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
             }
 
-            exit(0);
+            exit();
         }
     }
 
@@ -110,9 +110,7 @@ abstract class AbstractAPI
         if (isset($this->actions[$key])) {
             $callback = $this->actions[$key];
             if (is_callable($callback)) {
-                return call_user_func($callback,
-                    json_decode(file_get_contents('php://input'), true)
-                );
+                return call_user_func($callback, json_decode(file_get_contents('php://input'), true));
             }
         }
         throw new HttpException(404);

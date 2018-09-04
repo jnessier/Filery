@@ -4,6 +4,7 @@ import {ApiClient} from './Filery/ApiClient';
 declare var tinymce: any;
 
 import '../sass/plugin.scss';
+import {File} from "./Filery/Model/File";
 
 
 export default function (editor: any, url: string) {
@@ -42,13 +43,27 @@ export default function (editor: any, url: string) {
                 'audio'
             ];
         }
+        console.log(filter);
         let plugin = new Plugin(tinymce.activeEditor, filter);
-        plugin.openDialog(function (file) {
-            callback(file.url, {
-                text: file.name,
-                title: file.name
+        plugin.openDialog(function (file: File) {
+            callback(file.getUrl(), {
+                text: file.getName(),
+                title: file.getName()
             });
+            return true;
         }, 'select');
+    }
+
+    editor.settings.filery.imagesUploadHandler = function (blobInfo, success, failure) {
+
+        ApiClient
+            .upload(blobInfo)
+            .then((file) => {
+                success(file.getUrl());
+            })
+            .catch((error) => {
+                failure(error);
+            });
     }
 
     return {

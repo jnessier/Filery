@@ -57,6 +57,10 @@ module.exports = {
             }, {
                 from: path.join(__dirname, "../src/langs/"),
                 to: path.join(__dirname, "../dist", pluginName, 'langs')
+            }, {
+                from: path.join(__dirname, "../api/"),
+                to: path.join(__dirname, "../dist", 'api'),
+                ignore: ['config.php']
             }
         ])
     ]

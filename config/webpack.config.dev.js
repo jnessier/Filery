@@ -6,6 +6,10 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.js']
     },
+    /*devServer: {
+        host: "filery.local",
+        port: 8080,
+    },*/
     devtool: 'source-map',
     module: {
         rules: [{

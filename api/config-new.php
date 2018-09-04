@@ -2,8 +2,8 @@
 
 return [
     'base' => [
-        'path' => __DIR__ . '/files',
-        'url' => 'http://localhost/filery/php/files',
+        'path' => 'absolute/path/to/storage',
+        'url' => 'http://domain.tld/storage',
     ],
     'keys' => [
         'public' => '...public key here...',
@@ -20,9 +20,10 @@ return [
             'zip', 'rar', 'tar', '7z',
         ]
     ],
+    'hideHiddenFiles' => true,
     'accessControl' => [
         'allowedOrigin' => '*',
-        'allowedMethods' => 'GET, POST, DELETE, OPTIONS'
+        'allowedMethods' => 'GET, POST, DELETE, PUT, OPTIONS'
     ],
     'fileTypes' => [
         'code' => ['java', 'php', 'html', 'js', 'css', 'htm', 'cpp', 'ts', 'xml', 'json', 'bat'],

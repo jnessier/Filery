@@ -8,19 +8,21 @@
             selector: 'textarea',
             menubar: false,
             plugins: [
-                'link image imagetools filery',
+                'link image media filery',
             ],
             height: '500px',
             toolbar: 'filery | insert',
-            file_picker_types: 'file image media',
             filery: {
                 api: {
-                    url: 'http://localhost/filery/php/api/index.php',
-                },
-                delete_content_ref: true
+                    url: 'http://filery.local/api/index.php',
+                }
             },
+            file_picker_types: 'file image media',
             file_picker_callback: function (callback, value, meta) {
                 tinymce.settings.filery.filePickerCallback(callback, value, meta);
+            },
+            images_upload_handler: function (blobInfo, success, failure) {
+                tinymce.settings.filery.imagesUploadHandler(blobInfo, success, failure);
             }
         })
         ;

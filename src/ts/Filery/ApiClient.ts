@@ -42,11 +42,14 @@ export class ApiClient {
     static async upload(fileData: any, dir?: string) {
 
         let formData = new FormData();
-        formData.append('file', fileData);
+        if (typeof fileData.blob === 'function' && fileData.blob() instanceof Blob) {
+            formData.append('file', fileData.blob(), fileData.filename());
+        } else {
+            formData.append('file', fileData);
+        }
 
         return await request
             .post(this.url)
-            //  .set('content-type', 'application/json')
             .query({
                 'dir': dir,
             })
