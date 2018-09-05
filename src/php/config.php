@@ -5,10 +5,6 @@ return [
         'path' => realpath(__DIR__ . '/../../storage'),
         'url' => 'http://filery.local/storage',
     ],
-    'keys' => [
-        'public' => '...public key here...',
-        'private' => '...private key here...'
-    ],
     'upload' => [
         'overwrite' => false,
         'maxFileSize' => return_bytes(ini_get('upload_max_filesize')),
@@ -20,7 +16,7 @@ return [
             'zip', 'rar', 'tar', '7z',
         ]
     ],
-    'hideHiddenFiles' => true,
+    'showHiddenFiles' => true,
     'accessControl' => [
         'allowedOrigin' => '*',
         'allowedMethods' => 'GET, POST, DELETE, PUT, OPTIONS'
@@ -32,5 +28,9 @@ return [
         'text' => ['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt', 'rtf', 'csv'],
         'video' => ['mp4', 'wma', 'qt', 'mov'],
         'zip' => ['zip', 'rar', 'tar', '7z'],
-    ]
+    ],
+    'tokenCallback' => function ($token) {
+        // Return your custom config, based on your filery token
+        // E.g. return decode($token);
+    }
 ];

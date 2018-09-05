@@ -14,7 +14,7 @@ class API extends AbstractAPI
     {
         parent::__construct($config);
 
-        $this->fileFactory = new FileFactory($config);
+        $this->fileFactory = new FileFactory($this->config);
 
         $this->register('GET', [], [$this, 'read'])->register('DELETE', ['fileName'], [
             $this,
@@ -31,7 +31,7 @@ class API extends AbstractAPI
         foreach ($fileNames as $fileName) {
             $filePath = $this->config['base']['path'] . '/' . $fileName;
             if (is_file($filePath)) {
-                if (!$this->config['hideHiddenFiles'] || $fileName[0] !== '.') {
+                if ($this->config['showHiddenFiles'] || $fileName[0] !== '.') {
                     $data[] = $this->fileFactory->create($filePath);
                 }
             }

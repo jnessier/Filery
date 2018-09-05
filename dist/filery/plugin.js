@@ -1,4 +1,14 @@
-/******/ (function(modules) { // webpackBootstrap
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else if(typeof exports === 'object')
+		exports["Filery"] = factory();
+	else
+		root["Filery"] = factory();
+})(window, function() {
+return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -2184,7 +2194,7 @@ exports = module.exports = __webpack_require__(10)(false);
 
 
 // module
-exports.push([module.i, "#filery-dialog-body {\n  background: #c5c5c5; }\n  #filery-dialog-body .filery-container {\n    position: relative;\n    overflow: hidden;\n    padding: 0 10px 0 0; }\n\n.filery-container .filery-item {\n  width: calc((100% / 2) - 4px);\n  padding: 2px;\n  float: left;\n  display: block; }\n\n.filery-item.selected .filery-item-body, .filery-item.selected .filery-item-body:hover {\n  transition: all .3s ease;\n  border-color: #1e6abc;\n  background: #f0f6fd; }\n\n.filery-item .filery-item-body:hover {\n  transition: all .3s ease;\n  border-color: transparent;\n  background: #f0f6fd; }\n\n.filery-item .filery-item-body {\n  background: #fff;\n  display: block;\n  overflow: hidden;\n  cursor: pointer;\n  border: 3px solid transparent;\n  transition: all .3s ease; }\n\n.filery-item .file-thumbnail {\n  float: left;\n  width: 80px;\n  height: 80px;\n  position: relative;\n  padding: 5px; }\n  .filery-item .file-thumbnail .file-thumbnail-image {\n    background: url(" + escape(__webpack_require__(11)) + ") no-repeat center center;\n    position: absolute;\n    height: 80%;\n    width: 80%;\n    top: 0;\n    bottom: 0;\n    left: 0;\n    right: 0;\n    margin: auto; }\n    .filery-item .file-thumbnail .file-thumbnail-image.audio {\n      background-image: url(" + escape(__webpack_require__(12)) + "); }\n    .filery-item .file-thumbnail .file-thumbnail-image.code {\n      background-image: url(" + escape(__webpack_require__(13)) + "); }\n    .filery-item .file-thumbnail .file-thumbnail-image.text {\n      background-image: url(" + escape(__webpack_require__(14)) + "); }\n    .filery-item .file-thumbnail .file-thumbnail-image.image {\n      background-image: url(" + escape(__webpack_require__(15)) + "); }\n    .filery-item .file-thumbnail .file-thumbnail-image.zip {\n      background-image: url(" + escape(__webpack_require__(16)) + "); }\n    .filery-item .file-thumbnail .file-thumbnail-image.video {\n      background-image: url(" + escape(__webpack_require__(17)) + "); }\n\n.filery-item .file-title {\n  float: left;\n  width: calc(100% - 100px);\n  height: 80px;\n  padding: 5px; }\n  .filery-item .file-title .file-title-name {\n    font-weight: bold;\n    height: 20px;\n    margin: 25px 0 0 0;\n    display: block;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis; }\n  .filery-item .file-title .file-title-meta {\n    margin: 0;\n    height: 20px;\n    padding: 0;\n    list-style: none;\n    color: #929292; }\n    .filery-item .file-title .file-title-meta li {\n      margin: 0 5px 0 0;\n      font-size: 12px;\n      display: inline-block; }\n", ""]);
+exports.push([module.i, "#filery-dialog-body {\n  background: #c5c5c5; }\n  #filery-dialog-body .filery-container {\n    position: relative;\n    overflow: hidden;\n    padding: 0 10px 0 0; }\n  #filery-dialog-body .filery-contextmenu {\n    min-width: 120px;\n    box-shadow: 0 4px 5px 3px rgba(0, 0, 0, 0.2);\n    display: none;\n    background: #fff;\n    position: fixed;\n    transition: 0.2s display ease-in; }\n    #filery-dialog-body .filery-contextmenu.show {\n      display: block; }\n\n.filery-contextmenu ul {\n  list-style: none;\n  padding: 5px;\n  margin: 0 !important; }\n  .filery-contextmenu ul li {\n    font-weight: 500;\n    padding: 5px 5px;\n    cursor: pointer; }\n    .filery-contextmenu ul li:hover {\n      background: rgba(0, 0, 0, 0.2); }\n\n.filery-container .filery-item {\n  width: calc((100% / 2) - 4px);\n  padding: 2px;\n  float: left;\n  display: block; }\n\n.filery-item.selected .filery-item-body, .filery-item.selected .filery-item-body:hover {\n  transition: all .3s ease;\n  border-color: #1e6abc;\n  background: #f0f6fd; }\n\n.filery-item .filery-item-body:hover {\n  transition: all .3s ease;\n  border-color: transparent;\n  background: #f0f6fd; }\n\n.filery-item .filery-item-body {\n  background: #fff;\n  display: block;\n  overflow: hidden;\n  cursor: pointer;\n  border: 3px solid transparent;\n  transition: all .3s ease; }\n\n.filery-item .file-thumbnail {\n  float: left;\n  width: 80px;\n  height: 80px;\n  position: relative;\n  padding: 5px; }\n  .filery-item .file-thumbnail .file-thumbnail-image {\n    background: url(" + escape(__webpack_require__(11)) + ") no-repeat center center;\n    position: absolute;\n    height: 80%;\n    width: 80%;\n    top: 0;\n    bottom: 0;\n    left: 0;\n    right: 0;\n    margin: auto; }\n    .filery-item .file-thumbnail .file-thumbnail-image.audio {\n      background-image: url(" + escape(__webpack_require__(12)) + "); }\n    .filery-item .file-thumbnail .file-thumbnail-image.code {\n      background-image: url(" + escape(__webpack_require__(13)) + "); }\n    .filery-item .file-thumbnail .file-thumbnail-image.text {\n      background-image: url(" + escape(__webpack_require__(14)) + "); }\n    .filery-item .file-thumbnail .file-thumbnail-image.image {\n      background-image: url(" + escape(__webpack_require__(15)) + "); }\n    .filery-item .file-thumbnail .file-thumbnail-image.zip {\n      background-image: url(" + escape(__webpack_require__(16)) + "); }\n    .filery-item .file-thumbnail .file-thumbnail-image.video {\n      background-image: url(" + escape(__webpack_require__(17)) + "); }\n\n.filery-item .file-title {\n  float: left;\n  width: calc(100% - 100px);\n  height: 80px;\n  padding: 5px; }\n  .filery-item .file-title .file-title-name {\n    font-weight: bold;\n    height: 20px;\n    margin: 25px 0 0 0;\n    display: block;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis; }\n  .filery-item .file-title .file-title-meta {\n    margin: 0;\n    height: 20px;\n    padding: 0;\n    list-style: none;\n    color: #929292; }\n    .filery-item .file-title .file-title-meta li {\n      margin: 0 5px 0 0;\n      font-size: 12px;\n      display: inline-block; }\n", ""]);
 
 // exports
 
@@ -3049,13 +3059,13 @@ class Control {
         }
         return this;
     }
-    on(type, listener) {
-        this.element.addEventListener(type, listener);
+    on(type, listener, options) {
+        this.element.addEventListener(type, listener, options);
         this.events[type] = listener;
         return this;
     }
-    once(type, listener) {
-        this.on(type, listener);
+    once(type, listener, options) {
+        this.on(type, listener, options);
         this.trigger(type, (e) => {
             this.off(type);
         });
@@ -3225,7 +3235,7 @@ class Item_Item extends Control {
 
 
 class Container_Container extends Control {
-    constructor(files = []) {
+    constructor(files = [], contextMenu) {
         super();
         this.items = [];
         this.element = Control.createElement('div', {
@@ -3241,6 +3251,17 @@ class Container_Container extends Control {
                 }
                 this.selectedIndex = index;
                 item.toggleSelect();
+            })
+                .on('contextmenu', (e) => {
+                e.preventDefault();
+                let dialogRect = document.querySelector('#filery-dialog').getBoundingClientRect();
+                contextMenu
+                    .setPosition(e.pageY - dialogRect.top + 5, e.pageX - dialogRect.left + 5)
+                    .setItem(item)
+                    .show();
+            });
+            window.addEventListener('click', (e) => {
+                contextMenu.hide();
             });
             this.items.push(item);
             this.append(item);
@@ -3262,7 +3283,100 @@ class Container_Container extends Control {
     }
 }
 
+// CONCATENATED MODULE: ./src/ts/Filery/UI/ContextMenu.ts
+
+class ContextMenu_ContextMenu extends Control {
+    constructor(insertType) {
+        super();
+        this.callbacks = {
+            delete: (item) => {
+            },
+            select: (item) => {
+            },
+            link: (item) => {
+            },
+            image: (item) => {
+            }
+        };
+        this.insertType = 'insert';
+        this.element = Control.createElement('div', {
+            className: 'filery-contextmenu',
+        });
+        this.insertType = insertType;
+    }
+    setCallback(key, callback) {
+        this.callbacks[key] = callback;
+        return this;
+    }
+    setItem(item) {
+        this.item = item;
+        let menu = Control.createByTag('ul');
+        if (this.insertType === 'select') {
+            menu.append(Control.createByTag('li')
+                .text(tinymce.i18n.translate('Select'))
+                .on('click', (e) => {
+                e.preventDefault();
+                this.callbacks.select(this.item);
+            }));
+        }
+        else {
+            menu.append(Control.createByTag('li')
+                .text(tinymce.i18n.translate('Insert link'))
+                .on('click', (e) => {
+                e.preventDefault();
+                this.callbacks.link(this.item);
+            }));
+            if (this.item.getFile().getType() === 'image') {
+                menu.append(Control.createByTag('li')
+                    .text(tinymce.i18n.translate('Insert image'))
+                    .on('click', (e) => {
+                    e.preventDefault();
+                    this.callbacks.image(this.item);
+                }));
+            }
+        }
+        menu
+            .append(Control.createByTag('li')
+            .text(tinymce.i18n.translate('Delete'))
+            .on('click', (e) => {
+            e.preventDefault();
+            this.callbacks.delete(this.item);
+        }));
+        this
+            .html('')
+            .append(menu);
+        return this;
+    }
+    setPosition(top, left) {
+        this.css({
+            left: left + 'px',
+            top: top + 'px',
+        });
+        return this;
+    }
+    ;
+    show() {
+        this
+            .addClass('show')
+            .trigger('showed', [this]);
+    }
+    hide() {
+        this
+            .removeClass('show')
+            .trigger('hidden', [this]);
+    }
+    toggleShow() {
+        if (this.hasClass('show')) {
+            this.hide();
+        }
+        else {
+            this.show();
+        }
+    }
+}
+
 // CONCATENATED MODULE: ./src/ts/Filery/Plugin.ts
+
 
 
 
@@ -3283,6 +3397,7 @@ class Plugin_Plugin {
     }
     openDialog(insertCallback, insertType) {
         this.insertType = insertType;
+        this.insertCallback = insertCallback;
         this.editor.windowManager.open({
             title: 'File manager',
             id: 'filery-dialog',
@@ -3297,7 +3412,7 @@ class Plugin_Plugin {
                     visible: (insertType === 'select'),
                     onClick: (e) => {
                         e.preventDefault();
-                        this.insertFile(insertCallback, 'select');
+                        this.insertFile('select');
                     },
                     onPostRender: (e) => {
                         this.buttons.select = e.target;
@@ -3309,7 +3424,7 @@ class Plugin_Plugin {
                     visible: false,
                     onClick: (e) => {
                         e.preventDefault();
-                        this.insertFile(insertCallback, 'image');
+                        this.insertFile('image');
                     },
                     onPostRender: (e) => {
                         this.buttons.image = e.target;
@@ -3322,7 +3437,7 @@ class Plugin_Plugin {
                     visible: (insertType === 'insert'),
                     onClick: (e) => {
                         e.preventDefault();
-                        this.insertFile(insertCallback, 'link');
+                        this.insertFile('link');
                     },
                     onPostRender: (e) => {
                         this.buttons.link = e.target;
@@ -3382,10 +3497,10 @@ class Plugin_Plugin {
             .trigger('click');
         return this;
     }
-    insertFile(callback, type) {
+    insertFile(type) {
         if (this.selectedItem) {
             let file = this.selectedItem.getFile();
-            if (callback(file, type)) {
+            if (this.insertCallback(file, type)) {
                 this.editor.windowManager.close(window);
                 let text = tinymce.i18n.translate(['"{0}" as link successfully inserted.', file.getName()]);
                 if (type === 'image') {
@@ -3444,11 +3559,30 @@ class Plugin_Plugin {
                     return this.filter.indexOf(file.getType()) > -1;
                 });
             }
-            let container = new Container_Container(files);
+            let contextmenu = new ContextMenu_ContextMenu(this.insertType);
+            contextmenu
+                .setCallback('delete', (item) => {
+                this.selectedItem = item;
+                this.deleteFile();
+            })
+                .setCallback('select', (item) => {
+                this.selectedItem = item;
+                this.insertFile('select');
+            })
+                .setCallback('link', (item) => {
+                this.selectedItem = item;
+                this.insertFile('link');
+            })
+                .setCallback('image', (item) => {
+                this.selectedItem = item;
+                this.insertFile('image');
+            });
+            let container = new Container_Container(files, contextmenu);
             Control
                 .createBySelector('#filery-dialog-body')[0]
                 .html('')
-                .append(container);
+                .append(container)
+                .append(contextmenu);
             container
                 .selectListener((item) => {
                 this.selectedItem = item;
@@ -3481,7 +3615,7 @@ var sass_plugin = __webpack_require__(7);
 
 /* harmony default export */ var ts_plugin = (function (editor, url) {
     tinymce.DOM.loadCSS(url + '/plugin.min.css');
-    ApiClient_ApiClient.setUrl(editor.settings.filery.api.url);
+    ApiClient_ApiClient.setUrl(editor.settings.filery_api_url);
     editor.addButton('filery', {
         icon: 'browse',
         title: 'File manager',
@@ -3489,48 +3623,15 @@ var sass_plugin = __webpack_require__(7);
             let plugin = new Plugin_Plugin(editor, []);
             plugin.openDialog((file, insertType) => {
                 if (insertType === 'image') {
-                    editor.insertContent('<img src="' + file.url + '" title="' + file.name + '" />');
+                    editor.insertContent('<img src="' + file.getUrl() + '" title="' + file.getName() + '" />');
                 }
                 else {
-                    editor.insertContent('<a href="' + file.url + '" title="' + file.name + '">' + file.name + '</a>');
+                    editor.insertContent('<a href="' + file.getUrl() + '" title="' + file.getName() + '">' + file.getName() + '</a>');
                 }
                 return true;
             }, 'insert');
         }
     });
-    editor.settings.filery.filePickerCallback = function (callback, value, meta) {
-        let filter = [];
-        if (meta.filetype === 'image') {
-            filter = [
-                'image'
-            ];
-        }
-        else if (meta.filetype === 'media') {
-            filter = [
-                'video',
-                'audio'
-            ];
-        }
-        console.log(filter);
-        let plugin = new Plugin_Plugin(tinymce.activeEditor, filter);
-        plugin.openDialog(function (file) {
-            callback(file.getUrl(), {
-                text: file.getName(),
-                title: file.getName()
-            });
-            return true;
-        }, 'select');
-    };
-    editor.settings.filery.imagesUploadHandler = function (blobInfo, success, failure) {
-        ApiClient_ApiClient
-            .upload(blobInfo)
-            .then((file) => {
-            success(file.getUrl());
-        })
-            .catch((error) => {
-            failure(error);
-        });
-    };
     return {
         getMetadata: function () {
             return {
@@ -3542,9 +3643,47 @@ var sass_plugin = __webpack_require__(7);
 });
 
 // CONCATENATED MODULE: ./src/ts/index.ts
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "filePickerCallback", function() { return filePickerCallback; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "imagesUploadHandler", function() { return imagesUploadHandler; });
+
+
 
 tinymce.PluginManager.add('filery', ts_plugin);
+function filePickerCallback(callback, value, meta) {
+    let filter = [];
+    if (meta.filetype === 'image') {
+        filter = [
+            'image'
+        ];
+    }
+    else if (meta.filetype === 'media') {
+        filter = [
+            'video',
+            'audio'
+        ];
+    }
+    let plugin = new Plugin_Plugin(tinymce.activeEditor, filter);
+    plugin.openDialog(function (file) {
+        callback(file.getUrl(), {
+            text: file.getName(),
+            title: file.getName()
+        });
+        return true;
+    }, 'select');
+}
+function imagesUploadHandler(blobInfo, success, failure) {
+    ApiClient_ApiClient
+        .upload(blobInfo)
+        .then((file) => {
+        success(file.getUrl());
+    })
+        .catch((error) => {
+        failure(error);
+    });
+}
+;
 
 
 /***/ })
 /******/ ]);
+});

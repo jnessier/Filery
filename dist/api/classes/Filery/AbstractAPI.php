@@ -11,13 +11,43 @@ abstract class AbstractAPI
      * API configuration
      * @var array
      */
-    protected $config = [];
+    protected $config = [
+        'base' => [
+            'path' => 'absolute/path/to/storage',
+            'url' => 'http://domain.tld/storage',
+        ],
+        'showHiddenFiles' => false,
+        'accessControl' => [
+            'allowedOrigin' => '*',
+            'allowedMethods' => 'GET, POST, DELETE, PUT, OPTIONS'
+        ],
+        'fileTypes' => [
+            'code' => ['java', 'php', 'html', 'js', 'css', 'htm', 'cpp', 'ts', 'xml', 'json', 'bat'],
+            'audio' => ['mp3', 'wav', 'ogg', 'wma'],
+            'image' => ['gif', 'bmp', 'jpg', 'jpeg', 'png'],
+            'text' => ['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt', 'rtf', 'csv', 'pdf'],
+            'video' => ['mp4', 'wma', 'qt', 'mov'],
+            'zip' => ['zip', 'rar', 'tar', '7z'],
+        ],
+        'upload' => [
+            'overwrite' => false,
+            'maxFileSize' => 2000000,
+            'allowedFileExtensions' => [
+                'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt', 'rtf', 'csv', 'pdf',
+                'mp3', 'wav', 'ogg', 'wma',
+                'gif', 'bmp', 'jpg', 'jpeg', 'png',
+                'mp4', 'wma', 'qt', 'mov',
+                'zip', 'rar', 'tar', '7z',
+            ]
+        ],
+        'tokenCallback' => false
+    ];
 
     /**
      * Registered API actions
      * @var array
      */
-    protected $actions = [];
+    protected $actions = [ ];
 
     /**
      * AbstractAPI constructor.
@@ -25,7 +55,13 @@ abstract class AbstractAPI
      */
     public function __construct($config)
     {
-        $this->config = $config;
+        $this->config['upload']['maxFileSize'] = return_bytes(ini_get('upload_max_filesize'));
+
+        $customConfig = [];
+        if (isset($_SERVER['X-FILERY-TOKEN']) && is_callable($this->config['tokenCallback'])) {
+            $customConfig = call_user_func($this->config['tokenCallback'], $_SERVER['X-FILERY-TOKEN']);
+        }
+        $this->config = array_replace_recursive($this->config, $config, $customConfig);
     }
 
 
