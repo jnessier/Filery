@@ -3,29 +3,24 @@
 <head>
     <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
     <script>
-
         tinymce.init({
             selector: 'textarea',
-            menubar: false,
             plugins: [
                 'link image media filery',
             ],
+            contextmenu: 'image link filery',
+            language_url: 'http://filery.local/static/langs/de.js',
             height: '500px',
             toolbar: 'filery | insert',
-            filery: {
-                api: {
-                    url: 'http://filery.local/api/index.php',
-                }
-            },
+            filery_api_url: 'http://filery.local/api/index.php',
             file_picker_types: 'file image media',
             file_picker_callback: function (callback, value, meta) {
-                tinymce.settings.filery.filePickerCallback(callback, value, meta);
+                Filery.filePickerCallback(callback, value, meta);
             },
             images_upload_handler: function (blobInfo, success, failure) {
-                tinymce.settings.filery.imagesUploadHandler(blobInfo, success, failure);
+                Filery.imagesUploadHandler(blobInfo, success, failure);
             }
-        })
-        ;
+        });
     </script>
     <script src="../src/langs/de.js"></script>
 </head>

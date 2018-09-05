@@ -6,6 +6,37 @@
     overflow: hidden;
     padding: 0 10px 0 0;
   }
+
+  .filery-contextmenu {
+    min-width: 120px;
+    box-shadow: 0 4px 5px 3px rgba(0, 0, 0, 0.2);
+    display: none;
+    background: #fff;
+    position: fixed;
+    transition: 0.2s display ease-in;
+
+    &.show {
+      display: block;
+    }
+  }
+}
+
+.filery-contextmenu {
+  ul {
+    list-style: none;
+    padding: 5px;
+    margin: 0 !important;
+
+    li {
+      font-weight: 500;
+      padding: 5px 5px;
+      cursor: pointer;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
 }
 
 .filery-container {

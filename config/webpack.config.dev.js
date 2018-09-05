@@ -6,6 +6,10 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.js']
     },
+    output: {
+        library: 'Filery',
+        libraryTarget: 'umd',
+    },
     /*devServer: {
         host: "filery.local",
         port: 8080,

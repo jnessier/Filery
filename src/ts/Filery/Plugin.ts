@@ -1,6 +1,7 @@
 import {ApiClient} from './ApiClient';
 import {Control} from './UI/Control';
 import {Container} from './UI/Container';
+import {ContextMenu} from './UI/ContextMenu';
 
 declare var tinymce: any;
 
@@ -26,10 +27,12 @@ export class Plugin {
     }
 
     private insertType = 'select';
+    private insertCallback: any;
 
     public openDialog(insertCallback: any, insertType: any) {
 
         this.insertType = insertType;
+        this.insertCallback = insertCallback;
 
         this.editor.windowManager.open({
             title: 'File manager',
@@ -45,7 +48,7 @@ export class Plugin {
                 visible: (insertType === 'select'),
                 onClick: (e) => {
                     e.preventDefault();
-                    this.insertFile(insertCallback, 'select');
+                    this.insertFile('select');
                 },
                 onPostRender: (e) => {
                     this.buttons.select = e.target;
@@ -57,7 +60,7 @@ export class Plugin {
                 visible: false,
                 onClick: (e) => {
                     e.preventDefault();
-                    this.insertFile(insertCallback, 'image');
+                    this.insertFile('image');
                 },
                 onPostRender: (e) => {
                     this.buttons.image = e.target;
@@ -70,7 +73,7 @@ export class Plugin {
                 visible: (insertType === 'insert'),
                 onClick: (e) => {
                     e.preventDefault();
-                    this.insertFile(insertCallback, 'link');
+                    this.insertFile('link');
                 },
                 onPostRender: (e) => {
                     this.buttons.link = e.target;
@@ -133,13 +136,13 @@ export class Plugin {
         return this;
     }
 
-    public insertFile(callback: any, type: string): this {
+    public insertFile(type: string): this {
 
         if (this.selectedItem) {
 
             let file = this.selectedItem.getFile();
 
-            if (callback(file, type)) {
+            if (this.insertCallback(file, type)) {
                 this.editor.windowManager.close(window);
 
                 let text = tinymce.i18n.translate(['"{0}" as link successfully inserted.', file.getName()]);
@@ -230,12 +233,34 @@ export class Plugin {
                     });
                 }
 
-                let container = new Container(files);
+                let contextmenu = new ContextMenu(this.insertType);
+
+                contextmenu
+                    .setCallback('delete', (item) => {
+                        this.selectedItem = item;
+                        this.deleteFile();
+                    })
+                    .setCallback('select', (item) => {
+                        this.selectedItem = item;
+                        this.insertFile('select');
+                    })
+                    .setCallback('link', (item) => {
+                        this.selectedItem = item;
+                        this.insertFile('link');
+                    })
+                    .setCallback('image', (item) => {
+                        this.selectedItem = item;
+                        this.insertFile('image');
+                    });
+
+
+                let container = new Container(files, contextmenu);
 
                 Control
                     .createBySelector('#filery-dialog-body')[0]
                     .html('')
-                    .append(container);
+                    .append(container)
+                    .append(contextmenu);
 
                 container
                     .selectListener((item) => {

@@ -11,6 +11,8 @@ module.exports = {
         "plugin.min": "./src/ts/index.ts"
     },
     output: {
+        library: 'Filery',
+        libraryTarget: 'umd',
         path: path.join(__dirname, "../dist", pluginName),
         filename: "[name].js"
     },

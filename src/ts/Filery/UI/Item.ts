@@ -3,6 +3,8 @@ import {File} from '../Model/File';
 import {FileThumbnail} from './FileThumbnail';
 import {FileTitle} from './FileTitle';
 
+declare var tinymce: any;
+
 export class Item extends Control {
 
     protected file: File;
@@ -26,6 +28,7 @@ export class Item extends Control {
             .append(new FileTitle(file));
 
         this.append(itemBody);
+
     }
 
     public select() {

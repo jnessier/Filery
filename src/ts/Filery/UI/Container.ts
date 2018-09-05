@@ -1,13 +1,14 @@
 import {Control} from './Control';
 import {Item} from './Item';
 import {File} from '../Model/File';
+import {ContextMenu} from './ContextMenu';
 
 export class Container extends Control {
     protected items = [];
 
     protected selectedIndex: number;
 
-    constructor(files: Array<File> = []) {
+    constructor(files: Array<File> = [], contextMenu: ContextMenu) {
         super();
 
         this.element = Control.createElement('div', {
@@ -28,7 +29,21 @@ export class Container extends Control {
                     this.selectedIndex = index;
                     item.toggleSelect();
 
+                })
+                .on('contextmenu', (e) => {
+                    e.preventDefault();
+
+                    let dialogRect = document.querySelector('#filery-dialog').getBoundingClientRect();
+
+                    contextMenu
+                        .setPosition(e.pageY - dialogRect.top + 5, e.pageX - dialogRect.left + 5)
+                        .setItem(item)
+                        .show();
                 });
+
+            window.addEventListener('click', (e) => {
+                contextMenu.hide();
+            });
 
             this.items.push(item);
 

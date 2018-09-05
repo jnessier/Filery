@@ -1,11 +1,11 @@
 export class File {
 
-    protected url: string;
-    protected name: string;
-    protected size: number;
-    protected time: number;
-    protected extension: string;
-    protected type: string;
+    private readonly url: string;
+    private readonly name: string;
+    private readonly size: number;
+    private readonly time: number;
+    private readonly extension: string;
+    private readonly type: string;
 
     constructor(url: string, name: string, size: any, time: any, extension: string, type: string) {
         this.url = url;

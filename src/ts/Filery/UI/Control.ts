@@ -136,19 +136,19 @@ export class Control {
         return this;
     }
 
-    public on(type: string, listener: any): this {
-        this.element.addEventListener(type, listener);
+    public on(type: string, listener: any, options?: any): this {
+        this.element.addEventListener(type, listener, options);
         this.events[type] = listener;
 
         return this;
     }
 
-    public once(type: string, listener: any): this {
-        this.on(type, listener);
+    public once(type: string, listener: any, options?: any): this {
+        this.on(type, listener, options);
 
         this.trigger(type, (e) => {
             this.off(type);
-        })
+        });
 
         return this;
     }
