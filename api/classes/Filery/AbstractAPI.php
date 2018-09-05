@@ -33,11 +33,33 @@ abstract class AbstractAPI
             'overwrite' => false,
             'maxFileSize' => 2000000,
             'allowedFileExtensions' => [
-                'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt', 'rtf', 'csv', 'pdf',
-                'mp3', 'wav', 'ogg', 'wma',
-                'gif', 'bmp', 'jpg', 'jpeg', 'png',
-                'mp4', 'wma', 'qt', 'mov',
-                'zip', 'rar', 'tar', '7z',
+                'doc',
+                'docx',
+                'xls',
+                'xlsx',
+                'ppt',
+                'pptx',
+                'txt',
+                'rtf',
+                'csv',
+                'pdf',
+                'mp3',
+                'wav',
+                'ogg',
+                'wma',
+                'gif',
+                'bmp',
+                'jpg',
+                'jpeg',
+                'png',
+                'mp4',
+                'wma',
+                'qt',
+                'mov',
+                'zip',
+                'rar',
+                'tar',
+                '7z',
             ]
         ],
         'tokenCallback' => false
@@ -47,7 +69,7 @@ abstract class AbstractAPI
      * Registered API actions
      * @var array
      */
-    protected $actions = [ ];
+    protected $actions = [];
 
     /**
      * AbstractAPI constructor.
@@ -57,11 +79,7 @@ abstract class AbstractAPI
     {
         $this->config['upload']['maxFileSize'] = return_bytes(ini_get('upload_max_filesize'));
 
-        $customConfig = [];
-        if (isset($_SERVER['X-FILERY-TOKEN']) && is_callable($this->config['tokenCallback'])) {
-            $customConfig = call_user_func($this->config['tokenCallback'], $_SERVER['X-FILERY-TOKEN']);
-        }
-        $this->config = array_replace_recursive($this->config, $config, $customConfig);
+        $this->config = array_replace_recursive($this->config, $config);
     }
 
 
@@ -87,6 +105,11 @@ abstract class AbstractAPI
     {
         try {
             $this->cors();
+
+            if (isset($_SERVER['HTTP_X_FILERY_TOKEN']) && is_callable($this->config['tokenCallback'])) {
+                $customConfig = call_user_func($this->config['tokenCallback'], $_SERVER['HTTP_X_FILERY_TOKEN']);
+                $this->config = array_replace_recursive($this->config, $customConfig);
+            }
 
             if (!is_readable($this->config['base']['path'])) {
                 throw new Exception('Base path does not exist or is not readable.');

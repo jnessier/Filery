@@ -26,6 +26,7 @@ export class ApiClient {
     static async read(dir?: string) {
         return await request
             .get(this.url)
+            .set('X-Filery-Token', tinymce.settings.filery_api_token)
             .query({
                 'dir': dir,
             })
@@ -50,6 +51,7 @@ export class ApiClient {
 
         return await request
             .post(this.url)
+            .set('X-Filery-Token', tinymce.settings.filery_api_token)
             .query({
                 'dir': dir,
             })
@@ -63,6 +65,7 @@ export class ApiClient {
     static async delete(file: File, dir?: string) {
         return await request
             .delete(this.url)
+            .set('X-Filery-Token', tinymce.settings.filery_api_token)
             .query({
                 'dir': dir,
                 'fileName': file.getName(),
