@@ -25,14 +25,22 @@ export class FileButtons extends Control {
         let menu = Control.createByTag('ul');
 
         if (this.config.type === 'select') {
-            menu.append(Control.createByTag('li')
+            menu.append(Control
+                .createByTag('li', {
+                    className: 'select'
+                })
+                .setAttribute('title', tinymce.i18n.translate('Select'))
                 .text(tinymce.i18n.translate('Select'))
                 .on('click', (e) => {
                     e.preventDefault();
                     this.insertFile('select');
                 }));
         } else {
-            menu.append(Control.createByTag('li')
+            menu.append(Control
+                .createByTag('li', {
+                    className: 'link'
+                })
+                .setAttribute('title', tinymce.i18n.translate('Insert link'))
                 .text(tinymce.i18n.translate('Insert link'))
                 .on('click', (e) => {
                     e.preventDefault();
@@ -40,7 +48,12 @@ export class FileButtons extends Control {
                 }));
 
             if (this.file.getType() === 'image') {
-                menu.append(Control.createByTag('li')
+                menu.append(Control
+                    .createByTag('li', {
+                        className: 'image'
+                    })
+
+                    .setAttribute('title', tinymce.i18n.translate('Insert image'))
                     .text(tinymce.i18n.translate('Insert image'))
                     .on('click', (e) => {
                         e.preventDefault();
@@ -50,8 +63,12 @@ export class FileButtons extends Control {
         }
 
         menu
-            .append(Control.createByTag('li')
-                .text(tinymce.i18n.translate('Delete'))
+            .append(Control
+                .createByTag('li', {
+                    className: 'delete'
+                })
+                .setAttribute('title', tinymce.i18n.translate('Delete'))
+                .prepend('<i class="mce-ico mce-i-remove"></i>')
                 .on('click', (e) => {
                     e.preventDefault();
                     this.deleteFile();
@@ -109,40 +126,38 @@ export class FileButtons extends Control {
                 ApiClient
                     .delete(this.file)
                     .then(() => {
-                        this.element.parentElement.remove();
-                        /*this.fadeOut(() => {
 
-                            this.deselect();
-                            this.loadDialogContent();
-                            this.editor.windowManager.alert(tinymce.i18n.translate(['"{0}" successfully deleted.', file.getName()]));
-*/
-                        /*this.editor.windowManager.confirm(tinymce.i18n.translate(['"{0}" successfully deleted. Do you want to remove the content with reference to the deleted file?', file.getName()]), (state) => {
-                            if (state) {
-                                Control
-                                    .createBySelector('img', this.editor.getBody())
-                                    .forEach((img) => {
-                                        if (img.getAttribute('src').endsWith(file.getName())) {
-                                            img.remove();
-                                        }
-                                    });
+                        this.getParent().fadeOut(() => {
 
-                                Control
-                                    .createBySelector('a', this.editor.getBody())
-                                    .forEach((a) => {
-                                        if (a.getAttribute('href').endsWith(file.getName())) {
-                                            a.unwrap();
-                                        }
-                                    });
-                            }
-                        });*/
-                        /* }, 30);*/
+                            this.config.editor.windowManager.alert(tinymce.i18n.translate(['"{0}" successfully deleted.', this.file.getName()]));
+
+                            /*this.editor.windowManager.confirm(tinymce.i18n.translate(['"{0}" successfully deleted. Do you want to remove the content with reference to the deleted file?', file.getName()]), (state) => {
+                                if (state) {
+                                    Control
+                                        .createBySelector('img', this.editor.getBody())
+                                        .forEach((img) => {
+                                            if (img.getAttribute('src').endsWith(file.getName())) {
+                                                img.remove();
+                                            }
+                                        });
+
+                                    Control
+                                        .createBySelector('a', this.editor.getBody())
+                                        .forEach((a) => {
+                                            if (a.getAttribute('href').endsWith(file.getName())) {
+                                                a.unwrap();
+                                            }
+                                        });
+                                }
+                            });*/
+                        }, 30);
 
                     })
                     .catch((error) => {
                         this.config.editor.windowManager.alert(tinymce.i18n.translate(['Delete failed: {0}', error]));
                     });
             } else {
-                //  this.selectedItem.unselect();
+                //this.removeClass('selected');
             }
 
         });

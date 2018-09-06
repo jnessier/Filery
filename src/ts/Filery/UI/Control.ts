@@ -18,7 +18,40 @@ export class Control {
         return control;
     }
 
-    public static createBySelector(query: string, target = document): Array<Control> {
+    public find(query: string): Array<Control> {
+        return Control.createBySelector(query, this.element);
+    }
+
+    public getParent(): Control {
+        if (this.element.parentElement) {
+            return Control.createByElement(this.element.parentElement);
+        }
+        return null;
+    }
+
+    public getChildren(): Array<Control> {
+        let controls = new Array<Control>();
+
+        Array.from(this.element.children).forEach((element) => {
+            controls.push(Control.createByElement(element as HTMLElement));
+        });
+
+        return controls;
+    }
+
+    public getSiblings(): Array<Control> {
+        let controls = new Array<Control>();
+
+        var element = this.element.parentElement.firstChild;
+        for (; element; element = element.nextSibling) {
+            if (element.nodeType !== 1 || element === this.element) continue;
+            controls.push(Control.createByElement(element as HTMLElement));
+        }
+        return controls;
+    };
+
+
+    public static createBySelector(query: string, target: any): Array<Control> {
         let controls = new Array<Control>();
 
         target.querySelectorAll(query).forEach((element) => {

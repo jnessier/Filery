@@ -85,7 +85,7 @@ export class Plugin {
                     });
                 }
                 Control
-                    .createBySelector('#filery-dialog-body')[0]
+                    .createBySelector('#filery-dialog-body', document)[0]
                     .html('')
                     .append(new Container(files, this.config));
 

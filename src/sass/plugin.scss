@@ -7,36 +7,6 @@
     padding: 0 10px 0 0;
   }
 
-  .filery-contextmenu {
-    min-width: 120px;
-    box-shadow: 0 4px 5px 3px rgba(0, 0, 0, 0.2);
-    display: none;
-    background: #fff;
-    position: fixed;
-    transition: 0.2s display ease-in;
-
-    &.show {
-      display: block;
-    }
-  }
-}
-
-.filery-contextmenu {
-  ul {
-    list-style: none;
-    padding: 5px;
-    margin: 0 !important;
-
-    li {
-      font-weight: 500;
-      padding: 5px 5px;
-      cursor: pointer;
-
-      &:hover {
-        background: rgba(0, 0, 0, 0.2);
-      }
-    }
-  }
 }
 
 .filery-container {
@@ -45,6 +15,7 @@
     padding: 2px;
     float: left;
     display: block;
+    position: relative;
   }
 }
 
@@ -57,6 +28,19 @@
         background: #f0f6fd;
       }
     }
+
+    .file-buttons {
+      transition: all .3s ease;
+      display: block;
+    }
+
+    .file-title {
+      .file-title-name {
+        transition: all .3s ease;
+        margin: 20px 0 0 0;
+      }
+    }
+
   }
 
   .filery-item-body {
@@ -74,6 +58,56 @@
     cursor: pointer;
     border: 3px solid transparent;
     transition: all .3s ease;
+  }
+
+  .file-buttons {
+    transition: all .3s ease;
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    display: none;
+
+    ul {
+      list-style: none;
+      padding: 5px;
+      margin: 0 !important;
+
+      li {
+        padding: 3px 5px;
+        margin: 0 0 0 2px;
+        cursor: pointer;
+        display: inline-block;
+        background: #2276d2;
+        color: #fff;
+        font-size: 11px;
+        line-height: 16px;
+        height: 16px;
+
+        &:hover {
+          background: #1e6abc;
+        }
+
+        .mce-ico {
+          height: 16px;
+          width: 16px;
+          font-size: 16px;
+          line-height: 13px;
+          text-align: center;
+          color: #fff;
+        }
+
+        &.delete {
+          background: #fff;
+          color: #595959;
+          border: 1px solid #b3b3b3;
+          padding: 2px 2px;
+
+          .mce-ico {
+            color: #595959;
+          }
+        }
+      }
+    }
   }
 
   .file-thumbnail {
@@ -127,6 +161,7 @@
     padding: 5px;
 
     .file-title-name {
+      transition: all .3s ease;
       font-weight: bold;
       height: 20px;
       margin: 25px 0 0 0;

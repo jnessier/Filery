@@ -18,16 +18,22 @@ export class Item extends Control {
             className: 'filery-item'
         });
 
-        this
-            .setAttribute('title', file.getName())
-            .on('click', (e) => {
-                e.preventDefault();
-                this.toggleSelect();
-            });
+        this.setAttribute('title', file.getName());
 
         let itemBody = Control
             .createByTag('div', {
                 className: 'filery-item-body'
+            })
+            .on('click', (e) => {
+                e.preventDefault();
+                this.getSiblings().forEach((item) => {
+                    item.removeClass('selected');
+                })
+                if (this.hasClass('selected')) {
+                    this.removeClass('selected')
+                } else {
+                    this.addClass('selected');
+                }
             })
             .append(new FileThumbnail(file))
             .append(new FileTitle(file));
@@ -36,22 +42,6 @@ export class Item extends Control {
             .append(itemBody)
             .append(new FileButtons(file, config));
 
-    }
-
-    public select() {
-        this.addClass('selected');
-    }
-
-    public deselect() {
-        this.removeClass('selected');
-    }
-
-    public toggleSelect() {
-        if (this.hasClass('selected')) {
-            this.deselect();
-        } else {
-            this.select();
-        }
     }
 
 
