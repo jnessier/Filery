@@ -2,14 +2,14 @@ import {Control} from './Control';
 import {File} from '../Model/File';
 import {FileThumbnail} from './FileThumbnail';
 import {FileTitle} from './FileTitle';
-
-declare var tinymce: any;
+import {FileButtons} from './FileButtons';
+import {PluginConfig} from '../Plugin';
 
 export class Item extends Control {
 
     protected file: File;
 
-    constructor(file: File) {
+    constructor(file: File, config: PluginConfig) {
         super();
 
         this.file = file;
@@ -18,7 +18,12 @@ export class Item extends Control {
             className: 'filery-item'
         });
 
-        this.setAttribute('title', file.getName());
+        this
+            .setAttribute('title', file.getName())
+            .on('click', (e) => {
+                e.preventDefault();
+                this.toggleSelect();
+            });
 
         let itemBody = Control
             .createByTag('div', {
@@ -27,20 +32,18 @@ export class Item extends Control {
             .append(new FileThumbnail(file))
             .append(new FileTitle(file));
 
-        this.append(itemBody);
+        this
+            .append(itemBody)
+            .append(new FileButtons(file, config));
 
     }
 
     public select() {
-        this
-            .addClass('selected')
-            .trigger('selected', [this]);
+        this.addClass('selected');
     }
 
     public deselect() {
-        this
-            .removeClass('selected')
-            .trigger('deselected', [this]);
+        this.removeClass('selected');
     }
 
     public toggleSelect() {
@@ -51,8 +54,5 @@ export class Item extends Control {
         }
     }
 
-    public getFile(): File {
-        return this.file;
-    }
 
 }

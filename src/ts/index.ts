@@ -1,7 +1,7 @@
-import plugin from './plugin';
-import {Plugin} from './Filery/Plugin';
-import {File} from './Filery/Model/File';
+import {Plugin, PluginConfig} from './Filery/Plugin';
 import {ApiClient} from './Filery/ApiClient';
+import plugin from './plugin';
+import {File} from './Filery/Model/File';
 
 declare var tinymce: any;
 
@@ -20,18 +20,24 @@ export function filePickerCallback(callback, value, meta) {
         ];
     }
 
-    let plugin = new Plugin(tinymce.activeEditor, filter);
-    plugin.openDialog(function (file: File) {
-        callback(file.getUrl(), {
-            text: file.getName(),
-            title: file.getName()
-        });
-        return true;
-    }, 'select');
+    let config: PluginConfig = {
+        filter: filter,
+        callback: (file) => {
+            callback(file.getUrl(), {
+                text: file.getName(),
+                title: file.getName()
+            });
+            return true;
+        },
+        type: 'select',
+        editor: tinymce.activeEditor
+    };
+
+    let plugin = new Plugin(config);
+    plugin.openDialog();
 }
 
 export function imagesUploadHandler(blobInfo, success, failure) {
-
     ApiClient
         .upload(blobInfo)
         .then((file) => {

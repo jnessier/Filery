@@ -1,11 +1,8 @@
-import {Plugin} from './Filery/Plugin';
+import {Plugin, PluginConfig} from './Filery/Plugin';
 import {ApiClient} from './Filery/ApiClient';
+import '../sass/plugin.scss';
 
 declare var tinymce: any;
-
-import '../sass/plugin.scss';
-import {File} from './Filery/Model/File';
-
 
 export default function (editor: any, url: string) {
 
@@ -18,16 +15,23 @@ export default function (editor: any, url: string) {
         title: 'File manager',
         onClick: function () {
 
-            let plugin = new Plugin(editor, []);
+            let config: PluginConfig = {
+                filter: [],
+                callback: (file, insertType) => {
+                    if (insertType === 'image') {
+                        editor.insertContent('<img src="' + file.getUrl() + '" title="' + file.getName() + '" />');
+                    } else {
+                        let content = editor.selection.getContent();
+                        editor.insertContent('<a href="' + file.getUrl() + '" title="' + file.getName() + '">' + (content ? content : file.getName()) + '</a>');
+                    }
+                    return true;
+                },
+                type: 'insert',
+                editor: editor
+            };
 
-            plugin.openDialog((file, insertType) => {
-                if (insertType === 'image') {
-                    editor.insertContent('<img src="' + file.getUrl() + '" title="' + file.getName() + '" />');
-                } else {
-                    editor.insertContent('<a href="' + file.getUrl() + '" title="' + file.getName() + '">' + file.getName() + '</a>');
-                }
-                return true;
-            }, 'insert');
+            let plugin = new Plugin(config);
+            plugin.openDialog();
         }
     });
 
