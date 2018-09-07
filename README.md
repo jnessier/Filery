@@ -36,7 +36,7 @@ Filery will not work with an API and needs to be configured.
 |Parameter|Description|
 |---|---|
 |`filery_api_url`|Defines the URL to the plugin API. The API is the most important part of the plugin and is handling all CRUD actions for the file management.|
-|`filery_api_token`|Is a token which can be send to the API for custom API configurations.<br />**Optional** - Default value: false|
+|`filery_api_token`|Is a token which will be send as X-FILERY-TOKEN header to the API for a custom API configuration handling (e.g. when your using different configurations per TinyMCE instance).<br />**Optional** - Default value: false|
 |`filery_dialog_height`|Can be used to customize the dialog height.<br />**Optional** - Default value: 400px|
 
 ````
@@ -44,7 +44,7 @@ tinymce.init({
   ...
   filery_api_url: 'http://domain.tld/filery/api/index.php',
   filery_api_token: false,
-  filery_dialog_height: '333px',
+  filery_dialog_height: '400px',
   ...
 });
 ````
