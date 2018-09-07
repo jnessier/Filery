@@ -1,5 +1,5 @@
 # Filery
-A file manager plugin for TinyMCE.
+<span style="font-size:larger;">A file manager plugin for TinyMCE.</span>
 
 ![A file manager plugin for TinyMCE](https://raw.githubusercontent.com/Neoflow/Filery/master/static/example.png "A file manager plugin for TinyMCE.")
 
