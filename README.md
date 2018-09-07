@@ -1,10 +1,9 @@
 ![A file manager plugin for TinyMCE](https://raw.githubusercontent.com/Neoflow/Filery/master/static/example.png "A file manager plugin for TinyMCE.")
 
 # About
-Filery is a file manager plugin for TinyMCE. The plugin provides a dialog as port of TinyMCE, where you
-can manage and upload files for your content.
+Filery is a file manager plugin for TinyMCE. The plugin provides a dialog as a part of TinyMCE, where you can manage and upload files for your content.
 
-The TinyMCE plugin is open-source and licensed under MIT. You can also try the plugin in the [demo](https://demos.neoflow.ch/filery/) online.
+Feel free to try the [demo](https://demos.neoflow.ch/filery/) online.
 
 **Table of Contents**
 * [Requirements](#requirements)
