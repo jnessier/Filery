@@ -1,7 +1,19 @@
 # Filery
 A file manager plugin for TinyMCE.
 
-[index]
+## Table of Contents
+* [Important questions](#important-questions)
+    + [What does the plugin do?](#what-does-the-plugin-do-)
+    + [How much does the plugin cost?](#how-much-does-the-plugin-cost-)
+* [Installation](#installation)
+    + [1. TinyMCE plugin](#1-tinymce-plugin)
+        - [Installation](#installation-1)
+        - [Configuration](#configuration)
+    + [2. Plugin API](#2-plugin-api)
+        - [Installation](#installation-2)
+        - [Configuration](#configuration-1)
+        - [Advanced configuration](#advanced-configuration)
+* [License](#license)
 
 ## Important questions
 ### What does the plugin do?
