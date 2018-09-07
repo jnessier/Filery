@@ -11,8 +11,8 @@ Nothing, nada, nichts. The plugin is 100% free and licensed under MIT.
 
 ## Installation
 The installation is done in two steps:
-1. Installation of the TinyMCE plugin
-2. Installation of the plugin API
+1. [Installation of the TinyMCE plugin](#1-tinymce-plugin)
+2. [Installation of the plugin API](#2-plugin-api)
 
 But first you have to download and unzip the latest version.
 
