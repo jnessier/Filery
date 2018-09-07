@@ -18,20 +18,18 @@ But first you have to download and unzip the latest version.
 
 ### 1. TinyMCE plugin
 #### Installation
-Move the folder "filery" to the plugins folder of your TinyMCE 
-installation and add `filery` to the list of plugins and toolbar items
-of your TinyMCE configuration. 
+Move the folder "filery" to the plugins folder of your TinyMCE installation and add `filery` to the list of plugins and toolbar items of your TinyMCE configuration. 
 
-````
+```js
 tinymce.init({
   selector: "textarea",
   plugins: "filery",
   toolbar: "filery"
 });
-````
+```
 
 ### Configuration
-Filery will not work with an API and needs to be configured.
+Filery will not work without an API, which needs to be configured.
 
 |Parameter|Description|
 |---|---|
@@ -39,7 +37,7 @@ Filery will not work with an API and needs to be configured.
 |`filery_api_token`|A token for a custom API configuration handling (e.g. when you want to use different API configurations per TinyMCE instance). The token will be send as X-FILERY-TOKEN header to the API.<br />**Optional** - Default value: false|
 |`filery_dialog_height`|Can be used to customize the dialog height.<br />**Optional** - Default value: 400px|
 
-````
+```js
 tinymce.init({
   ...
   filery_api_url: 'http://domain.tld/filery/api/index.php',
@@ -47,12 +45,32 @@ tinymce.init({
   filery_dialog_height: '400px',
   ...
 });
-````
+```
 
 ### 2. Plugin API
 #### Installation
-Move the folder "api" to a destination of your webserver, which supports PHP 5.6 or newer.
+Move the folder "api" to a HTTP-accessible destination of your server and rename the config file from "config-new.php" to "config.php".
 
 #### Configuration
-.... to be defined.
+The API needs to know where get the files from, which can be configured too.
 
+|Parameter|Description|
+|---|---|
+|`base.path`|The path to the directory where the files for the API are located.|
+|`base.url`|The URL of the the directory, where the files are accessible over HTTP.|
+|`tokenCallback`|A callback function for the token handling. Can be used to return custom config parameters. The return value must be an key-value array.|
+
+```php
+<?php 
+return [
+    'base' => [
+        'path' => 'absolute/path/to/storage',
+        'url' => 'http://domain.tld/storage',
+    ],
+    'tokenCallback' => function ($token) {
+        // E.g. return decodeFileryToken($token);
+        // or return $_SESSION[$token];
+        return [];
+    }
+];
+```
