@@ -6,7 +6,6 @@ use Filery\API;
 require_once 'functions/return_bytes.php';
 
 // Include classes
-require_once 'classes/Filery/FileFactory.php';
 require_once 'classes/Filery/AbstractAPI.php';
 require_once 'classes/Filery/API.php';
 require_once 'classes/Filery/HttpException.php';

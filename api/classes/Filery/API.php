@@ -2,19 +2,18 @@
 
 namespace Filery;
 
-
 use Exception;
 
 class API extends AbstractAPI
 {
-
-    protected $fileFactory;
-
+    /**
+     * AbstractAPI constructor.
+     *
+     * @param array $config API Configuration
+     */
     public function __construct(array $config)
     {
         parent::__construct($config);
-
-        $this->fileFactory = new FileFactory($this->config);
 
         $this
             ->register('GET', [], [$this, 'read'])
@@ -22,7 +21,11 @@ class API extends AbstractAPI
             ->register('POST', [], [$this, 'upload']);
     }
 
-
+    /**
+     * Read API action (get all files)
+     *
+     * @return array
+     */
     protected function read()
     {
         $data = [];
@@ -31,14 +34,21 @@ class API extends AbstractAPI
         foreach ($fileNames as $fileName) {
             $filePath = $this->config['base']['path'] . '/' . $fileName;
             if (is_file($filePath)) {
-                if ($this->config['showHiddenFiles'] || $fileName[0] !== '.') {
-                    $data[] = $this->fileFactory->create($filePath);
+                if ($this->config['showHiddenFiles'] || '.' !== $fileName[0]) {
+                    $data[] = $this->aggregateFileData($filePath);
                 }
             }
         }
+
         return $data;
     }
 
+    /**
+     * Delete API action (delete file by file name)
+     *
+     * @return array
+     * @throws Exception
+     */
     protected function delete()
     {
         $fileName = $_GET['fileName'];
@@ -52,7 +62,14 @@ class API extends AbstractAPI
         throw new Exception('File does not exist or is not deletable.');
     }
 
-    protected function upload($input)
+    /**
+     * Upload API action (upload file)
+     *
+     * @return array
+     * @throws Exception
+     * @throws HttpException
+     */
+    protected function upload()
     {
         $fileData = $_FILES['file'];
 
@@ -60,6 +77,7 @@ class API extends AbstractAPI
         $filePath = $this->config['base']['path'] . '/' . $fileName;
         $fileExtension = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
 
+        // Check if file already exists
         if (file_exists($filePath) && !$this->config['upload']['overwrite']) {
             throw new HttpException(409, 'File already exists.');
         }
@@ -73,11 +91,8 @@ class API extends AbstractAPI
         }
 
         if (move_uploaded_file($fileData['tmp_name'], $filePath)) {
-            return $this->fileFactory->create($filePath);
+            return $this->aggregateFileData($filePath);
         }
         throw new Exception('File upload failed.');
-
     }
-
-
 }

@@ -8,7 +8,8 @@ use Throwable;
 abstract class AbstractAPI
 {
     /**
-     * API configuration
+     * API configuration.
+     *
      * @var array
      */
     protected $config = [
@@ -19,7 +20,7 @@ abstract class AbstractAPI
         'showHiddenFiles' => false,
         'accessControl' => [
             'allowedOrigin' => '*',
-            'allowedMethods' => 'GET, POST, DELETE, PUT, OPTIONS'
+            'allowedMethods' => 'GET, POST, DELETE, PUT, OPTIONS',
         ],
         'fileTypes' => [
             'code' => ['java', 'php', 'html', 'js', 'css', 'htm', 'cpp', 'ts', 'xml', 'json', 'bat'],
@@ -38,19 +39,21 @@ abstract class AbstractAPI
                 'gif', 'bmp', 'jpg', 'jpeg', 'png',
                 'mp4', 'wma', 'qt', 'mov',
                 'zip', 'rar', 'tar', '7z',
-            ]
+            ],
         ],
-        'tokenCallback' => false
+        'tokenCallback' => false,
     ];
 
     /**
-     * Registered API actions
+     * Registered API actions.
+     *
      * @var array
      */
     protected $actions = [];
 
     /**
      * AbstractAPI constructor.
+     *
      * @param array $config API Configuration
      */
     public function __construct($config)
@@ -60,12 +63,13 @@ abstract class AbstractAPI
         $this->config = array_replace_recursive($this->config, $config);
     }
 
-
     /**
-     * Register API actions
+     * Register API actions.
+     *
      * @param string $method POST, GET, DELETE or PUT
      * @param array $queryKeys Keys of query parameters
      * @param callable $callback Callback when API action get called
+     *
      * @return self
      */
     protected function register($method, $queryKeys, $callback)
@@ -97,35 +101,34 @@ abstract class AbstractAPI
         } catch (HttpException $ex) {
             http_response_code($ex->getCode());
             $output = [
-                'error' => $ex->getMessage()
+                'error' => $ex->getMessage(),
             ];
         } catch (Throwable $ex) {
             http_response_code(500);
             $output = [
-                'error' => $ex->getMessage()
+                'error' => $ex->getMessage(),
             ];
         } finally {
             header('Content-Type: application/json');
             echo json_encode($output);
             exit;
         }
-
-
     }
 
     /**
-     * CORS handling
+     * Cross-Origin Resource Sharing handling.
+     *
      * @see https://stackoverflow.com/a/9866124/2338829
      */
     protected function cors()
     {
-        header("Access-Control-Allow-Origin: " . $this->config['accessControl']['allowedOrigin']);
+        header('Access-Control-Allow-Origin: ' . $this->config['accessControl']['allowedOrigin']);
         header('Access-Control-Allow-Credentials: true');
         header('Access-Control-Max-Age: 86400');
 
-        if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+        if ('OPTIONS' == $_SERVER['REQUEST_METHOD']) {
             if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'])) {
-                header("Access-Control-Allow-Methods: " . $this->config['accessControl']['allowedMethods']);
+                header('Access-Control-Allow-Methods: ' . $this->config['accessControl']['allowedMethods']);
             }
 
             if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS'])) {
@@ -137,8 +140,10 @@ abstract class AbstractAPI
     }
 
     /**
-     * Call registered API action
+     * Call registered API action.
+     *
      * @return mixed
+     *
      * @throws HttpException
      */
     protected function call()
@@ -151,5 +156,40 @@ abstract class AbstractAPI
             }
         }
         throw new HttpException(404);
+    }
+
+    /**
+     * Aggregate file data
+     *
+     * @param string $path File path
+     *
+     * @return array
+     * @throws Exception
+     */
+    protected function aggregateFileData($path)
+    {
+        if (is_file($path)) {
+            $type = 'file';
+            $name = basename($path);
+            $extension = pathinfo($path, PATHINFO_EXTENSION);
+            $url = $this->config['base']['url'] . '/' . $name;
+
+            foreach ($this->config['fileTypes'] as $fileType => $extensions) {
+                if (in_array($extension, $extensions)) {
+                    $type = $fileType;
+                    break;
+                }
+            }
+
+            return [
+                'url' => $url,
+                'name' => $name,
+                'extension' => $extension,
+                'time' => filemtime($path),
+                'size' => filesize($path),
+                'type' => $type,
+            ];
+        }
+        throw new Exception('File path is not valid.');
     }
 }

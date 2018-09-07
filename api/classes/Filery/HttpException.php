@@ -7,7 +7,7 @@ use Exception;
 class HttpException extends Exception
 {
     /**
-     * List of HTTP status codes
+     * List of HTTP status codes.
      *
      * From http://en.wikipedia.org/wiki/List_of_HTTP_status_codes
      *
@@ -72,9 +72,11 @@ class HttpException extends Exception
     ];
 
     /**
-     * Constructor
+     * Constructor.
+     *
      * @param int $code HTTP status code
      * @param string $message Custom status message
+     *
      * @throws Exception
      */
     public function __construct($code = 500, $message = '')
@@ -83,11 +85,10 @@ class HttpException extends Exception
             throw new Exception('Status code of HTTP exception is invalid.');
         }
 
-        if ($message === '') {
+        if ('' === $message) {
             $message = $this->status[$code];
         }
 
         parent::__construct($message, $code);
     }
-
 }
