@@ -5,6 +5,7 @@ A file manager plugin for TinyMCE.
 * [Important questions](#important-questions)
     + [What does the plugin do?](#what-does-the-plugin-do-)
     + [How much does the plugin cost?](#how-much-does-the-plugin-cost-)
+    + [Is there a demo?](#is-there-a-demo-)
 * [Requirements](#requirements)
 * [Installation](#installation)
     + [1. TinyMCE plugin](#1-tinymce-plugin)
@@ -24,6 +25,9 @@ can manage and upload files of your content.
 
 ### How much does the plugin cost?
 Nothing, nada, nichts. The plugin is 100% free and licensed under MIT.
+
+### Is there a demo?
+For sure, here is the link to the [demo](https://demos.neoflow.ch/filery/).
 
 ## Requirements
 For Filery as TinyMCE plugin:

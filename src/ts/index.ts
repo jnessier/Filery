@@ -6,6 +6,8 @@ declare var tinymce: any;
 
 tinymce.PluginManager.add('filery', plugin);
 
+tinymce.PluginManager.requireLangPack('filery', 'en,de');
+
 export function filePickerCallback(callback, value, meta) {
     let filter = [];
     if (meta.filetype === 'image') {

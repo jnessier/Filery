@@ -6,8 +6,6 @@ declare var tinymce: any;
 
 export default function (editor: any, url: string) {
 
-    /* tinymce.DOM.loadCSS(url + '/plugin.min.css');*/
-
     ApiClient.setUrl(editor.settings.filery_api_url);
 
     editor.addButton('filery', {

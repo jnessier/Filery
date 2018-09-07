@@ -3516,6 +3516,7 @@ var sass_plugin = __webpack_require__(7);
 
 
 tinymce.PluginManager.add('filery', ts_plugin);
+tinymce.PluginManager.requireLangPack('filery', 'en,de');
 function filePickerCallback(callback, value, meta) {
     let filter = [];
     if (meta.filetype === 'image') {
