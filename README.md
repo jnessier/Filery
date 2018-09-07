@@ -14,6 +14,7 @@ A file manager plugin for TinyMCE.
         - [Installation](#installation-2)
         - [Configuration](#configuration-1)
         - [Advanced configuration](#advanced-configuration)
+* [Donation](#donation)
 * [License](#license)
 
 ## Important questions
@@ -38,7 +39,7 @@ The installation is done in two steps:
 1. [Installation of the TinyMCE plugin](#1-tinymce-plugin)
 2. [Installation of the plugin API](#2-plugin-api)
 
-But first you have to download and unzip the latest version.
+But first you have to download and unzip the [latest release](https://github.com/rjgamer/Filery/releases/latest)
 
 ### 1. TinyMCE plugin
 #### Installation
@@ -118,8 +119,13 @@ return [
 #### Advanced configuration
 There are more advanced configuration parameters for the API. If you really want to change it, then please take a look at the [AbstractAPI class on line 14](https://github.com/rjgamer/Filery/blob/master/api/classes/Filery/AbstractAPI.php#L14). 
 
-## License
-Filery as TinyMCE plugin open-source and licensed under MIT. 
+## Donation
+If you like my work or if you use it for a commercial project, please give me a donation. Thanks!
 
-*Made in Switzerland with :banana:... no I mean :heart:
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.me/JonathanNessier)
+
+## License
+Filery is an open-source plugin for TinyMCE and []licensed under MIT](https://github.com/rjgamer/Filery/blob/master/LICENSE).
+
+*Made in Switzerland with :banana:... I mean :heart:
 
