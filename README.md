@@ -1,13 +1,12 @@
-# Filery
-<span style="font-size:larger;">A file manager plugin for TinyMCE.</span>
-
 ![A file manager plugin for TinyMCE](https://raw.githubusercontent.com/Neoflow/Filery/master/static/example.png "A file manager plugin for TinyMCE.")
 
-## Table of Contents
-* [Important questions](#important-questions)
-    + [What does the plugin do?](#what-does-the-plugin-do)
-    + [How much does the plugin cost?](#how-much-does-the-plugin-cost)
-    + [Is there a demo?](#is-there-a-demo)
+# About
+Filery is a file manager plugin for TinyMCE. The plugin provides a dialog as port of TinyMCE, where you
+can manage and upload files for your content.
+
+The TinyMCE plugin is open-source and licensed under MIT. You can also try the plugin in the [demo](https://demos.neoflow.ch/filery/) online.
+
+**Table of Contents**
 * [Requirements](#requirements)
 * [Installation](#installation)
     + [1. TinyMCE plugin](#1-tinymce-plugin)
@@ -21,18 +20,7 @@
 * [Donation](#donation)
 * [License](#license)
 
-## Important questions
-### What does the plugin do?
-The plugin provides a file manager dialog for TinyMCE, where you
-can manage and upload files of your content. 
-
-### How much does the plugin cost?
-Nothing, nada, nichts. The plugin is 100% free and licensed under MIT.
-
-### Is there a demo?
-For sure, here is the link to the [demo](https://demos.neoflow.ch/filery/).
-
-## Requirements
+# Requirements
 For Filery as TinyMCE plugin:
 * TinyMCE 4.8.x or newer
 * Modern theme of TinyMCE
@@ -41,15 +29,15 @@ For the API of Filery:
 * PHP 5.6 or newer
 * Read and write access
 
-## Installation
+# Installation
 The installation is done in two steps:
 1. [Installation of the TinyMCE plugin](#1-tinymce-plugin)
 2. [Installation of the plugin API](#2-plugin-api)
 
 But first you have to download and unzip the [latest release](https://github.com/rjgamer/Filery/releases/latest)
 
-### 1. TinyMCE plugin
-#### Installation
+## 1. TinyMCE plugin
+### Installation
 Move the folder "filery" to the plugins folder of your TinyMCE installation and add `filery` to the list of plugins and toolbar items of your TinyMCE configuration. 
 
 ```js
@@ -60,7 +48,7 @@ tinymce.init({
 });
 ```
 
-#### Configuration
+### Configuration
 Filery will not work without an API, which needs to be configured.
 
 |Parameter|Description|
@@ -79,7 +67,7 @@ tinymce.init({
 });
 ```
 
-#### Advanced configuration
+### Advanced configuration
 Filery provides callbacks functions for the file picker and image upload, which must be to configured first.
 
 ```js
@@ -94,11 +82,11 @@ tinymce.init({
   // ...
 });
 ```
-### 2. Plugin API
-#### Installation
+## 2. Plugin API
+### Installation
 Move the folder "api" to a HTTP-accessible destination of your server and rename the config file from "config-new.php" to "config.php".
 
-#### Configuration
+### Configuration
 The API needs to know where get the files from, which can be configured too.
 
 |Parameter|Description|
@@ -123,15 +111,15 @@ return [
 ];
 ```
 
-#### Advanced configuration
+### Advanced configuration
 There are more advanced configuration parameters for the API. If you really want to change it, then please take a look at the [AbstractAPI class on line 14](https://github.com/rjgamer/Filery/blob/master/api/classes/Filery/AbstractAPI.php#L14). 
 
-## Donation
+# Donation
 If you like my work or if you use it for a commercial project, please give me a donation. Thanks!
 
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.me/JonathanNessier)
 
-## License
+# License
 Filery is an open-source plugin for TinyMCE and [licensed under MIT](https://github.com/rjgamer/Filery/blob/master/LICENSE).
 
 *Made in Switzerland with :banana:... I mean :heart:
