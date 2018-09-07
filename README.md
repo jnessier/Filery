@@ -49,10 +49,10 @@ tinymce.init({
 });
 ````
 
-## 2. Plugin API
-### Installation
+### 2. Plugin API
+#### Installation
 Move the folder "api" to a destination of your webserver, which supports PHP 5.6 or newer.
 
-### Configuration
+#### Configuration
 .... to be defined.
 
