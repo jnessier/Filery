@@ -75,3 +75,4 @@ return [
     }
 ];
 ```
+There are more advanced configuration parameters for the API. If you really want to change it, please check https://github.com/rjgamer/Filery/blob/master/api/classes/Filery/AbstractAPI.php#L14
