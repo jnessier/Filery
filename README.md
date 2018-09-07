@@ -61,7 +61,6 @@ The API needs to know where get the files from, which can be configured too.
 |`tokenCallback`|A callback function for the token handling. Can be used to return custom config parameters. The return value must be an key-value array.|
 
 ```php
-<?php 
 return [
     'base' => [
         'path' => 'absolute/path/to/storage',
