@@ -16,7 +16,7 @@ The installation is done in two steps:
 
 But first you have to download and unzip the latest version.
 
-### TinyMCE plugin
+### 1. TinyMCE plugin
 #### Installation
 Move the folder "filery" to the plugins folder of your TinyMCE 
 installation and add `filery` to the list of plugins and toolbar items
@@ -48,3 +48,11 @@ tinymce.init({
   ...
 });
 ````
+
+## 2. Plugin API
+### Installation
+Move the folder "api" to a destination of your webserver, which supports PHP 5.6 or newer.
+
+### Configuration
+.... to be defined.
+
