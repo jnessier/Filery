@@ -39,11 +39,11 @@ Filery will not work without an API, which needs to be configured.
 
 ```js
 tinymce.init({
-  ...
+  // ...
   filery_api_url: 'http://domain.tld/filery/api/index.php',
   filery_api_token: false,
   filery_dialog_height: '400px',
-  ...
+  // ...
 });
 ```
 
