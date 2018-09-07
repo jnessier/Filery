@@ -80,8 +80,7 @@ return [
 There are more advanced configuration parameters for the API. If you really want to change it, then please take a look at the [AbstractAPI class on line 14](https://github.com/rjgamer/Filery/blob/master/api/classes/Filery/AbstractAPI.php#L14). 
 
 ## License
-
-The Neoflow CMS is licensed under MIT.
+Filery as TinyMCE plugin open-source and licensed under MIT. 
 
 *Made in Switzerland with :banana:... no I mean :heart:
 
