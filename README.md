@@ -1,6 +1,8 @@
 # Filery
 A file manager plugin for TinyMCE.
 
+[index]
+
 ## Important questions
 ### What does the plugin do?
 The plugin provides a file manager dialog for TinyMCE, where you
