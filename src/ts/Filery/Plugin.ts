@@ -27,10 +27,15 @@ export class Plugin {
             }
         });
 
+        let height = 400;
+        if (this.config.editor.settings.filery_dialog_height) {
+            height = Number.parseInt(this.config.editor.settings.filery_dialog_height);
+        }
+
         this.config.editor.windowManager.open({
             title: tinymce.i18n.translate(['File manager']),
             id: 'filery-dialog',
-            height: Number.parseInt(this.config.editor.settings.filery_dialog_height),
+            height: height,
             width: 700,
             autoScroll: true,
             buttons: [{
