@@ -18,37 +18,37 @@ But first you have to download and unzip the latest version.
 
 ### TinyMCE plugin
 #### Installation
-Move the folder "filery" to the plugin folder of your TinyMCE 
-installation and add "filery" to the list of plugins and toolbar items
-to the TinyMCE configuration. 
+Move the folder "filery" to the plugins folder of your TinyMCE 
+installation and add `filery` to the list of plugins and toolbar items
+of your TinyMCE configuration. 
 
 ````
 tinymce.init({
   selector: "textarea",
   plugins: "filery",
-  toolbar: "filery",
+  toolbar: "filery"
 });
 ````
 
 ### Configuration
-Filery as a few plugin-specific configuration parameters.
+Filery needs to be configured.
 
-`filery_api_url` defines the URL to the plugin API. The API is the most
+`filery_api_url` Defines the URL to the plugin API. The API is the most
 important part of the plugin and is handling all CRUD actions for the 
-file management.
+file management. 
 
-`filery_api_token` is a token which can be send to the API for custom API
-configurations. 
+`filery_api_token` Is a token which can be send to the API for custom API
+configurations. Optional, default value is "false".
 
-`filery_dialog_height` can be used to customize the dialog height.
+`filery_dialog_height` Can be used to customize the dialog height. Optional, 
+default value is "400px".
 
 ````
 tinymce.init({
-  selector: "textarea",
-  plugins: "filery",
-  toolbar: "filery",
-  filery_api_url: 'http://filery.local/api/index.php',
+  ...
+  filery_api_url: 'http://domain.tld/filery/api/index.php',
   filery_api_token: false,
-  filery_dialog_height: '400px'
+  filery_dialog_height: '333px',
+  ...
 });
 ````
