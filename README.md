@@ -125,7 +125,7 @@ If you like my work or if you use it for a commercial project, please give me a 
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.me/JonathanNessier)
 
 ## License
-Filery is an open-source plugin for TinyMCE and []licensed under MIT](https://github.com/rjgamer/Filery/blob/master/LICENSE).
+Filery is an open-source plugin for TinyMCE and [licensed under MIT](https://github.com/rjgamer/Filery/blob/master/LICENSE).
 
 *Made in Switzerland with :banana:... I mean :heart:
 
