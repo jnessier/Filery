@@ -28,13 +28,13 @@ export class Plugin {
         });
 
         this.config.editor.windowManager.open({
-            title: 'File manager',
+            title: tinymce.i18n.translate(['File manager']),
             id: 'filery-dialog',
             height: Number.parseInt(this.config.editor.settings.filery_dialog_height),
             width: 700,
             autoScroll: true,
             buttons: [{
-                text: 'Upload',
+                text: tinymce.i18n.translate(['Upload']),
                 icon: 'upload',
                 classes: 'primary',
                 onClick: (e) => {
@@ -42,7 +42,7 @@ export class Plugin {
                     this.uploadFile();
                 }
             }, {
-                text: 'Cancel',
+                text: tinymce.i18n.translate(['Cancel']),
                 onclick: 'close',
             }],
             onOpen: (e) => {
@@ -56,7 +56,7 @@ export class Plugin {
         Control
             .createByTag('input', {
                 'type': 'file',
-                //'accept': this.config.filter + '/*'
+                // 'accept': this.config.filter + '/*'
             })
             .on('change', (e) => {
                 ApiClient
@@ -80,9 +80,9 @@ export class Plugin {
             .read()
             .then((files) => {
                 if (this.config.filter.length > 0) {
-                    files = files.filter((file) => {
-                        return this.config.filter.indexOf(file.getType()) > -1;
-                    });
+                    /*   files = files.filter((file) => {
+                           return this.config.filter.indexOf(file.getType()) > -1;
+                       });*/
                 }
                 Control
                     .createBySelector('#filery-dialog-body', document)[0]

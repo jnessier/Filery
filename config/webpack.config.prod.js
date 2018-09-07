@@ -1,8 +1,7 @@
 const path = require("path"),
     CopyWebpackPlugin = require("copy-webpack-plugin"),
     UglifyJsPlugin = require('uglifyjs-webpack-plugin'),
-    MiniCssExtractPlugin = require("mini-css-extract-plugin"),
-    OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+    WebpackAutoInject = require('webpack-auto-inject-version');
 
 const pluginName = "filery";
 
@@ -28,8 +27,28 @@ module.exports = {
         }, {
             test: /\.scss$/,
             use: [
-                MiniCssExtractPlugin.loader,
-                "css-loader", // translates CSS into CommonJS
+                "style-loader",
+
+                /* {
+                  loader: 'postcss-loader',
+                 options: {
+                        ident: 'postcss',
+                        plugins: (loader) => [
+                            //   require('postcss-import')({root: loader.resourcePath}),
+                            //  require('postcss-preset-env')(),
+                            require('cssnano')()
+                        ]
+                    }
+                    },*/
+                'css-loader',
+                {
+                    loader: 'postcss-loader',
+                    options: {
+                        plugins: () => [
+                            require('cssnano')
+                        ]
+                    }
+                },
                 "sass-loader" // compiles Sass to CSS, using Node Sass by default
             ]
         }, {
@@ -52,17 +71,22 @@ module.exports = {
         minimizer: [
             new UglifyJsPlugin({
                 include: /\.min\.js$/
-            }),
-            new OptimizeCSSAssetsPlugin({
-                assetNameRegExp: /\.min\.css$/,
-            })]
+            })
+        ]
     },
     plugins: [
-        new MiniCssExtractPlugin({
-            // Options similar to the same options in webpackOptions.output
-            // both options are optional
-            filename: "[name].css",
-            // chunkFilename: "[id].css"
+        new WebpackAutoInject({
+            SHORT: 'Filery: A TinyMCE plugin',
+            SILENT: true,
+            components: {
+                AutoIncreaseVersion: false
+            },
+            componentsOptions: {
+                InjectAsComment: {
+                    tag: '{version} - {date}', // default
+                    dateFormat: 'yyyy-mm-dd' // default
+                }
+            }
         }),
         new CopyWebpackPlugin([
             {

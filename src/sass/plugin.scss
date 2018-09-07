@@ -20,6 +20,17 @@
 }
 
 .filery-item {
+  &.disabled {
+    opacity: 0.5;
+
+    .filery-item-body {
+      &:hover {
+        cursor: not-allowed;
+        background: #fff;
+      }
+    }
+  }
+
   &.selected {
     .filery-item-body {
       &, &:hover {

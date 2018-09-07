@@ -23,8 +23,10 @@ export class Item extends Control {
         let itemBody = Control
             .createByTag('div', {
                 className: 'filery-item-body'
-            })
-            .on('click', (e) => {
+            });
+
+        if (config.filter.length === 0 || config.filter.indexOf(file.getType()) !== -1) {
+            itemBody.on('click', (e) => {
                 e.preventDefault();
                 this.getSiblings().forEach((item) => {
                     item.removeClass('selected');
@@ -34,7 +36,12 @@ export class Item extends Control {
                 } else {
                     this.addClass('selected');
                 }
-            })
+            });
+        } else {
+            this.addClass('disabled');
+        }
+
+        itemBody
             .append(new FileThumbnail(file))
             .append(new FileTitle(file));
 

@@ -1,7 +1,6 @@
 import {Plugin, PluginConfig} from './Filery/Plugin';
 import {ApiClient} from './Filery/ApiClient';
 import plugin from './plugin';
-import {File} from './Filery/Model/File';
 
 declare var tinymce: any;
 

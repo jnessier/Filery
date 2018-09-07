@@ -5,6 +5,7 @@ A file manager plugin for TinyMCE.
 * [Important questions](#important-questions)
     + [What does the plugin do?](#what-does-the-plugin-do-)
     + [How much does the plugin cost?](#how-much-does-the-plugin-cost-)
+* [Requirements](#requirements)
 * [Installation](#installation)
     + [1. TinyMCE plugin](#1-tinymce-plugin)
         - [Installation](#installation-1)
@@ -26,9 +27,11 @@ Nothing, nada, nichts. The plugin is 100% free and licensed under MIT.
 ## Requirements
 For Filery as TinyMCE plugin:
 * TinyMCE 4.8.x or newer
+* Modern theme of TinyMCE
 
 For the API of Filery:
 * PHP 5.6 or newer
+* Read and write access
 
 ## Installation
 The installation is done in two steps:
@@ -49,7 +52,7 @@ tinymce.init({
 });
 ```
 
-### Configuration
+#### Configuration
 Filery will not work without an API, which needs to be configured.
 
 |Parameter|Description|
@@ -68,6 +71,21 @@ tinymce.init({
 });
 ```
 
+#### Advanced configuration
+Filery provides callbacks functions for the file picker and image upload, which must be to configured first.
+
+```js
+tinymce.init({
+  // ...
+    file_picker_callback: function (callback, value, meta) {
+        Filery.filePickerCallback(callback, value, meta);
+    },
+    images_upload_handler: function (blobInfo, success, failure) {
+        Filery.imagesUploadHandler(blobInfo, success, failure);
+    }
+  // ...
+});
+```
 ### 2. Plugin API
 #### Installation
 Move the folder "api" to a HTTP-accessible destination of your server and rename the config file from "config-new.php" to "config.php".

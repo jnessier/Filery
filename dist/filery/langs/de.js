@@ -15,7 +15,6 @@ tinymce.addI18n('de', {
     'Load failed.': 'Laden fehlgeschlagen.',
 
     '"{0}" successfully uploaded.': '"{0}" erfolgreich hochgeladen.',
-    '"{0}" successfully deleted.': '"{0}" erfolgreich gelöscht.',
     '"{0}" successfully deleted. Do you want to remove the content with reference to the deleted file?': '"{0}" erfolgreich gelöscht. Willst du den Inhalt mit Bezug zur gelöschten Datei entfernen?',
     '"{0}" successfully inserted.': '"{0}" erfolgreich eingefügt.',
 
@@ -25,5 +24,4 @@ tinymce.addI18n('de', {
     'File already exists.': 'Die Datei existiert bereits.',
     'File is too large.': 'Die Datei ist zu gross.',
     'File extension is not allowed.': 'Die Dateierweiterung ist nicht erlaubt.'
-
 });
