@@ -16,10 +16,10 @@ class API extends AbstractAPI
 
         $this->fileFactory = new FileFactory($this->config);
 
-        $this->register('GET', [], [$this, 'read'])->register('DELETE', ['fileName'], [
-            $this,
-            'delete'
-        ])->register('POST', [], [$this, 'upload']);
+        $this
+            ->register('GET', [], [$this, 'read'])
+            ->register('DELETE', ['fileName'], [$this, 'delete'])
+            ->register('POST', [], [$this, 'upload']);
     }
 
 
@@ -60,7 +60,6 @@ class API extends AbstractAPI
         $filePath = $this->config['base']['path'] . '/' . $fileName;
         $fileExtension = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
 
-        // Check if file already exists
         if (file_exists($filePath) && !$this->config['upload']['overwrite']) {
             throw new HttpException(409, 'File already exists.');
         }
