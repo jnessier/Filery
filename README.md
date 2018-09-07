@@ -36,8 +36,8 @@ Filery will not work with an API and needs to be configured.
 |Parameter|Description|
 |---|---|
 |`filery_api_url`|Defines the URL to the plugin API. The API is the most important part of the plugin and is handling all CRUD actions for the file management.|
-|`filery_api_token`|***Optional*** Is a token which can be send to the API for custom API configurations. Default value: false|
-|`filery_dialog_height`|***Optional*** Can be used to customize the dialog height. Default value: 400px|
+|`filery_api_token`|Is a token which can be send to the API for custom API configurations.\***Optional*** - Default value: false|
+|`filery_dialog_height`|Can be used to customize the dialog height.\***Optional*** - Default value: 400px|
 
 ````
 tinymce.init({
