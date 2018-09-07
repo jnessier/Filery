@@ -1,6 +1,8 @@
 # Filery
 A file manager plugin for TinyMCE.
 
+![A file manager plugin for TinyMCE](https://raw.githubusercontent.com/Neoflow/Filery/master/static/example.png "A file manager plugin for TinyMCE.")
+
 ## Table of Contents
 * [Important questions](#important-questions)
     + [What does the plugin do?](#what-does-the-plugin-do)
