@@ -22,25 +22,25 @@ export class FileButtons extends Control {
             className: 'file-buttons',
         });
 
-        let menu = Control.createByTag('ul');
+        let buttons = Control.createByTag('ul');
 
         if (this.config.type === 'select') {
-            menu.append(Control
+            buttons.append(Control
                 .createByTag('li', {
-                    className: 'select'
+                    className: 'select',
+                    title: tinymce.i18n.translate('Select')
                 })
-                .setAttribute('title', tinymce.i18n.translate('Select'))
                 .text(tinymce.i18n.translate('Select'))
                 .on('click', (e) => {
                     e.preventDefault();
                     this.insertFile('select');
                 }));
         } else {
-            menu.append(Control
+            buttons.append(Control
                 .createByTag('li', {
-                    className: 'link'
+                    className: 'link',
+                    title: tinymce.i18n.translate('Insert link')
                 })
-                .setAttribute('title', tinymce.i18n.translate('Insert link'))
                 .text(tinymce.i18n.translate('Insert link'))
                 .on('click', (e) => {
                     e.preventDefault();
@@ -48,12 +48,11 @@ export class FileButtons extends Control {
                 }));
 
             if (this.file.getType() === 'image') {
-                menu.append(Control
+                buttons.append(Control
                     .createByTag('li', {
-                        className: 'image'
+                        className: 'image',
+                        title: tinymce.i18n.translate('Insert image')
                     })
-
-                    .setAttribute('title', tinymce.i18n.translate('Insert image'))
                     .text(tinymce.i18n.translate('Insert image'))
                     .on('click', (e) => {
                         e.preventDefault();
@@ -62,39 +61,18 @@ export class FileButtons extends Control {
             }
         }
 
-        menu
-            .append(Control
-                .createByTag('li', {
-                    className: 'delete'
-                })
-                .setAttribute('title', tinymce.i18n.translate('Delete'))
-                .prepend('<i class="mce-ico mce-i-remove"></i>')
-                .on('click', (e) => {
-                    e.preventDefault();
-                    this.deleteFile();
-                }));
+        buttons.append(Control
+            .createByTag('li', {
+                className: 'delete',
+                title: tinymce.i18n.translate('Delete')
+            })
+            .prepend('<i class="mce-ico mce-i-remove"></i>')
+            .on('click', (e) => {
+                e.preventDefault();
+                this.deleteFile();
+            }));
 
-        this.append(menu);
-    }
-
-    public show() {
-        this
-            .addClass('show')
-            .trigger('showed', [this]);
-    }
-
-    public hide() {
-        this
-            .removeClass('show')
-            .trigger('hidden', [this]);
-    }
-
-    public toggleShow() {
-        if (this.hasClass('show')) {
-            this.hide();
-        } else {
-            this.show();
-        }
+        this.append(buttons);
     }
 
     private insertFile(type: string): this {
@@ -119,8 +97,7 @@ export class FileButtons extends Control {
         return this;
     }
 
-
-    public deleteFile(): this {
+    private deleteFile(): this {
         this.config.editor.windowManager.confirm(tinymce.i18n.translate(['Are you sure you want to delete "{0}"?', this.file.getName()]), (state) => {
             if (state) {
                 ApiClient
@@ -128,36 +105,31 @@ export class FileButtons extends Control {
                     .then(() => {
 
                         this.getParent().fadeOut(() => {
-
-                            this.config.editor.windowManager.alert(tinymce.i18n.translate(['"{0}" successfully deleted.', this.file.getName()]));
-
-                            /*this.editor.windowManager.confirm(tinymce.i18n.translate(['"{0}" successfully deleted. Do you want to remove the content with reference to the deleted file?', file.getName()]), (state) => {
+                            this.config.editor.windowManager.confirm(tinymce.i18n.translate(['"{0}" successfully deleted. Do you want to remove the content with reference to the deleted file?', this.file.getName()]), (state) => {
                                 if (state) {
                                     Control
-                                        .createBySelector('img', this.editor.getBody())
+                                        .createBySelector('img', this.config.editor.getBody())
                                         .forEach((img) => {
-                                            if (img.getAttribute('src').endsWith(file.getName())) {
+                                            if (img.getAttribute('src').endsWith(this.file.getName())) {
                                                 img.remove();
                                             }
                                         });
 
                                     Control
-                                        .createBySelector('a', this.editor.getBody())
+                                        .createBySelector('a', this.config.editor.getBody())
                                         .forEach((a) => {
-                                            if (a.getAttribute('href').endsWith(file.getName())) {
+                                            if (a.getAttribute('href').endsWith(this.file.getName())) {
                                                 a.unwrap();
                                             }
                                         });
                                 }
-                            });*/
+                            });
                         }, 30);
 
                     })
                     .catch((error) => {
                         this.config.editor.windowManager.alert(tinymce.i18n.translate(['Delete failed: {0}', error]));
                     });
-            } else {
-                //this.removeClass('selected');
             }
 
         });

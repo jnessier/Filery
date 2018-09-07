@@ -30,7 +30,7 @@ export class Plugin {
         this.config.editor.windowManager.open({
             title: 'File manager',
             id: 'filery-dialog',
-            height: 400,
+            height: Number.parseInt(this.config.editor.settings.filery_dialog_height),
             width: 700,
             autoScroll: true,
             buttons: [{

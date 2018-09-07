@@ -1,6 +1,8 @@
-const path = require("path");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const path = require("path"),
+    CopyWebpackPlugin = require("copy-webpack-plugin"),
+    UglifyJsPlugin = require('uglifyjs-webpack-plugin'),
+    MiniCssExtractPlugin = require("mini-css-extract-plugin"),
+    OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 const pluginName = "filery";
 
@@ -26,7 +28,7 @@ module.exports = {
         }, {
             test: /\.scss$/,
             use: [
-                "style-loader", // creates style nodes from JS strings
+                MiniCssExtractPlugin.loader,
                 "css-loader", // translates CSS into CommonJS
                 "sass-loader" // compiles Sass to CSS, using Node Sass by default
             ]
@@ -47,11 +49,21 @@ module.exports = {
     },
     optimization: {
         minimize: true,
-        minimizer: [new UglifyJsPlugin({
-            include: /\.min\.js$/
-        })]
+        minimizer: [
+            new UglifyJsPlugin({
+                include: /\.min\.js$/
+            }),
+            new OptimizeCSSAssetsPlugin({
+                assetNameRegExp: /\.min\.css$/,
+            })]
     },
     plugins: [
+        new MiniCssExtractPlugin({
+            // Options similar to the same options in webpackOptions.output
+            // both options are optional
+            filename: "[name].css",
+            // chunkFilename: "[id].css"
+        }),
         new CopyWebpackPlugin([
             {
                 from: path.join(__dirname, "../LICENSE"),

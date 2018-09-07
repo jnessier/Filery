@@ -91,7 +91,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 20);
+/******/ 	return __webpack_require__(__webpack_require__.s = 9);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -2163,687 +2163,11 @@ module.exports = Agent;
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
-
-var content = __webpack_require__(8);
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-
-var transform;
-var insertInto;
-
-
-
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(18)(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {}
+// extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var escape = __webpack_require__(9);
-exports = module.exports = __webpack_require__(10)(false);
-// imports
-
-
-// module
-exports.push([module.i, "#filery-dialog-body {\n  background: #c5c5c5; }\n  #filery-dialog-body .filery-container {\n    position: relative;\n    overflow: hidden;\n    padding: 0 10px 0 0; }\n\n.filery-container .filery-item {\n  width: calc((100% / 2) - 4px);\n  padding: 2px;\n  float: left;\n  display: block;\n  position: relative; }\n\n.filery-item.selected .filery-item-body, .filery-item.selected .filery-item-body:hover {\n  transition: all .3s ease;\n  border-color: #1e6abc;\n  background: #f0f6fd; }\n\n.filery-item.selected .file-buttons {\n  transition: all .3s ease;\n  display: block; }\n\n.filery-item.selected .file-title .file-title-name {\n  transition: all .3s ease;\n  margin: 20px 0 0 0; }\n\n.filery-item .filery-item-body:hover {\n  transition: all .3s ease;\n  border-color: transparent;\n  background: #f0f6fd; }\n\n.filery-item .filery-item-body {\n  background: #fff;\n  display: block;\n  overflow: hidden;\n  cursor: pointer;\n  border: 3px solid transparent;\n  transition: all .3s ease; }\n\n.filery-item .file-buttons {\n  transition: all .3s ease;\n  position: absolute;\n  bottom: 4px;\n  right: 4px;\n  display: none; }\n  .filery-item .file-buttons ul {\n    list-style: none;\n    padding: 5px;\n    margin: 0 !important; }\n    .filery-item .file-buttons ul li {\n      padding: 3px 5px;\n      margin: 0 0 0 2px;\n      cursor: pointer;\n      display: inline-block;\n      background: #2276d2;\n      color: #fff;\n      font-size: 11px;\n      line-height: 16px;\n      height: 16px; }\n      .filery-item .file-buttons ul li:hover {\n        background: #1e6abc; }\n      .filery-item .file-buttons ul li .mce-ico {\n        height: 16px;\n        width: 16px;\n        font-size: 16px;\n        line-height: 13px;\n        text-align: center;\n        color: #fff; }\n      .filery-item .file-buttons ul li.delete {\n        background: #fff;\n        color: #595959;\n        border: 1px solid #b3b3b3;\n        padding: 2px 2px; }\n        .filery-item .file-buttons ul li.delete .mce-ico {\n          color: #595959; }\n\n.filery-item .file-thumbnail {\n  float: left;\n  width: 80px;\n  height: 80px;\n  position: relative;\n  padding: 5px; }\n  .filery-item .file-thumbnail .file-thumbnail-image {\n    background: url(" + escape(__webpack_require__(11)) + ") no-repeat center center;\n    position: absolute;\n    height: 80%;\n    width: 80%;\n    top: 0;\n    bottom: 0;\n    left: 0;\n    right: 0;\n    margin: auto; }\n    .filery-item .file-thumbnail .file-thumbnail-image.audio {\n      background-image: url(" + escape(__webpack_require__(12)) + "); }\n    .filery-item .file-thumbnail .file-thumbnail-image.code {\n      background-image: url(" + escape(__webpack_require__(13)) + "); }\n    .filery-item .file-thumbnail .file-thumbnail-image.text {\n      background-image: url(" + escape(__webpack_require__(14)) + "); }\n    .filery-item .file-thumbnail .file-thumbnail-image.image {\n      background-image: url(" + escape(__webpack_require__(15)) + "); }\n    .filery-item .file-thumbnail .file-thumbnail-image.zip {\n      background-image: url(" + escape(__webpack_require__(16)) + "); }\n    .filery-item .file-thumbnail .file-thumbnail-image.video {\n      background-image: url(" + escape(__webpack_require__(17)) + "); }\n\n.filery-item .file-title {\n  float: left;\n  width: calc(100% - 100px);\n  height: 80px;\n  padding: 5px; }\n  .filery-item .file-title .file-title-name {\n    transition: all .3s ease;\n    font-weight: bold;\n    height: 20px;\n    margin: 25px 0 0 0;\n    display: block;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis; }\n  .filery-item .file-title .file-title-meta {\n    margin: 0;\n    height: 20px;\n    padding: 0;\n    list-style: none;\n    color: #929292; }\n    .filery-item .file-title .file-title-meta li {\n      margin: 0 5px 0 0;\n      font-size: 12px;\n      display: inline-block; }\n", ""]);
-
-// exports
-
-
-/***/ }),
+/* 8 */,
 /* 9 */
-/***/ (function(module, exports) {
-
-module.exports = function escape(url) {
-    if (typeof url !== 'string') {
-        return url
-    }
-    // If url is already wrapped in quotes, remove them
-    if (/^['"].*['"]$/.test(url)) {
-        url = url.slice(1, -1);
-    }
-    // Should url be wrapped?
-    // See https://drafts.csswg.org/css-values-3/#urls
-    if (/["'() \t\n]/.test(url)) {
-        return '"' + url.replace(/"/g, '\\"').replace(/\n/g, '\\n') + '"'
-    }
-
-    return url
-}
-
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function(useSourceMap) {
-	var list = [];
-
-	// return the list of modules as css string
-	list.toString = function toString() {
-		return this.map(function (item) {
-			var content = cssWithMappingToString(item, useSourceMap);
-			if(item[2]) {
-				return "@media " + item[2] + "{" + content + "}";
-			} else {
-				return content;
-			}
-		}).join("");
-	};
-
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
-
-function cssWithMappingToString(item, useSourceMap) {
-	var content = item[1] || '';
-	var cssMapping = item[3];
-	if (!cssMapping) {
-		return content;
-	}
-
-	if (useSourceMap && typeof btoa === 'function') {
-		var sourceMapping = toComment(cssMapping);
-		var sourceURLs = cssMapping.sources.map(function (source) {
-			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
-		});
-
-		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-	}
-
-	return [content].join('\n');
-}
-
-// Adapted from convert-source-map (MIT)
-function toComment(sourceMap) {
-	// eslint-disable-next-line no-undef
-	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
-
-	return '/*# ' + data + ' */';
-}
-
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports) {
-
-module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACz0lEQVR4Ae2bT2saQRjGo6s3L5Jb0n6G+gGkyalJaAq9WNr03lv8gyRn78H1Ty/Fe7HgqdRSekzwnCL0EzQlJReFkNxc7fPKCrJk2XXeFfYl78Iy68y8M+/zm2edCJONDb2UgBJQAkrg8RJIcKTbtr2dSqXOMMYO7i3OWH6x0+m0VC6X237t3HpjAK74IRLY5CYREO8AwmtA6Af0M2o2BtBqtT4nEokjzPoD94disfjXKAOfoHa7PVtqusPzc8zxa6kuksek6SgQv+vGRi5+OafZbPYRnzMov5HrltuieDYGgMnn73zUK+8VNRgMKqj7DuDblmX1a7VaxtuH85kDgDNv6Nher+eMRqO3CBgCQi6bzXYLhYIVeoCAjrEHQPlj1ek74BD3NSAc5vP5BtVHcYkAQELpVXMc5xW+C+4B4bjZbBYfFQASW6lULlG8B4RpMpm0AYFcwbrEOGChslQqfcXzCW4LELqNRiO3aDMpxQEgkYBgwwWf8JgBhD5nexQJgCCMx+NjFD+522OcAVyT0Hq9/pRK74WdYYK6N3DCb872GFsAEHZBovFjq4M/i594AdBn7Ay3KF6i743p9ph6aOA41E0mk1OIfwFh+8jnChAC00Jfei1W2h5j64BqtXoFCDms7hfc/wLVG3aIrQNID0FA8S6MNs+vxzAh8z6xdUBoBcyOCoAJUHy4OkD8EjIFqAOYAMWHqwPELyFTgDqACVB8uDpA/BIyBagDmADFh6sDxC8hU4A6gAlQfLg6QPwSMgWoA5gAxYerA8QvIVOAOoAJUHy4OkD8EjIFqAOYAMWHqwPELyFTAMcB81NcfgeYmHmtFL7IweQoDQfAuZtlx+8o20oqDDu74jtu+CKn0KNxzgidgvgeTmYdpNPpP0gk9KTr6IhcRsiFjtCudBk7gE5vY8JnmHitp7iC1Li271Iu6/7njaBctF0JKAF5BP4Dai3F4B4r5IQAAAAASUVORK5CYII="
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports) {
-
-module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAEmUlEQVR4Ae2azUtUURjGHUcTwY200/ob0miRYObKCg3aGH1Qy3Y6fpREkYhlaOao0yZcFmHgKjSiZSZMC1GE/oIUpc0IUYjTfPR75d64DDPeO/ecmbmj98DhnHs+3+d53nPPuR8VFX7wGfAZ8BnwGTi+DARUoIfD4caqqqpJxrhIbFAZK1ffVCoV6uvri+SqVy13TYABfgMDTqoaYdM/CQnXIGHJpp2ratcEzM7OvgsEAreY9RPxXm9v75YrC3J0ikQiaUvVb/JtzLFuKdOSrXQ7CuDbjb7awVttSqfTr7iuI10Ur7PW6ci7JoDJD9a8buUzQa2srPRT9hHCG4PB4NLIyEhdZhuVaxUCVOZ13HdhYSEZi8Vu0GEDEprq6+vnu7u7g44HsGnoeQLEflSXe0AXcRsSulpbW6elXEcoCwIEqCy1ZDJ5lXvBH0jomZmZ6T1WBAjY/v7+NZLbkJCqrKwMQ4J4hVIoGw8wUYZCoQ/kHxCDkDA/PT3dZNa5ScuOAAEJCWG84DXZOkhYUtkey5IAIWF3d7eH5LPq9uhlArYF6NTU1GlJMwM7Q4Ky63jCd5Xt0bMEAGxZQPOwNcex+FQmAXLNzvCLpJO2P91uj1XZBvZCWSKRGAJ8B8AuY88mJNiaRVtZFnltj571gMHBwU1IaELd98QdW/QuG3jWAwSPkEBy0wm2jKdHJ10O2njWAxwjUGzoE6BIYNl39z2g7CVUBODpXcDExh2+hnwzL0dbOPu3sC228DyQ9YRo9nGaepIAOfkJWA42Es8D+CxpDeAPcJF3is+2XckJyKYuVp8ywRoI9iHhG/ko4OUdobZQdAKs6oJC3Lk5U13KtiiL4gVRAc7L0DXO/fuCmv7lTQAYNq3qAvC/uuSj1EVZ31sCthih6B5ggkLdAQGL0uumumZdMdOSEcCnLm1vdlUI8w9CKuwdhb6+BxwFFVUw+B6gwt5R6HvsPaBk5wA77+FrzwWOwPIJ7BxR7JS/Q14QtQZPEsBHz0ecEp+B1PrY18G1RK2hYAS4VRDwbQKe54K/HJOH+ST+RhDjDXcpG6XshE4GCkIAP1A9xtCnGJq3gvS7L/0IwzwjTFjATvAkKJfjljLlrPaboCgo4EVBrHuIgg0SJU9Z3IHFsuYrTOWt7ff29t5ar3XktXtAMRSESG1firR7AKrkVDCbqllUXJUyWfOZdbW1tXeMsoM2mfVurrV7wGFGxOPxACAqDlMQkiYB38k4o7LmTdLMmyDlKWlz2Dz51BXCA5QUHBgY+AqAYaKIMw7wbYmSlzLIe2K04VI9aPcADHyJWUoK8kpsjG10GeDmQUiQroryOsHLoNoJ4E3PMtugKDhKFAWt21bKqYIGUPGGgoZCLAH5iWkMtdoBu0jcMeKilEHQ84IiynNw7R5gzl8sBc353KYF8QC3xpSinwoBcmeWDxVZf2AqJhjTBllq+c6rQsAXY7K5XL+y5WuMm/YG+Dmjr2mT46FU7gFDMH6Jo++V6urqH3JoKWXAlhi2yLaZV3DtATypyfe7M0xc0L+47NAYbj8vtohNdu39ep8BnwGfASsD/wCFydj2qVnUJAAAAABJRU5ErkJggg=="
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports) {
-
-module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAEBklEQVR4Ae2au2/TUBTGm9fWJWKjIDrCRP+ACjzxEEWCoTx3tiaNWjqwEBYW2qQNC+qOCsqAEEWIiYI6gyohwUZLURFLKiGYmgffV+VKlmXXjo+vsdVrybr2vffce76fz8mNH0NDZjMEDAFDwBA4vAQyEum1Wm0kn88/whhnsR+VjOVl2+12y9PT0w2vdml9aAB98Rtw4IjUCR/7DiBcAYRVn36hmkMDWFpaeprJZG5h1jfY75RKpR+hPPAwajQaPVvTHxyfwRyfbHWRHGbDjgLxVt82cvF2n3q93mOcD6N8xaizt0VxHBoAJt/P+aivvFPU+vp6BXWvAXwkl8utVqvVYWcfybkEgGTewLbNZrPTarVuwGADEMaKxeLK5ORkLvAAPh0TD4D+46rzN2AC+w4gTIyPj9dZH8WWCgAUylTrdDqX8VvwFxCmFhcXS4cKAMVWKpWPKG4DQjebzdYAgVEh2lITAUpluVx+ieO72HOAsFKv18dUW5gydQAoEhBqiIInOBwGhFXJ8phKAISwu7s7heKtdHlMMoAdCl1YWDjO0rlhZWij7hoi4bNkeUwsAAj7QNG42VrG3+JjTgA8x8rwG8Ul9P0VdnnMuw2chLp2uz0H8ecg7AL82QYEX7fQl2kx0PKY2AiYmZnZBoQxXN1n2H/6qg/ZIbERQD2EgOJmEG2Ou8cgJvt9EhsBgRUIOxoAQoCpNzcRkPpLKBRgIkAIMPXmJgJSfwmFAkwECAGm3txEQOovoVBAIu4G8WBzFG99vkHLFh5yjAo1DWSelBSw6DXu+9dYxrnFAgBvkqvcvYThya7FNrwGX2OpNj871U9SagdAEXhUdR/7vfn5+ZNuzqLNYj3e/LxT7exLG9oeBE/1D1tqBaDEw7k9hPf12dnZr05Hmf+oO4F9C+1bqp19aYPzPZ0QtAFwisfLjBdKnKO0eO6W/7TRDUELgAHED3nlv4KkG0LkAAYRT5Eq/3G4xnO3TSeEyAG4CfCqs+c/3vxuevXTWR85AFytKvL2AZwu4Oo+R0RcPUCAxTa3/LfbcAyOhboCx+Yc9nbJceQA6ExQCH75z7F0iuf4WgBw4CAQ/PJft3itANwg2P8IqfxHSG+65T/aT+kKe/qmNm0RoCZQkQChDx1/hKx+n/eqr70ElC+0iTrn7XPwOJa7QbcfrSD572bnFCA91x4BXg765b+XXdT1sUSAm9Nx3/e7+cC6/xYBXg7FXW8AxE08afNJImD/Ky6vD5jiFKp8wJI58Kc0EgBq/V72+pQtDgh98cv9uZRPgaeWrAJzIH4ey9nFQqHwHY4EnlRHR/jSgi/8hHagLXQE8OttTHgaE2v9istPTT/sV+gLffLrb9oNAUPAELAT+AfgtbbFNhUwgwAAAABJRU5ErkJggg=="
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports) {
-
-module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAADHUlEQVR4Ae2aS4sTQRDHk0xyyyV4c/UzmA8Q1JMPXMFLxMfd2+ZBcM+5SyYPL5K7RMhJjIjHlVy8KAt+AndRvCQg6y2T+O9lBpohs93Tj2Wa1MAwPdPV1VW/qu5KoHM5uogAESACRGB3CeR1XPd9f69YLL6Cjlu4r+roShq7Xq+brVZrlNSv+10ZQOj8MQy4omuEYHwACI8AYSaQU+pWBjAcDt/m8/lnmPUT7heNRuNUyYKEQaPRaMN1naF9E3N8574ZaRZUtcD52+FY487zNm02m9d4L+P5gWUd32eirQwAk5+vedORjzs1n8/b+PYRwPc8z5t1u91yXEbnXQeAzrzSY6fTabBYLJ5gwDEgVCuVyqRer3vSCgSCRUF/6u7Y2k0cj8yR3n8Q9TPo3Yeyr4CwX6vV+gDTSFSeoiPzGRD5wpZaEAQPsRf8A4SDwWCQbQAswnyU4++RY2me7Xb7G+SfA8K6UCj4gMCyQutyJgMiL5vN5nu0X+L2AGHS7/erUZ/K0zgAUaRF/TJOAIKPLHgD2TIgzHTKo3EAMg6YkFkulwfQ81m3PGYZwC8GqtfrXd8GDJVhhe+PkQk/dMpjZgHAsS/McfzZGqMEXtsGAcvpL74/gOyfqDxuk7vom/HfARdNlqZvtVodwvk7cOwexp0AgnA4ZNmySFUeM5sBnU7nBBCqiO473L+F3isKWM8Atusr2pZjEDD2qcx42V+gcV2ZzYC4obbeCYAtsq7oNb4HqK7FtMB09hZ+rp1fAsYzwFRk+CjZbO98BhAAm+nlgm7jewBVARfCztloPAOoCnB0XWhSFXAhSjZtNL4HUBWwGS4Luo1nAFUBC1GyqZKqgE26Lug2vgdQFXAh7JyNxjOAqgBH14UmVQEXomTTRuN7AFUBm+GyoNt4BlAVsBAlmyqpCtik64JunQw4P8WFXX/rAabLdD6yQeUojQ6Ao9DJcdJRtsuAEDo/DueKbJKeWqcKHIL4XZzMul8qlX7CEOlJbQjClgVsYUdoU13KGYByd4oJb2Biq6e4RN6EaT9htjCbRPLUTwSIABHgCfwHjO70GFXHf2wAAAAASUVORK5CYII="
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports) {
-
-module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAEI0lEQVR4Ae1azWsTQRRvvhHioamItXroRYQeWk9SSNSTWmxRkIqtN4XemjQUeysEr/lq04stngSpUBTEFhVBqESPSsG/wIaIlxREBSEf/l7YhWVJsrszO8kumYFhZmfmzbzfb97M7M6+gQEZJAOSAcmAZKB/GfDwQM/lciN+vz+NPi4jnubpq51svV5PLC0tFdrV85YzE6CAP4ACQ7xKGMjXQMItkLBr0I6pmpmA9fX1Zx6PZx6jvkFciMfjJSYN2ggVCoWGpuo38pcwxldNmS1ZL2svAH9FkbUdvFanRqOxgecw0tdkddo6O/LMBGDw5pq3e+b1oIrFYhJleyB8xOfz7aZSqbC+Dc8zDwE845qW3dnZqVUqlbsQOAAJE4ODg9uzs7M+0x0YNHQ8AaQ/Zp32gGnEMkiYjkajeSq3I7iCAAJKS61Wq81gL/gDEhbX1tbifUUAgU0mk1+Q3AMJda/XmwMJZBVcwTUWoKJMJBKvkH+I6AMJ2/l8fkKtY0ldRwCBBAk5WMFjZMMgYZfneHQlAUTC0dHRIpJ3vMejkwkoE9BsNnuWUn3AyVBF2R1Ywjee49GxBADYRwKNj60tvBaf0RNAzzgZfiG5gbY/WY9Hf6uOnVBWrVZXAP4qgF2HPocgwVAttKVlYel4dKwFLC8vH4KECczuc8QfhugZGzjWAggPkYBkzgw23dejGZFmG8dagGkEnA0lAZwEul5cWoDrp5ATgLQATgJdLy4twPVTyAlAWgAnga4Xt/1bgPWd3CqT+BRm/qulHavvl4DtFqCya9cMqf2pqd0WJi1AZVZ0iuvrKdzgbtE4+N29gDt++qvc8yBsCeiREXhcWTXv9hQiWl526uVEP/f9EugaAWT2uNsrUaS86Jk123/XloCy5g3NHv/7HmCpzODHxzzu/v+aBcLarmsWYEZBuN2sYn94AgJuwg/gQyaTOWFGjqeNIwgghweA3wTwRyoY5C8Gg8FP6XR6VC0TkfacAPzYPBaLxV4CcKt94VwoFPqMl58LIsBTn13ZA7CWgzBpcnb6Rz4/5PZCgwN8BH9/yP1tkp7bhFPYOPexN9yGq9z7Nm2Yi4UTgBegYTg3vYCGTZBwbxkdGxubC4fDQwD/FuXnjbSHdRxH3AMJ943aWq0XSgDAT2JTI/DDqmIAMh2JRIqY1ZPacrW+QxpAX0871DNVCSMAmxqt6Q0ADrbQbBzlLYoNi5iEOvUqjAAA3Ow0sFPqen4K9JoISUCvZ6DX49u+B4i6CRJFlFwCHMyWSRavqS0dmDj6tSyq6oB3C8uuNDwWsK9outXOlc0yEgYBBXzzqg3iqk6me+LZA1bA+DWc91OBQOA7FDE9qIiG0KUCXciF1lJgtgBsdiUMOI6BhXpxGaFRzH6bdCGdjNrLesmAZEAyoGXgP2npK6MUeMjoAAAAAElFTkSuQmCC"
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports) {
-
-module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAEIUlEQVR4Ae1aS08UQRBmXzcuxBvobxDvROEiGjDxgjEar97YZUMELxgiXoTsLiwXw5UYTDgZ1ig3JRx9hMRfIATiZUmMXsw+/GozzXbaGefRU70T6Uk6011VXY+vqnuefX32sAhYBCwCFoHzi0BKJ/RyuTyUzWZXoOMa2qCOLq+5rVarMDMzU/Xi69IjA+AEfwAHLug64TO/CRBuA4Saj1wkdmQA1tbWXqZSqXuw+hbtYT6fP3LzoFqttmU65ALZVOb9hI6rmPtF1hVHPx1VCYIfdeZ6Bh9Vtzyv3W6vY9yP8w5VncyLox8ZABjvrHmvzAvnKONy1imzSnaFqOt5f3+/CMYbAD6UyWRqi4uL/a6CEYk6AEQ0GW7a9vZ2s16v38WsA4AwPDAwsDU1NZUJp8Vbmh0ANeNqRXi71uUg67QHTKIdA4TJkZGRSper12MHQM+97mxaas1m8xb2gl8AYXp1dTXf5UbvsQOgZlytiDCuF4vFz5C/DxBa6XS6DBCoKrQOdgC0vHOZXCgUXoP8CC0DELYqlcqwi1hgEjsAasbVigjsqSQIEMqoghcg9QOEms7lkR0Aye9Yu6enp9NQuKt7eWQHQM24WhH/QOWYeKVS6ZKbDK4MDdDvoBK+6lwe2QFwcz4IDYHtkRwetjYA2kW3OQD3B+gTkP0e9fKYdVMcJ40yLuujipDHXv1GozGH4K8jsBuQOYQeL9EzOmRpWYS6PCa2AmZnZw8BwjCy+wrt5CzKmDuBsuFmU2Q2aEaFvNAVdJ6Q9zsL/WH1JrYC/AKOi5/YPSCuAP30nPsKYAeA1qS8LmmtivXqlx0TfHYATAShY8PuATro/Q9z2ZeA3QMSXiZ2D0h4gtjdM74HsEcU0gA7ACH9MS7Ovgfgze043tvRc3rnwF1gDR871/Gxc1fQenlmrQB8QF1A8O8Q4IQU5ATRiCfRetZlAwABjuENzVO8zPiNNo+PGoPUqE804uGV9mjPIncMsy0BBDjv2FjAa+xlKdBlgEPD5/jY+Rjn9zTo1cFWAQjoCgWF9b6pBifROjIq3+SYDQCUedMvkCAyfjp0+WwAwLFP5Bw2vAeqkxLto8ozPWbbA5DdFewDtPsv0ZoXZe8EvwR6G/yS6YBVe2wVgOv8How9QZA5NNrwjqlRn2jEw5PiB9Uh02M2ACgQBPgMpzFUww7aidN2UA2jDs90vH/ZY1sCwpKT5Z5nWvijnlkrQDWWxLEFIIlZMemTrQCTaCfRlq2AJGbFpE+2AkyinURbOhXQ+YsL7/hcf2AyGazwgW61w9rVAUDc3m54/coW1pko8k7wG85c4VNgVTrPAnNAfBxPdjdzudw3OBLYKIcgfKnDF/qFNtQRuQLwkHMEg5dhmPUvLr9onLLfIl/IJz95y7cIWAQsAjICfwAoTowRDqziuQAAAABJRU5ErkJggg=="
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports) {
-
-module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAADRElEQVR4Ae2aS4sTQRDHN69bLsGbq5/BfICgnnzgCl4iPu7eNg+Ce85d8vQiuUuEnMSIeFzJWVnYT7C7rHhJQPSWSfxXmIJh2GEmXT2xh+mBoWamu6qrflU9PSG9t2cPS8ASsAQsgfQSyEhC73a7+/l8/g1s3MF5XWIrSHe1WtUbjcYwqF36XBmAG/wJHLgmdSJE3wGEJ4AwDemn1KwMYDAYvM9kMi8w6hecr2q12oWSBwFKw+Fw7Wn6g+vbGOOH55mWy6yqFQR/19XVHrzXp/V6/Rb3RchPVHXeNh3XygAw+GbO6868P6jZbNbEs88Avp/L5abtdrvo7yO5lwCQjBtZdzKZOPP5/BkUTgChXCqVxtVqNRfZQEhH4wGQ/8g6vQMOcF4CwkGlUunRcx1HIgBQoDTVHMd5jHfBX0A47Pf7tVQBoGCbzeZ3iJeAsMpms11AoKoQHYmpAI6yXq9/xPVrnDlAGPd6vTK3qcjEAaAgAaGLKniHyyIgTCXLYyIBEITFYnEI8VW6PJoM4JIC7XQ6N0n6D6wMSzx7iko4lSyPxgJAYN8oaPzYGuGz+IYfAN1jZfgN8Qh9f6kuj/mrDJvwbLlcHiH4ewjsAfw5B4RQt9CXpsVWy6OxFdBqtc4BoYzsfsD5MzR6xQ7GVgDFQxAgnkeJzffrMYrKpo+xFRA5AmFHC0AIMPHqtgISn0JhALYChAATr24rIPEpFAag/UtQ9Yts2zjwQ0j5Pw3vWKmfAtorgOlyhrgi+J7bo0q/Pt9H1Q/rZysgjJBqu+5M6bbHcaW+AmIDQHNedd5zdrxStz22HRsAHsB0GdsqoHvO6rbHibEVwCR0S57/nDmWquP47ana8evZCvAT0XXvzzhncFv7bIfltvph/VNfAbEB0L1u67bHlREbAB7AdGm/A0zPUNz+xTYFdM9Z3fYYbGwAeADT5c7eAdJ1XKoflAhbAUFkVJ/TXFXV/R96qa8ACYDNLi7MzSs3MO0ym+yDylYaCYBjN8hR0Fa2XUBwgx+5Y7FPkYeWrAJHIH4fO7MeFgqFMzgSedA4OsKXOXyhLbRbHcoVgJfdBQa8hYFj3cUVFo1b9mPyhXwK62/bLQFLwBLwEvgH8dYTTD+hviwAAAAASUVORK5CYII="
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-
-var stylesInDom = {};
-
-var	memoize = function (fn) {
-	var memo;
-
-	return function () {
-		if (typeof memo === "undefined") memo = fn.apply(this, arguments);
-		return memo;
-	};
-};
-
-var isOldIE = memoize(function () {
-	// Test for IE <= 9 as proposed by Browserhacks
-	// @see http://browserhacks.com/#hack-e71d8692f65334173fee715c222cb805
-	// Tests for existence of standard globals is to allow style-loader
-	// to operate correctly into non-standard environments
-	// @see https://github.com/webpack-contrib/style-loader/issues/177
-	return window && document && document.all && !window.atob;
-});
-
-var getTarget = function (target, parent) {
-  if (parent){
-    return parent.querySelector(target);
-  }
-  return document.querySelector(target);
-};
-
-var getElement = (function (fn) {
-	var memo = {};
-
-	return function(target, parent) {
-                // If passing function in options, then use it for resolve "head" element.
-                // Useful for Shadow Root style i.e
-                // {
-                //   insertInto: function () { return document.querySelector("#foo").shadowRoot }
-                // }
-                if (typeof target === 'function') {
-                        return target();
-                }
-                if (typeof memo[target] === "undefined") {
-			var styleTarget = getTarget.call(this, target, parent);
-			// Special case to return head of iframe instead of iframe itself
-			if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) {
-				try {
-					// This will throw an exception if access to iframe is blocked
-					// due to cross-origin restrictions
-					styleTarget = styleTarget.contentDocument.head;
-				} catch(e) {
-					styleTarget = null;
-				}
-			}
-			memo[target] = styleTarget;
-		}
-		return memo[target]
-	};
-})();
-
-var singleton = null;
-var	singletonCounter = 0;
-var	stylesInsertedAtTop = [];
-
-var	fixUrls = __webpack_require__(19);
-
-module.exports = function(list, options) {
-	if (typeof DEBUG !== "undefined" && DEBUG) {
-		if (typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
-	}
-
-	options = options || {};
-
-	options.attrs = typeof options.attrs === "object" ? options.attrs : {};
-
-	// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
-	// tags it will allow on a page
-	if (!options.singleton && typeof options.singleton !== "boolean") options.singleton = isOldIE();
-
-	// By default, add <style> tags to the <head> element
-        if (!options.insertInto) options.insertInto = "head";
-
-	// By default, add <style> tags to the bottom of the target
-	if (!options.insertAt) options.insertAt = "bottom";
-
-	var styles = listToStyles(list, options);
-
-	addStylesToDom(styles, options);
-
-	return function update (newList) {
-		var mayRemove = [];
-
-		for (var i = 0; i < styles.length; i++) {
-			var item = styles[i];
-			var domStyle = stylesInDom[item.id];
-
-			domStyle.refs--;
-			mayRemove.push(domStyle);
-		}
-
-		if(newList) {
-			var newStyles = listToStyles(newList, options);
-			addStylesToDom(newStyles, options);
-		}
-
-		for (var i = 0; i < mayRemove.length; i++) {
-			var domStyle = mayRemove[i];
-
-			if(domStyle.refs === 0) {
-				for (var j = 0; j < domStyle.parts.length; j++) domStyle.parts[j]();
-
-				delete stylesInDom[domStyle.id];
-			}
-		}
-	};
-};
-
-function addStylesToDom (styles, options) {
-	for (var i = 0; i < styles.length; i++) {
-		var item = styles[i];
-		var domStyle = stylesInDom[item.id];
-
-		if(domStyle) {
-			domStyle.refs++;
-
-			for(var j = 0; j < domStyle.parts.length; j++) {
-				domStyle.parts[j](item.parts[j]);
-			}
-
-			for(; j < item.parts.length; j++) {
-				domStyle.parts.push(addStyle(item.parts[j], options));
-			}
-		} else {
-			var parts = [];
-
-			for(var j = 0; j < item.parts.length; j++) {
-				parts.push(addStyle(item.parts[j], options));
-			}
-
-			stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
-		}
-	}
-}
-
-function listToStyles (list, options) {
-	var styles = [];
-	var newStyles = {};
-
-	for (var i = 0; i < list.length; i++) {
-		var item = list[i];
-		var id = options.base ? item[0] + options.base : item[0];
-		var css = item[1];
-		var media = item[2];
-		var sourceMap = item[3];
-		var part = {css: css, media: media, sourceMap: sourceMap};
-
-		if(!newStyles[id]) styles.push(newStyles[id] = {id: id, parts: [part]});
-		else newStyles[id].parts.push(part);
-	}
-
-	return styles;
-}
-
-function insertStyleElement (options, style) {
-	var target = getElement(options.insertInto)
-
-	if (!target) {
-		throw new Error("Couldn't find a style target. This probably means that the value for the 'insertInto' parameter is invalid.");
-	}
-
-	var lastStyleElementInsertedAtTop = stylesInsertedAtTop[stylesInsertedAtTop.length - 1];
-
-	if (options.insertAt === "top") {
-		if (!lastStyleElementInsertedAtTop) {
-			target.insertBefore(style, target.firstChild);
-		} else if (lastStyleElementInsertedAtTop.nextSibling) {
-			target.insertBefore(style, lastStyleElementInsertedAtTop.nextSibling);
-		} else {
-			target.appendChild(style);
-		}
-		stylesInsertedAtTop.push(style);
-	} else if (options.insertAt === "bottom") {
-		target.appendChild(style);
-	} else if (typeof options.insertAt === "object" && options.insertAt.before) {
-		var nextSibling = getElement(options.insertAt.before, target);
-		target.insertBefore(style, nextSibling);
-	} else {
-		throw new Error("[Style Loader]\n\n Invalid value for parameter 'insertAt' ('options.insertAt') found.\n Must be 'top', 'bottom', or Object.\n (https://github.com/webpack-contrib/style-loader#insertat)\n");
-	}
-}
-
-function removeStyleElement (style) {
-	if (style.parentNode === null) return false;
-	style.parentNode.removeChild(style);
-
-	var idx = stylesInsertedAtTop.indexOf(style);
-	if(idx >= 0) {
-		stylesInsertedAtTop.splice(idx, 1);
-	}
-}
-
-function createStyleElement (options) {
-	var style = document.createElement("style");
-
-	if(options.attrs.type === undefined) {
-		options.attrs.type = "text/css";
-	}
-
-	if(options.attrs.nonce === undefined) {
-		var nonce = getNonce();
-		if (nonce) {
-			options.attrs.nonce = nonce;
-		}
-	}
-
-	addAttrs(style, options.attrs);
-	insertStyleElement(options, style);
-
-	return style;
-}
-
-function createLinkElement (options) {
-	var link = document.createElement("link");
-
-	if(options.attrs.type === undefined) {
-		options.attrs.type = "text/css";
-	}
-	options.attrs.rel = "stylesheet";
-
-	addAttrs(link, options.attrs);
-	insertStyleElement(options, link);
-
-	return link;
-}
-
-function addAttrs (el, attrs) {
-	Object.keys(attrs).forEach(function (key) {
-		el.setAttribute(key, attrs[key]);
-	});
-}
-
-function getNonce() {
-	if (false) {}
-
-	return __webpack_require__.nc;
-}
-
-function addStyle (obj, options) {
-	var style, update, remove, result;
-
-	// If a transform function was defined, run it on the css
-	if (options.transform && obj.css) {
-	    result = options.transform(obj.css);
-
-	    if (result) {
-	    	// If transform returns a value, use that instead of the original css.
-	    	// This allows running runtime transformations on the css.
-	    	obj.css = result;
-	    } else {
-	    	// If the transform function returns a falsy value, don't add this css.
-	    	// This allows conditional loading of css
-	    	return function() {
-	    		// noop
-	    	};
-	    }
-	}
-
-	if (options.singleton) {
-		var styleIndex = singletonCounter++;
-
-		style = singleton || (singleton = createStyleElement(options));
-
-		update = applyToSingletonTag.bind(null, style, styleIndex, false);
-		remove = applyToSingletonTag.bind(null, style, styleIndex, true);
-
-	} else if (
-		obj.sourceMap &&
-		typeof URL === "function" &&
-		typeof URL.createObjectURL === "function" &&
-		typeof URL.revokeObjectURL === "function" &&
-		typeof Blob === "function" &&
-		typeof btoa === "function"
-	) {
-		style = createLinkElement(options);
-		update = updateLink.bind(null, style, options);
-		remove = function () {
-			removeStyleElement(style);
-
-			if(style.href) URL.revokeObjectURL(style.href);
-		};
-	} else {
-		style = createStyleElement(options);
-		update = applyToTag.bind(null, style);
-		remove = function () {
-			removeStyleElement(style);
-		};
-	}
-
-	update(obj);
-
-	return function updateStyle (newObj) {
-		if (newObj) {
-			if (
-				newObj.css === obj.css &&
-				newObj.media === obj.media &&
-				newObj.sourceMap === obj.sourceMap
-			) {
-				return;
-			}
-
-			update(obj = newObj);
-		} else {
-			remove();
-		}
-	};
-}
-
-var replaceText = (function () {
-	var textStore = [];
-
-	return function (index, replacement) {
-		textStore[index] = replacement;
-
-		return textStore.filter(Boolean).join('\n');
-	};
-})();
-
-function applyToSingletonTag (style, index, remove, obj) {
-	var css = remove ? "" : obj.css;
-
-	if (style.styleSheet) {
-		style.styleSheet.cssText = replaceText(index, css);
-	} else {
-		var cssNode = document.createTextNode(css);
-		var childNodes = style.childNodes;
-
-		if (childNodes[index]) style.removeChild(childNodes[index]);
-
-		if (childNodes.length) {
-			style.insertBefore(cssNode, childNodes[index]);
-		} else {
-			style.appendChild(cssNode);
-		}
-	}
-}
-
-function applyToTag (style, obj) {
-	var css = obj.css;
-	var media = obj.media;
-
-	if(media) {
-		style.setAttribute("media", media)
-	}
-
-	if(style.styleSheet) {
-		style.styleSheet.cssText = css;
-	} else {
-		while(style.firstChild) {
-			style.removeChild(style.firstChild);
-		}
-
-		style.appendChild(document.createTextNode(css));
-	}
-}
-
-function updateLink (link, options, obj) {
-	var css = obj.css;
-	var sourceMap = obj.sourceMap;
-
-	/*
-		If convertToAbsoluteUrls isn't defined, but sourcemaps are enabled
-		and there is no publicPath defined then lets turn convertToAbsoluteUrls
-		on by default.  Otherwise default to the convertToAbsoluteUrls option
-		directly
-	*/
-	var autoFixUrls = options.convertToAbsoluteUrls === undefined && sourceMap;
-
-	if (options.convertToAbsoluteUrls || autoFixUrls) {
-		css = fixUrls(css);
-	}
-
-	if (sourceMap) {
-		// http://stackoverflow.com/a/26603875
-		css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
-	}
-
-	var blob = new Blob([css], { type: "text/css" });
-
-	var oldSrc = link.href;
-
-	link.href = URL.createObjectURL(blob);
-
-	if(oldSrc) URL.revokeObjectURL(oldSrc);
-}
-
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports) {
-
-
-/**
- * When source maps are enabled, `style-loader` uses a link element with a data-uri to
- * embed the css on the page. This breaks all relative urls because now they are relative to a
- * bundle instead of the current page.
- *
- * One solution is to only use full urls, but that may be impossible.
- *
- * Instead, this function "fixes" the relative urls to be absolute according to the current page location.
- *
- * A rudimentary test suite is located at `test/fixUrls.js` and can be run via the `npm test` command.
- *
- */
-
-module.exports = function (css) {
-  // get current location
-  var location = typeof window !== "undefined" && window.location;
-
-  if (!location) {
-    throw new Error("fixUrls requires window.location");
-  }
-
-	// blank or null?
-	if (!css || typeof css !== "string") {
-	  return css;
-  }
-
-  var baseUrl = location.protocol + "//" + location.host;
-  var currentDir = baseUrl + location.pathname.replace(/\/[^\/]*$/, "/");
-
-	// convert each url(...)
-	/*
-	This regular expression is just a way to recursively match brackets within
-	a string.
-
-	 /url\s*\(  = Match on the word "url" with any whitespace after it and then a parens
-	   (  = Start a capturing group
-	     (?:  = Start a non-capturing group
-	         [^)(]  = Match anything that isn't a parentheses
-	         |  = OR
-	         \(  = Match a start parentheses
-	             (?:  = Start another non-capturing groups
-	                 [^)(]+  = Match anything that isn't a parentheses
-	                 |  = OR
-	                 \(  = Match a start parentheses
-	                     [^)(]*  = Match anything that isn't a parentheses
-	                 \)  = Match a end parentheses
-	             )  = End Group
-              *\) = Match anything and then a close parens
-          )  = Close non-capturing group
-          *  = Match anything
-       )  = Close capturing group
-	 \)  = Match a close parens
-
-	 /gi  = Get all matches, not the first.  Be case insensitive.
-	 */
-	var fixedCss = css.replace(/url\s*\(((?:[^)(]|\((?:[^)(]+|\([^)(]*\))*\))*)\)/gi, function(fullMatch, origUrl) {
-		// strip quotes (if they exist)
-		var unquotedOrigUrl = origUrl
-			.trim()
-			.replace(/^"(.*)"$/, function(o, $1){ return $1; })
-			.replace(/^'(.*)'$/, function(o, $1){ return $1; });
-
-		// already a full url? no change
-		if (/^(#|data:|http:\/\/|https:\/\/|file:\/\/\/|\s*$)/i.test(unquotedOrigUrl)) {
-		  return fullMatch;
-		}
-
-		// convert the url to a full url
-		var newUrl;
-
-		if (unquotedOrigUrl.indexOf("//") === 0) {
-		  	//TODO: should we add protocol?
-			newUrl = unquotedOrigUrl;
-		} else if (unquotedOrigUrl.indexOf("/") === 0) {
-			// path should be relative to the base url
-			newUrl = baseUrl + unquotedOrigUrl; // already starts with '/'
-		} else {
-			// path should be relative to current directory
-			newUrl = currentDir + unquotedOrigUrl.replace(/^\.\//, ""); // Strip leading './'
-		}
-
-		// send back the fixed url(...)
-		return "url(" + JSON.stringify(newUrl) + ")";
-	});
-
-	// send back the fixed css
-	return fixedCss;
-};
-
-
-/***/ }),
-/* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3229,13 +2553,13 @@ class FileButtons_FileButtons extends Control {
         this.element = Control.createElement('div', {
             className: 'file-buttons',
         });
-        let menu = Control.createByTag('ul');
+        let buttons = Control.createByTag('ul');
         if (this.config.type === 'select') {
-            menu.append(Control
+            buttons.append(Control
                 .createByTag('li', {
-                className: 'select'
+                className: 'select',
+                title: tinymce.i18n.translate('Select')
             })
-                .setAttribute('title', tinymce.i18n.translate('Select'))
                 .text(tinymce.i18n.translate('Select'))
                 .on('click', (e) => {
                 e.preventDefault();
@@ -3243,22 +2567,22 @@ class FileButtons_FileButtons extends Control {
             }));
         }
         else {
-            menu.append(Control
+            buttons.append(Control
                 .createByTag('li', {
-                className: 'link'
+                className: 'link',
+                title: tinymce.i18n.translate('Insert link')
             })
-                .setAttribute('title', tinymce.i18n.translate('Insert link'))
                 .text(tinymce.i18n.translate('Insert link'))
                 .on('click', (e) => {
                 e.preventDefault();
                 this.insertFile('link');
             }));
             if (this.file.getType() === 'image') {
-                menu.append(Control
+                buttons.append(Control
                     .createByTag('li', {
-                    className: 'image'
+                    className: 'image',
+                    title: tinymce.i18n.translate('Insert image')
                 })
-                    .setAttribute('title', tinymce.i18n.translate('Insert image'))
                     .text(tinymce.i18n.translate('Insert image'))
                     .on('click', (e) => {
                     e.preventDefault();
@@ -3266,36 +2590,17 @@ class FileButtons_FileButtons extends Control {
                 }));
             }
         }
-        menu
-            .append(Control
+        buttons.append(Control
             .createByTag('li', {
-            className: 'delete'
+            className: 'delete',
+            title: tinymce.i18n.translate('Delete')
         })
-            .setAttribute('title', tinymce.i18n.translate('Delete'))
             .prepend('<i class="mce-ico mce-i-remove"></i>')
             .on('click', (e) => {
             e.preventDefault();
             this.deleteFile();
         }));
-        this.append(menu);
-    }
-    show() {
-        this
-            .addClass('show')
-            .trigger('showed', [this]);
-    }
-    hide() {
-        this
-            .removeClass('show')
-            .trigger('hidden', [this]);
-    }
-    toggleShow() {
-        if (this.hasClass('show')) {
-            this.hide();
-        }
-        else {
-            this.show();
-        }
+        this.append(buttons);
     }
     insertFile(type) {
         if (this.config.callback(this.file, type)) {
@@ -3323,14 +2628,29 @@ class FileButtons_FileButtons extends Control {
                     .delete(this.file)
                     .then(() => {
                     this.getParent().fadeOut(() => {
-                        this.config.editor.windowManager.alert(tinymce.i18n.translate(['"{0}" successfully deleted.', this.file.getName()]));
+                        this.config.editor.windowManager.confirm(tinymce.i18n.translate(['"{0}" successfully deleted. Do you want to remove the content with reference to the deleted file?', this.file.getName()]), (state) => {
+                            if (state) {
+                                Control
+                                    .createBySelector('img', this.config.editor.getBody())
+                                    .forEach((img) => {
+                                    if (img.getAttribute('src').endsWith(this.file.getName())) {
+                                        img.remove();
+                                    }
+                                });
+                                Control
+                                    .createBySelector('a', this.config.editor.getBody())
+                                    .forEach((a) => {
+                                    if (a.getAttribute('href').endsWith(this.file.getName())) {
+                                        a.unwrap();
+                                    }
+                                });
+                            }
+                        });
                     }, 30);
                 })
                     .catch((error) => {
                     this.config.editor.windowManager.alert(tinymce.i18n.translate(['Delete failed: {0}', error]));
                 });
-            }
-            else {
             }
         });
         return this;
@@ -3406,7 +2726,7 @@ class Plugin_Plugin {
         this.config.editor.windowManager.open({
             title: 'File manager',
             id: 'filery-dialog',
-            height: 400,
+            height: Number.parseInt(this.config.editor.settings.filery_dialog_height),
             width: 700,
             autoScroll: true,
             buttons: [{
@@ -3475,7 +2795,6 @@ var sass_plugin = __webpack_require__(7);
 
 
 /* harmony default export */ var ts_plugin = (function (editor, url) {
-    tinymce.DOM.loadCSS(url + '/plugin.min.css');
     ApiClient_ApiClient.setUrl(editor.settings.filery_api_url);
     editor.addButton('filery', {
         icon: 'browse',

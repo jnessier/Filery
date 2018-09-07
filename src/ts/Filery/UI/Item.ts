@@ -28,9 +28,9 @@ export class Item extends Control {
                 e.preventDefault();
                 this.getSiblings().forEach((item) => {
                     item.removeClass('selected');
-                })
+                });
                 if (this.hasClass('selected')) {
-                    this.removeClass('selected')
+                    this.removeClass('selected');
                 } else {
                     this.addClass('selected');
                 }
