@@ -23,6 +23,13 @@ can manage and upload files of your content.
 ### How much does the plugin cost?
 Nothing, nada, nichts. The plugin is 100% free and licensed under MIT.
 
+## Requirements
+For Filery as TinyMCE plugin:
+* TinyMCE 4.8.x or newer
+
+For the API of Filery:
+* PHP 5.6 or newer
+
 ## Installation
 The installation is done in two steps:
 1. [Installation of the TinyMCE plugin](#1-tinymce-plugin)
