@@ -77,7 +77,15 @@ tinymce.init({
     },
     images_upload_handler: function (blobInfo, success, failure) {
         Filery.imagesUploadHandler(blobInfo, success, failure);
-    }
+    },
+  // ...
+});
+```
+Not recommended alternative to `images_upload_handler` callback, because the token handling of Filery is not supported. 
+```js
+tinymce.init({
+  // ...
+    images_upload_url: 'http://filery.local/api/index.php?images_upload_url=1',
   // ...
 });
 ```

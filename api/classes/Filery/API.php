@@ -18,7 +18,8 @@ class API extends AbstractAPI
         $this
             ->register('GET', [], [$this, 'read'])
             ->register('DELETE', ['fileName'], [$this, 'delete'])
-            ->register('POST', [], [$this, 'upload']);
+            ->register('POST', [], [$this, 'upload'])
+            ->register('POST', ['images_upload_url'], [$this, 'upload']);
     }
 
     /**
@@ -100,5 +101,10 @@ class API extends AbstractAPI
             return $fileData;
         }
         throw new Exception('File upload failed.');
+    }
+
+    protected function uploadImage()
+    {
+
     }
 }
