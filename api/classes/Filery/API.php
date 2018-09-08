@@ -102,9 +102,4 @@ class API extends AbstractAPI
         }
         throw new Exception('File upload failed.');
     }
-
-    protected function uploadImage()
-    {
-
-    }
 }
