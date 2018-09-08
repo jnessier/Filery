@@ -5,14 +5,25 @@
     <script>
         tinymce.init({
             selector: 'textarea',
+            menubar: false,
+
             plugins: [
-                'link image media filery',
+                'link image imagetools media filery',
             ],
+
             contextmenu: 'image link',
             language_url: 'http://filery.local/static/langs/de.js',
             height: '500px',
-            toolbar: 'filery | insert',
+            toolbar: 'filery | insert | image',
             file_picker_types: 'file image media',
+
+            image_advtab: true,
+            imagetools_toolbar: 'editimage imageoptions',
+            imagetools_cors_hosts: ['filery.local'],
+
+            automatic_uploads: true,
+            images_reuse_filename: true,
+            //images_upload_url: 'http://filery.local/api/index.php?images_upload_url=1',
 
             filery_dialog_height: '400px',
             filery_api_token: false,

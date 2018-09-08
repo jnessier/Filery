@@ -93,6 +93,7 @@ The API needs to know where get the files from, which can be configured too.
 |`base.path`|The path to the directory where the files for the API are located.|
 |`base.url`|The URL of the the directory, where the files are accessible over HTTP.|
 |`showHiddenFiles`|Set TRUE to make the hidden files visible too in the file manager of Filery.<br />**Optional** - Default value: false|
+|`upload.overwrite`|Set TRUE to overwrite an existing file, when the uploaded file has the similar name. Don't forget to set TRUE, when you have `images_reuse_filename` enabled in your TinyMCE configuration.<br />**Optional** - Default value: false|
 |`tokenCallback`|A callback function for the token handling. Can be used to return custom config parameters. The return value must be an key-value array.<br />**Optional** - Default value: Anonymous function returning an empty array.|
 
 ```php
@@ -102,6 +103,9 @@ return [
         'url' => 'http://domain.tld/storage',
     ],
     'showHiddenFiles' => false,
+    'upload' => [
+        'overwrite' => false,
+    ],
     'tokenCallback' => function ($token) {
         // E.g. return decodeFileryToken($token);
         // or return $_SESSION[$token];

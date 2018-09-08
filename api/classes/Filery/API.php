@@ -91,7 +91,13 @@ class API extends AbstractAPI
         }
 
         if (move_uploaded_file($fileData['tmp_name'], $filePath)) {
-            return $this->aggregateFileData($filePath);
+            $fileData = $this->aggregateFileData($filePath);
+            if (isset($_GET['images_upload_url'])) {
+                return [
+                    'location' => $fileData['url']
+                ];
+            }
+            return $fileData;
         }
         throw new Exception('File upload failed.');
     }
