@@ -24,7 +24,6 @@
                 'link image imagetools media filery',
             ],
 
-            contextmenu: 'image link',
             height: '500px',
             toolbar: 'filery | insert | image',
             file_picker_types: 'file image media',
