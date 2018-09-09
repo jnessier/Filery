@@ -6,9 +6,7 @@ return [
         'url' => 'http://domain.tld/storage',
     ],
     'showHiddenFiles' => false,
-    'tokenCallback' => function ($token) {
-        // E.g. return decodeFileryToken($token);
-        // or return $_SESSION[$token];
-        return [];
-    }
+    'upload' => [
+        'overwrite' => false,
+    ],
 ];

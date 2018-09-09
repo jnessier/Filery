@@ -1,4 +1,4 @@
-// [Filery: A TinyMCE plugin]  1.0.0 - 2018-09-07  
+// [Filery: A TinyMCE plugin]  1.1.0 - 2018-09-09  
  (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -3406,10 +3406,14 @@ class Plugin_Plugin {
                 this.config.editor.windowManager.close(window);
             }
         });
+        let height = 400;
+        if (this.config.editor.settings.filery_dialog_height) {
+            height = Number.parseInt(this.config.editor.settings.filery_dialog_height);
+        }
         this.config.editor.windowManager.open({
             title: tinymce.i18n.translate(['File manager']),
             id: 'filery-dialog',
-            height: Number.parseInt(this.config.editor.settings.filery_dialog_height),
+            height: height,
             width: 700,
             autoScroll: true,
             buttons: [{
