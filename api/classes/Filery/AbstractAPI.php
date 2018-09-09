@@ -41,7 +41,6 @@ abstract class AbstractAPI
                 'zip', 'rar', 'tar', '7z',
             ],
         ],
-        'tokenCallback' => false,
     ];
 
     /**
@@ -66,15 +65,15 @@ abstract class AbstractAPI
     /**
      * Register API actions.
      *
-     * @param string $method POST, GET, DELETE or PUT
-     * @param array $queryKeys Keys of query parameters
-     * @param callable $callback Callback when API action get called
+     * @param string   $method    POST, GET, DELETE or PUT
+     * @param array    $queryKeys Keys of query parameters
+     * @param callable $callback  Callback when API action get called
      *
      * @return self
      */
     protected function register($method, $queryKeys, $callback)
     {
-        $key = $method . implode($queryKeys);
+        $key = $method.implode($queryKeys);
         $this->actions[$key] = $callback;
 
         return $this;
@@ -88,9 +87,14 @@ abstract class AbstractAPI
         try {
             $this->cors();
 
-            if (isset($_SERVER['HTTP_X_FILERY_TOKEN']) && is_callable($this->config['tokenCallback'])) {
-                $customConfig = call_user_func($this->config['tokenCallback'], $_SERVER['HTTP_X_FILERY_TOKEN']);
+            try {
+                $token = new Token();
+                $customConfig = $token
+                    ->set($_SERVER['HTTP_X_FILERY_TOKEN'])
+                    ->fetchFromSession();
                 $this->config = array_replace_recursive($this->config, $customConfig);
+            } catch (Exception $ex) {
+                throw new HttpException(401, $ex->getMessage());
             }
 
             if (!is_readable($this->config['base']['path'])) {
@@ -122,13 +126,13 @@ abstract class AbstractAPI
      */
     protected function cors()
     {
-        header('Access-Control-Allow-Origin: ' . $this->config['accessControl']['allowedOrigin']);
+        header('Access-Control-Allow-Origin: '.$this->config['accessControl']['allowedOrigin']);
         header('Access-Control-Allow-Credentials: true');
         header('Access-Control-Max-Age: 86400');
 
         if ('OPTIONS' == $_SERVER['REQUEST_METHOD']) {
             if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'])) {
-                header('Access-Control-Allow-Methods: ' . $this->config['accessControl']['allowedMethods']);
+                header('Access-Control-Allow-Methods: '.$this->config['accessControl']['allowedMethods']);
             }
 
             if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS'])) {
@@ -148,7 +152,7 @@ abstract class AbstractAPI
      */
     protected function call()
     {
-        $key = $_SERVER['REQUEST_METHOD'] . implode(array_keys($_GET));
+        $key = $_SERVER['REQUEST_METHOD'].implode(array_keys($_GET));
         if (isset($this->actions[$key])) {
             $callback = $this->actions[$key];
             if (is_callable($callback)) {
@@ -159,11 +163,12 @@ abstract class AbstractAPI
     }
 
     /**
-     * Aggregate file data
+     * Aggregate file data.
      *
      * @param string $path File path
      *
      * @return array
+     *
      * @throws Exception
      */
     protected function aggregateFileData($path)
@@ -172,7 +177,7 @@ abstract class AbstractAPI
             $type = 'file';
             $name = basename($path);
             $extension = pathinfo($path, PATHINFO_EXTENSION);
-            $url = $this->config['base']['url'] . '/' . $name;
+            $url = $this->config['base']['url'].'/'.$name;
 
             foreach ($this->config['fileTypes'] as $fileType => $extensions) {
                 if (in_array($extension, $extensions)) {

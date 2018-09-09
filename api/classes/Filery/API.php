@@ -18,12 +18,11 @@ class API extends AbstractAPI
         $this
             ->register('GET', [], [$this, 'read'])
             ->register('DELETE', ['fileName'], [$this, 'delete'])
-            ->register('POST', [], [$this, 'upload'])
-            ->register('POST', ['images_upload_url'], [$this, 'upload']);
+            ->register('POST', [], [$this, 'upload']);
     }
 
     /**
-     * Read API action (get all files)
+     * Read API action (get all files).
      *
      * @return array
      */
@@ -33,7 +32,7 @@ class API extends AbstractAPI
         $fileNames = scandir($this->config['base']['path']);
 
         foreach ($fileNames as $fileName) {
-            $filePath = $this->config['base']['path'] . '/' . $fileName;
+            $filePath = $this->config['base']['path'].'/'.$fileName;
             if (is_file($filePath)) {
                 if ($this->config['showHiddenFiles'] || '.' !== $fileName[0]) {
                     $data[] = $this->aggregateFileData($filePath);
@@ -45,15 +44,16 @@ class API extends AbstractAPI
     }
 
     /**
-     * Delete API action (delete file by file name)
+     * Delete API action (delete file by file name).
      *
      * @return array
+     *
      * @throws Exception
      */
     protected function delete()
     {
         $fileName = $_GET['fileName'];
-        $filePath = $this->config['base']['path'] . '/' . basename($fileName);
+        $filePath = $this->config['base']['path'].'/'.basename($fileName);
 
         if (basename($fileName) === $fileName && is_readable($filePath) && is_file($filePath)) {
             if (unlink($filePath)) {
@@ -64,9 +64,10 @@ class API extends AbstractAPI
     }
 
     /**
-     * Upload API action (upload file)
+     * Upload API action (upload file).
      *
      * @return array
+     *
      * @throws Exception
      * @throws HttpException
      */
@@ -75,7 +76,7 @@ class API extends AbstractAPI
         $fileData = $_FILES['file'];
 
         $fileName = basename($fileData['name']);
-        $filePath = $this->config['base']['path'] . '/' . $fileName;
+        $filePath = $this->config['base']['path'].'/'.$fileName;
         $fileExtension = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
 
         // Check if file already exists
@@ -92,13 +93,7 @@ class API extends AbstractAPI
         }
 
         if (move_uploaded_file($fileData['tmp_name'], $filePath)) {
-            $fileData = $this->aggregateFileData($filePath);
-            if (isset($_GET['images_upload_url'])) {
-                return [
-                    'location' => $fileData['url']
-                ];
-            }
-            return $fileData;
+            return $this->aggregateFileData($filePath);
         }
         throw new Exception('File upload failed.');
     }
