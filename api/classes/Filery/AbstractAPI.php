@@ -124,18 +124,20 @@ abstract class AbstractAPI
      * Cross-Origin Resource Sharing handling.
      *
      * @see https://stackoverflow.com/a/9866124/2338829
+     * @see https://www.tiny.cloud/docs/advanced/php-upload-handler/
      */
     protected function cors()
     {
-        header('Access-Control-Max-Age: 86400');
-
-        if (isset($_SERVER['HTTP_ORIGIN']) && count($this->config['accessControl']['acceptedOrigins'])) {
+        if (isset($_SERVER['HTTP_ORIGIN']) && count($this->config['accessControl']['acceptedOrigins']) > 0) {
             if (in_array($_SERVER['HTTP_ORIGIN'], $this->config['accessControl']['acceptedOrigins'])) {
                 header('Access-Control-Allow-Origin: '.$_SERVER['HTTP_ORIGIN']);
             } else {
                 throw new HttpException(403);
             }
         }
+
+        header('Access-Control-Allow-Credentials: true');
+        header('Access-Control-Max-Age: 86400');
 
         if ('OPTIONS' == $_SERVER['REQUEST_METHOD']) {
             if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'])) {
