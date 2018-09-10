@@ -23,11 +23,11 @@ abstract class AbstractAPI
             'acceptedMethods' => 'GET, POST, DELETE, PUT, OPTIONS',
         ],
         'fileTypes' => [
-            'code' => ['java', 'php', 'html', 'js', 'css', 'htm', 'cpp', 'ts', 'xml', 'json', 'bat'],
-            'audio' => ['mp3', 'wav', 'ogg', 'wma'],
-            'image' => ['gif', 'bmp', 'jpg', 'jpeg', 'png'],
+            'code' => ['java', 'php', 'html', 'js', 'css', 'htm', 'cpp', 'ts', 'xml', 'json', 'bat', 'sh', 'py'],
+            'audio' => ['mp3', 'wav', 'ogg', 'wma', 'flac'],
+            'image' => ['gif', 'bmp', 'jpg', 'jpeg', 'png', 'webp'],
             'text' => ['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt', 'rtf', 'csv', 'pdf'],
-            'video' => ['mp4', 'wma', 'qt', 'mov'],
+            'video' => ['mp4', 'qt', 'mov', 'avi', 'flv', 'wmv', 'webm'],
             'zip' => ['zip', 'rar', 'tar', '7z'],
         ],
         'upload' => [
@@ -35,9 +35,9 @@ abstract class AbstractAPI
             'maxFileSize' => 2000000,
             'allowedFileExtensions' => [
                 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt', 'rtf', 'csv', 'pdf',
-                'mp3', 'wav', 'ogg', 'wma',
-                'gif', 'bmp', 'jpg', 'jpeg', 'png',
-                'mp4', 'wma', 'qt', 'mov',
+                'mp3', 'wav', 'ogg', 'wma', 'flac',
+                'gif', 'bmp', 'jpg', 'jpeg', 'png', 'webp',
+                'mp4', 'qt', 'mov', 'avi', 'flv', 'wmv', 'webm',
                 'zip', 'rar', 'tar', '7z',
             ],
         ],
