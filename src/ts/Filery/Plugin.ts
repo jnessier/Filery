@@ -29,7 +29,7 @@ export class Plugin {
 
         let height = 400;
         if (this.config.editor.settings.filery_dialog_height) {
-            height = Number.parseInt(this.config.editor.settings.filery_dialog_height);
+            height = parseInt(this.config.editor.settings.filery_dialog_height);
         }
 
         this.config.editor.windowManager.open({
@@ -75,7 +75,7 @@ export class Plugin {
                         this.config.editor.windowManager.alert(tinymce.i18n.translate('Upload failed.') + ' ' + error);
                     });
             })
-            .trigger('click');
+            .get().click();
 
         return this;
     }
@@ -84,11 +84,7 @@ export class Plugin {
         ApiClient
             .read()
             .then((files) => {
-                if (this.config.filter.length > 0) {
-                    /*   files = files.filter((file) => {
-                           return this.config.filter.indexOf(file.getType()) > -1;
-                       });*/
-                }
+
                 Control
                     .createBySelector('#filery-dialog-body', document)[0]
                     .html('')

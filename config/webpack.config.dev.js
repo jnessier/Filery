@@ -2,7 +2,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
     mode: 'development',
-    entry: './src/ts/index.ts',
+    entry: ['./src/ts/index.ts'],
     resolve: {
         extensions: ['.ts', '.js']
     },
@@ -15,16 +15,10 @@ module.exports = {
     module: {
         rules: [{
             test: /\.ts$/,
-            use: 'ts-loader'
-        }, {
-            test: /\.js$/,
-            exclude: /(node_modules|bower_components)/,
-            use: {
-                loader: 'babel-loader',
-                options: {
-                    presets: [['es2015', {modules: false}]],
-                }
-            }
+            use: [
+                'babel-loader',
+                'ts-loader',
+            ],
         }, {
             test: /\.scss$/,
             use: [

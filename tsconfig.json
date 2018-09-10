@@ -2,7 +2,11 @@
   "compilerOptions": {
     "noImplicitAny": false,
     "removeComments": true,
-    "target": "es6",
+    "target": "ES6",
+    /* "lib": [
+       "ES6",
+       "DOM"
+     ],*/
     "allowSyntheticDefaultImports": true
   }
 }

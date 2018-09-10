@@ -10,7 +10,7 @@
     $token = new Filery\Token();
     $token->create([
         'base' => [
-            'path' => realpath(__DIR__ . '/storage/custom'),
+            'path' => realpath(__DIR__.'/storage/custom'),
             'url' => 'http://filery.local/dev/storage/custom',
         ],
     ]);
