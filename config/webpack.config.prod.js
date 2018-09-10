@@ -23,23 +23,20 @@ module.exports = {
     module: {
         rules: [{
             test: /\.ts$/,
-            use: "ts-loader"
+            use: 'ts-loader'
+        }, {
+            test: /\.js$/,
+            exclude: /(node_modules|bower_components)/,
+            use: {
+                loader: 'babel-loader',
+                options: {
+                    presets: [['es2015', {modules: false}]],
+                }
+            }
         }, {
             test: /\.scss$/,
             use: [
                 "style-loader",
-
-                /* {
-                  loader: 'postcss-loader',
-                 options: {
-                        ident: 'postcss',
-                        plugins: (loader) => [
-                            //   require('postcss-import')({root: loader.resourcePath}),
-                            //  require('postcss-preset-env')(),
-                            require('cssnano')()
-                        ]
-                    }
-                    },*/
                 'css-loader',
                 {
                     loader: 'postcss-loader',

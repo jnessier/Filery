@@ -2,7 +2,7 @@
   "compilerOptions": {
     "noImplicitAny": false,
     "removeComments": true,
-    "target": "ES2017"
-    // "module": "commonjs"
+    "target": "es6",
+    "allowSyntheticDefaultImports": true
   }
 }

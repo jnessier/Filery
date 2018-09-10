@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+    <script src="https://cdn.tinymce.com/4/tinymce.min.js"></script>
     <script src="http://localhost:8080/scripts/main.js"></script>
     <?php
     session_start();
@@ -10,7 +10,7 @@
     $token = new Filery\Token();
     $token->create([
         'base' => [
-            'path' => realpath(__DIR__.'/storage/custom'),
+            'path' => realpath(__DIR__ . '/storage/custom'),
             'url' => 'http://filery.local/dev/storage/custom',
         ],
     ]);

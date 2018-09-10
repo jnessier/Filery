@@ -1,4 +1,4 @@
-// [Filery: A TinyMCE plugin]  1.1.0 - 2018-09-09  
+// [Filery: A TinyMCE plugin]  1.1.0 - 2018-09-10  
  (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -2889,6 +2889,14 @@ class File {
 }
 
 // CONCATENATED MODULE: ./src/ts/Filery/ApiClient.ts
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 
 
 class ApiClient_ApiClient {
@@ -2904,51 +2912,57 @@ class ApiClient_ApiClient {
         }
         return Promise.reject(tinymce.i18n.translate(message));
     }
-    static async read(dir) {
-        return await client["get"](this.url)
-            .set('X-Filery-Token', tinymce.settings.filery_api_token)
-            .query({
-            'dir': dir,
-        })
-            .then((response) => {
-            let files = new Array();
-            response.body.forEach((value) => {
-                files.push(new File(value.url, value.name, value.size, value.time, value.extension, value.type));
-            });
-            return files;
-        })
-            .catch(this.handleError);
+    static read(dir) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield client["get"](this.url)
+                .set('X-Filery-Token', tinymce.settings.filery_api_token)
+                .query({
+                'dir': dir,
+            })
+                .then((response) => {
+                let files = new Array();
+                response.body.forEach((value) => {
+                    files.push(new File(value.url, value.name, value.size, value.time, value.extension, value.type));
+                });
+                return files;
+            })
+                .catch(this.handleError);
+        });
     }
-    static async upload(fileData, dir) {
-        let formData = new FormData();
-        if (typeof fileData.blob === 'function' && fileData.blob() instanceof Blob) {
-            formData.append('file', fileData.blob(), fileData.filename());
-        }
-        else {
-            formData.append('file', fileData);
-        }
-        return await client["post"](this.url)
-            .set('X-Filery-Token', tinymce.settings.filery_api_token)
-            .query({
-            'dir': dir,
-        })
-            .send(formData)
-            .then((response) => {
-            return new File(response.body.url, response.body.name, response.body.size, response.body.time, response.body.extension, response.body.type);
-        })
-            .catch(this.handleError);
+    static upload(fileData, dir) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let formData = new FormData();
+            if (typeof fileData.blob === 'function' && fileData.blob() instanceof Blob) {
+                formData.append('file', fileData.blob(), fileData.filename());
+            }
+            else {
+                formData.append('file', fileData);
+            }
+            return yield client["post"](this.url)
+                .set('X-Filery-Token', tinymce.settings.filery_api_token)
+                .query({
+                'dir': dir,
+            })
+                .send(formData)
+                .then((response) => {
+                return new File(response.body.url, response.body.name, response.body.size, response.body.time, response.body.extension, response.body.type);
+            })
+                .catch(this.handleError);
+        });
     }
-    static async delete(file, dir) {
-        return await client["delete"](this.url)
-            .set('X-Filery-Token', tinymce.settings.filery_api_token)
-            .query({
-            'dir': dir,
-            'fileName': file.getName(),
-        })
-            .then((response) => {
-            return true;
-        })
-            .catch(this.handleError);
+    static delete(file, dir) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield client["delete"](this.url)
+                .set('X-Filery-Token', tinymce.settings.filery_api_token)
+                .query({
+                'dir': dir,
+                'fileName': file.getName(),
+            })
+                .then((response) => {
+                return true;
+            })
+                .catch(this.handleError);
+        });
     }
 }
 
