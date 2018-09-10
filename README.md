@@ -21,7 +21,6 @@ Feel free to try the [demo](https://demos.neoflow.ch/filery/) online.
 
 # Requirements
 * TinyMCE 4.8.x or newer
-    - asd
 * PHP 7.1 or newer
 
 **Important**: The website with the TinyMCE instance and the Filery API have to run under the same domain with the same PHP-initiated session. If this is not the case, the security of the Filery API cannot be guaranteed.
