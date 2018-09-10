@@ -58,23 +58,32 @@ export class Plugin {
     }
 
     private uploadFile() {
-        Control
+        let input = Control
             .createByTag('input', {
                 'type': 'file',
-                // 'accept': this.config.filter + '/*'
+                'accept': this.config.filter + '/*'
+            });
+
+        if (this.config.filter.length) {
+            let accept = [];
+            this.config.filter.forEach((filter) => {
+                accept.push(filter + '/*');
             })
-            .on('change', (e) => {
-                ApiClient
-                    .upload(e.target.files[0])
-                    .then((file) => {
-                        this.config.editor.windowManager.alert(tinymce.i18n.translate(['"{0}" successfully uploaded.', file.getName()]), () => {
-                            this.loadFiles();
-                        });
-                    })
-                    .catch((error) => {
-                        this.config.editor.windowManager.alert(tinymce.i18n.translate('Upload failed.') + ' ' + error);
+            input.setAttribute('accept', accept.join(','))
+        }
+
+        input.on('change', (e) => {
+            ApiClient
+                .upload(e.target.files[0])
+                .then((file) => {
+                    this.config.editor.windowManager.alert(tinymce.i18n.translate(['"{0}" successfully uploaded.', file.getName()]), () => {
+                        this.loadFiles();
                     });
-            })
+                })
+                .catch((error) => {
+                    this.config.editor.windowManager.alert(tinymce.i18n.translate('Upload failed.') + ' ' + error);
+                });
+        })
             .get().click();
 
         return this;
