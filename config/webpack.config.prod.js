@@ -1,15 +1,16 @@
 const path = require("path"),
     CopyWebpackPlugin = require("copy-webpack-plugin"),
     UglifyJsPlugin = require('uglifyjs-webpack-plugin'),
-    WebpackAutoInject = require('webpack-auto-inject-version');
+    WebpackAutoInject = require('webpack-auto-inject-version'),
+    CleanWebpackPlugin = require('clean-webpack-plugin'); //installed via npm
 
 const pluginName = "filery";
 
 module.exports = {
     mode: 'production',
     entry: {
-        "plugin": "./src/ts/index.ts",
-        "plugin.min": "./src/ts/index.ts"
+        "plugin": ["./src/ts/index.ts"],
+        "plugin.min": ["./src/ts/index.ts"]
     },
     output: {
         library: 'Filery',
@@ -23,23 +24,15 @@ module.exports = {
     module: {
         rules: [{
             test: /\.ts$/,
-            use: "ts-loader"
+            use: [
+                'babel-loader',
+                'ts-loader',
+            ],
+            exclude: /node_modules/
         }, {
             test: /\.scss$/,
             use: [
                 "style-loader",
-
-                /* {
-                  loader: 'postcss-loader',
-                 options: {
-                        ident: 'postcss',
-                        plugins: (loader) => [
-                            //   require('postcss-import')({root: loader.resourcePath}),
-                            //  require('postcss-preset-env')(),
-                            require('cssnano')()
-                        ]
-                    }
-                    },*/
                 'css-loader',
                 {
                     loader: 'postcss-loader',
@@ -75,6 +68,7 @@ module.exports = {
         ]
     },
     plugins: [
+
         new WebpackAutoInject({
             SHORT: 'Filery: A TinyMCE plugin',
             SILENT: true,
@@ -103,6 +97,11 @@ module.exports = {
                 to: path.join(__dirname, "../dist", 'api'),
                 ignore: ['config.php']
             }
-        ])
+        ]),
+        new CleanWebpackPlugin([
+            'dist'
+        ], {
+            root: path.join(__dirname, '..')
+        }),
     ]
 };

@@ -7,6 +7,7 @@ Feel free to try the [demo](https://demos.neoflow.ch/filery/) online.
 
 **Table of Contents**
 * [Requirements](#requirements)
+* [Download](#download)
 * [Installation](#installation)
     + [1. TinyMCE plugin](#1-tinymce-plugin)
         - [Installation](#installation-1)
@@ -16,25 +17,29 @@ Feel free to try the [demo](https://demos.neoflow.ch/filery/) online.
         - [Installation](#installation-2)
         - [Configuration](#configuration-2)
         - [Advanced configuration](#advanced-configuration-2)
+* [Support](#support)        
 * [Donation](#donation)
 * [License](#license)
 
 # Requirements
 * TinyMCE 4.8.x or newer
-    - asd
 * PHP 7.1 or newer
 
 **Important**: The website with the TinyMCE instance and the Filery API have to run under the same domain with the same PHP-initiated session. If this is not the case, the security of the Filery API cannot be guaranteed.
 
 Please use the modern theme of TinyMCE for the best user experience with Filery.
 
+# Download
+You can download the latest release [here](https://github.com/Neoflow/Filery/releases).
+
+Older versions of Filery than the latest release aren't support and recommended use.
 
 # Installation
-The installation is done in two steps:
-1. [Installation of the TinyMCE plugin](#1-tinymce-plugin)
-2. [Installation of the plugin API](#2-plugin-api)
+Filery and the installation is divided into two parts:
+1. [TinyMCE Plugin](#1-tinymce-plugin)
+2. [Plugin API](#2-plugin-api)
 
-But first you have to download and unzip the [latest release](https://github.com/rjgamer/Filery/releases/latest).
+Both parts must be installed and configured as described below. Otherwise Filery will not run.
 
 ## 1. TinyMCE plugin
 ### Installation
@@ -70,6 +75,7 @@ After the token is generated, you can configure your TinyMCE instance and the Fi
 |`filery_api_url`|Defines the URL to the plugin API. The API is the most important part of the plugin and is handling all CRUD actions for the file management.|
 |`filery_api_token`|The token provides the security, that only authenticated users can access the Filery API.|
 |`filery_dialog_height`|Can be used to customize the dialog height.<br />**Optional** - Default value: 400px|
+|`filery_show_images`|Set FALSE to show default image icon instead of images.<br />**Optional** - Default value: true|
 
 ```js
 tinymce.init({
@@ -77,6 +83,7 @@ tinymce.init({
   filery_api_url: 'http://domain.tld/filery/api/index.php',
   filery_api_token: '<?= $token->toString(); ?>',
   filery_dialog_height: '400px',
+  filery_show_images: true
   // ...
 });
 ```
@@ -127,6 +134,9 @@ return [
 
 ### Advanced configuration
 There are more advanced configuration parameters for the API. If you really want to change it, then please take a look at the [AbstractAPI](https://github.com/rjgamer/Filery/blob/master/api/classes/Filery/AbstractAPI.php#L15) class on line 15. 
+
+# Support
+Older versions of Filery than the latest release aren't supported and recommended use.
 
 # Donation
 If you like my work or if you use it for a commercial project, please give me a donation. Thanks!

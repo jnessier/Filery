@@ -21,7 +21,6 @@ Feel free to try the [demo](https://demos.neoflow.ch/filery/) online.
 
 # Requirements
 * TinyMCE 4.8.x or newer
-    - asd
 * PHP 7.1 or newer
 
 **Important**: The website with the TinyMCE instance and the Filery API have to run under the same domain with the same PHP-initiated session. If this is not the case, the security of the Filery API cannot be guaranteed.
@@ -70,6 +69,7 @@ After the token is generated, you can configure your TinyMCE instance and the Fi
 |`filery_api_url`|Defines the URL to the plugin API. The API is the most important part of the plugin and is handling all CRUD actions for the file management.|
 |`filery_api_token`|The token provides the security, that only authenticated users can access the Filery API.|
 |`filery_dialog_height`|Can be used to customize the dialog height.<br />**Optional** - Default value: 400px|
+|`filery_show_images`|Set FALSE to show default image icon instead of images.<br />**Optional** - Default value: true|
 
 ```js
 tinymce.init({

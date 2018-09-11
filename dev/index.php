@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+    <script src="https://cdn.tinymce.com/4/tinymce.min.js"></script>
     <script src="http://localhost:8080/scripts/main.js"></script>
     <?php
     session_start();
@@ -10,7 +10,7 @@
     $token = new Filery\Token();
     $token->create([
         'base' => [
-            'path' => realpath(__DIR__.'/storage/custom'),
+            'path' => realpath(__DIR__ . '/storage/custom'),
             'url' => 'http://filery.local/dev/storage/custom',
         ],
     ]);
@@ -42,9 +42,10 @@
             // Alternative to images_upload_handler callback, but not supported by Filery
             //images_upload_url: 'http://filery.local/api/index.php?images_upload_url=1',
 
-            filery_dialog_height: '400px',
+
             filery_api_token: '<?= $token->toString(); ?>',
             filery_api_url: 'http://filery.local/api/index.php',
+            filery_show_images: false,
 
             file_picker_callback: function (callback, value, meta) {
                 Filery.filePickerCallback(callback, value, meta);

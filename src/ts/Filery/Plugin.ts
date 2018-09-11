@@ -29,7 +29,7 @@ export class Plugin {
 
         let height = 400;
         if (this.config.editor.settings.filery_dialog_height) {
-            height = Number.parseInt(this.config.editor.settings.filery_dialog_height);
+            height = parseInt(this.config.editor.settings.filery_dialog_height);
         }
 
         this.config.editor.windowManager.open({
@@ -58,24 +58,33 @@ export class Plugin {
     }
 
     private uploadFile() {
-        Control
+        let input = Control
             .createByTag('input', {
                 'type': 'file',
-                // 'accept': this.config.filter + '/*'
+                'accept': this.config.filter + '/*'
+            });
+
+        if (this.config.filter.length) {
+            let accept = [];
+            this.config.filter.forEach((filter) => {
+                accept.push(filter + '/*');
             })
-            .on('change', (e) => {
-                ApiClient
-                    .upload(e.target.files[0])
-                    .then((file) => {
-                        this.config.editor.windowManager.alert(tinymce.i18n.translate(['"{0}" successfully uploaded.', file.getName()]), () => {
-                            this.loadFiles();
-                        });
-                    })
-                    .catch((error) => {
-                        this.config.editor.windowManager.alert(tinymce.i18n.translate('Upload failed.') + ' ' + error);
+            input.setAttribute('accept', accept.join(','))
+        }
+
+        input.on('change', (e) => {
+            ApiClient
+                .upload(e.target.files[0])
+                .then((file) => {
+                    this.config.editor.windowManager.alert(tinymce.i18n.translate(['"{0}" successfully uploaded.', file.getName()]), () => {
+                        this.loadFiles();
                     });
-            })
-            .trigger('click');
+                })
+                .catch((error) => {
+                    this.config.editor.windowManager.alert(tinymce.i18n.translate('Upload failed.') + ' ' + error);
+                });
+        })
+            .get().click();
 
         return this;
     }
@@ -84,11 +93,7 @@ export class Plugin {
         ApiClient
             .read()
             .then((files) => {
-                if (this.config.filter.length > 0) {
-                    /*   files = files.filter((file) => {
-                           return this.config.filter.indexOf(file.getType()) > -1;
-                       });*/
-                }
+
                 Control
                     .createBySelector('#filery-dialog-body', document)[0]
                     .html('')

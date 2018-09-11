@@ -2,7 +2,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
     mode: 'development',
-    entry: './src/ts/index.ts',
+    entry: ['./src/ts/index.ts'],
     resolve: {
         extensions: ['.ts', '.js']
     },
@@ -12,43 +12,42 @@ module.exports = {
         libraryTarget: 'umd',
     },
     devtool: 'source-map',
-    module:
-        {
-            rules: [{
-                test: /\.ts$/,
-                use: 'ts-loader'
-            }, {
-                test: /\.scss$/,
-                use: [
-                    "style-loader", // creates style nodes from JS strings
-                    "css-loader", // translates CSS into CommonJS
-                    "sass-loader" // compiles Sass to CSS, using Node Sass by default
-                ]
-            }, {
-                test: /\.(png|jpg|gif)$/i,
-                use: [
-                    {
-                        loader: 'url-loader',
-                        options: {
-                            limit: 8192
-                        }
+    module: {
+        rules: [{
+            test: /\.ts$/,
+            use: [
+                'babel-loader',
+                'ts-loader',
+            ],
+        }, {
+            test: /\.scss$/,
+            use: [
+                "style-loader", // creates style nodes from JS strings
+                "css-loader", // translates CSS into CommonJS
+                "sass-loader" // compiles Sass to CSS, using Node Sass by default
+            ]
+        }, {
+            test: /\.(png|jpg|gif)$/i,
+            use: [
+                {
+                    loader: 'url-loader',
+                    options: {
+                        limit: 8192
                     }
-                ]
-            }]
-        }
+                }
+            ]
+        }]
+    }
     ,
     node: {
         fs: 'empty',
-        net:
-            'empty',
-        tls:
-            'empty',
-    }
-    ,
+        net: 'empty',
+        tls: 'empty',
+    },
     plugins: [
         /*  new HtmlWebpackPlugin({
               inject: true,
               template: './static/index.html'
           })*/
-    ]
+    ],
 }

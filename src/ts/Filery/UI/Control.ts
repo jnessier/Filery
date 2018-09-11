@@ -40,9 +40,9 @@ export class Control {
     }
 
     public getSiblings(): Array<Control> {
-        let controls = new Array<Control>();
+        let controls = new Array<Control>(),
+            element = this.element.parentElement.firstChild;
 
-        var element = this.element.parentElement.firstChild;
         for (; element; element = element.nextSibling) {
             if (element.nodeType !== 1 || element === this.element) continue;
             controls.push(Control.createByElement(element as HTMLElement));
@@ -54,9 +54,9 @@ export class Control {
     public static createBySelector(query: string, target: any): Array<Control> {
         let controls = new Array<Control>();
 
-        target.querySelectorAll(query).forEach((element) => {
+        Array.from(target.querySelectorAll(query)).forEach((element) => {
             controls.push(this.createByElement(element as HTMLElement));
-        });
+        })
 
         return controls;
     }
@@ -176,34 +176,6 @@ export class Control {
         return this;
     }
 
-    public once(type: string, listener: any, options?: any): this {
-        this.on(type, listener, options);
-
-        this.trigger(type, (e) => {
-            this.off(type);
-        });
-
-        return this;
-    }
-
-    public off(type: string): this {
-        this.element.removeEventListener(type, this.events[type]);
-
-        return this;
-    }
-
-    public trigger(type: string, detail?: any): this {
-        if (/^(?:mouse|pointer|contextmenu|drag|drop)|click/.test(type)) {
-            this.element.dispatchEvent(new MouseEvent(type, detail));
-        } else if (/^key/.test(type)) {
-            this.element.dispatchEvent(new KeyboardEvent(type, detail));
-        } else {
-            this.element.dispatchEvent(new CustomEvent(type, detail));
-        }
-
-        return this;
-    }
-
     public unwrap(): this {
         let parent = this.element.parentElement;
         while (this.element.firstChild) parent.insertBefore(this.element.firstChild, this.element);
@@ -226,27 +198,6 @@ export class Control {
                 this.element.style.opacity = String(opacity);
             } else {
                 this.element.style.display = 'none';
-                callback(this);
-                clearInterval(fadeEffect);
-            }
-        }, time);
-
-        return this;
-    }
-
-    public fadeIn(callback, time = 30): this {
-
-        let opacity = 1;
-        if (this.element.style.opacity) {
-            opacity = Number(this.element.style.opacity);
-        }
-
-        let fadeEffect = setInterval(() => {
-            if (opacity < 1) {
-                opacity += 0.1;
-                this.element.style.opacity = String(opacity);
-            } else {
-                this.element.style.display = '';
                 callback(this);
                 clearInterval(fadeEffect);
             }

@@ -42,7 +42,7 @@ export class Item extends Control {
         }
 
         itemBody
-            .append(new FileThumbnail(file))
+            .append(new FileThumbnail(file, config))
             .append(new FileTitle(file));
 
         this
