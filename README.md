@@ -69,6 +69,7 @@ After the token is generated, you can configure your TinyMCE instance and the Fi
 |`filery_api_url`|Defines the URL to the plugin API. The API is the most important part of the plugin and is handling all CRUD actions for the file management.|
 |`filery_api_token`|The token provides the security, that only authenticated users can access the Filery API.|
 |`filery_dialog_height`|Can be used to customize the dialog height.<br />**Optional** - Default value: 400px|
+|`filery_show_images`|Set FALSE to show default image icon instead of images.<br />**Optional** - Default value: true|
 
 ```js
 tinymce.init({

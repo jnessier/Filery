@@ -6,6 +6,17 @@ declare var tinymce: any;
 
 export default function (editor: any, url: string) {
 
+    let defaultSettings = {
+        filery_dialog_height: '400px',
+        filery_show_images: true
+    };
+
+    Object.keys(defaultSettings).forEach((key: string) => {
+        if (typeof  editor.settings[key] === undefined) {
+            editor.settings[key] = defaultSettings[key];
+        }
+    });
+
     ApiClient.setUrl(editor.settings.filery_api_url);
 
     editor.addButton('filery', {
