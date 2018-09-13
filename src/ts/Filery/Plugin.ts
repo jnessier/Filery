@@ -68,8 +68,8 @@ export class Plugin {
             let accept = [];
             this.config.filter.forEach((filter) => {
                 accept.push(filter + '/*');
-            })
-            input.setAttribute('accept', accept.join(','))
+            });
+            input.setAttribute('accept', accept.join(','));
         }
 
         input.on('change', (e) => {

@@ -48,15 +48,16 @@ export class Control {
             controls.push(Control.createByElement(element as HTMLElement));
         }
         return controls;
-    };
-
+    }
 
     public static createBySelector(query: string, target: any): Array<Control> {
         let controls = new Array<Control>();
 
-        Array.from(target.querySelectorAll(query)).forEach((element) => {
-            controls.push(this.createByElement(element as HTMLElement));
-        })
+        Array
+            .from(target.querySelectorAll(query))
+            .forEach((element) => {
+                controls.push(this.createByElement(element as HTMLElement));
+            });
 
         return controls;
     }
