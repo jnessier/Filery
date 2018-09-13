@@ -42,10 +42,8 @@
             // Alternative to images_upload_handler callback, but not supported by Filery
             //images_upload_url: 'http://filery.local/api/index.php?images_upload_url=1',
 
-
             filery_api_token: '<?= $token->toString(); ?>',
             filery_api_url: 'http://filery.local/api/index.php',
-            filery_show_images: false,
 
             file_picker_callback: function (callback, value, meta) {
                 Filery.filePickerCallback(callback, value, meta);

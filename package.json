@@ -1,8 +1,8 @@
 {
   "name": "Filery",
-  "version": "1.1.0",
+  "version": "1.2.1",
   "description": "File manager and file picker plugin for TinyMCE.",
-  "main": "index.js",
+  "main": "dist/filery/plugin.js",
   "scripts": {
     "start": "webpack-dev-server --config config/webpack.config.dev.js --progress --open --inline",
     "lint": "tslint 'src/**/*.ts'",
@@ -12,7 +12,7 @@
   "license": "MIT",
   "devDependencies": {
     "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.0.0",
+    "@babel/core": "^7.0.1",
     "@babel/preset-env": "^7.0.0",
     "@types/node": "^10.9.4",
     "@types/superagent": "^3.8.4",
@@ -33,7 +33,7 @@
     "typescript": "^3.0.3",
     "uglifyjs-webpack-plugin": "^1.3.0",
     "url-loader": "^1.1.1",
-    "webpack": "^4.18.0",
+    "webpack": "^4.18.1",
     "webpack-auto-inject-version": "^1.1.0",
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.8"

@@ -47,4 +47,4 @@ export function imagesUploadHandler(blobInfo, success, failure) {
         .catch((error) => {
             failure(error);
         });
-};
+}
