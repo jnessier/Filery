@@ -12,7 +12,7 @@ export default function (editor: any, url: string) {
     };
 
     Object.keys(defaultSettings).forEach((key: string) => {
-        if (typeof  editor.settings[key] === undefined) {
+        if (typeof  editor.settings[key] === 'undefined') {
             editor.settings[key] = defaultSettings[key];
         }
     });
