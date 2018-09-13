@@ -1,8 +1,8 @@
 {
   "name": "Filery",
-  "version": "1.1.0",
+  "version": "1.2.1",
   "description": "File manager and file picker plugin for TinyMCE.",
-  "main": "index.js",
+  "main": "dist/filery/plugin.js",
   "scripts": {
     "start": "webpack-dev-server --config config/webpack.config.dev.js --progress --open --inline",
     "lint": "tslint 'src/**/*.ts'",
