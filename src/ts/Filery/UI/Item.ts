@@ -2,7 +2,7 @@ import {Control} from './Control';
 import {File} from '../Data/File';
 import {Thumbnail} from './Item/Thumbnail';
 import {Title} from './Item/Title';
-import {FileButtons} from './Item/FileButtons';
+import {Buttons} from './Item/Buttons';
 import {PluginConfig} from '../Plugin';
 
 export class Item extends Control {
@@ -47,7 +47,7 @@ export class Item extends Control {
 
         this
             .append(itemBody)
-            .append(new FileButtons(file, config));
+            .append(new Buttons(file, config));
 
     }
 

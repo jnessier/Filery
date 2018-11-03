@@ -5,7 +5,7 @@ import {ApiClient} from '../../ApiClient';
 
 declare var tinymce: any;
 
-export class FileButtons extends Control {
+export class Buttons extends Control {
 
     protected file: File;
 
@@ -26,41 +26,56 @@ export class FileButtons extends Control {
 
         if (this.file.getType() !== 'folder') {
             if (this.config.type === 'select') {
-                buttons.append(Control
-                    .createByTag('li', {
-                        className: 'select',
-                        title: tinymce.i18n.translate('Select')
-                    })
-                    .text(tinymce.i18n.translate('Select'))
-                    .on('click', (e) => {
-                        e.preventDefault();
-                        this.insertFile('select');
-                    }));
-            } else {
-                buttons.append(Control
-                    .createByTag('li', {
-                        className: 'link',
-                        title: tinymce.i18n.translate('Insert link')
-                    })
-                    .text(tinymce.i18n.translate('Insert link'))
-                    .on('click', (e) => {
-                        e.preventDefault();
-                        this.insertFile('link');
-                    }));
-
-                if (this.file.getType() === 'image') {
-                    buttons.append(Control
+                buttons
+                    .append(Control
                         .createByTag('li', {
-                            className: 'image',
-                            title: tinymce.i18n.translate('Insert image')
+                            className: 'select',
+                            title: tinymce.i18n.translate('Select')
                         })
-                        .text(tinymce.i18n.translate('Insert image'))
+                        .text(tinymce.i18n.translate('Select'))
                         .on('click', (e) => {
                             e.preventDefault();
-                            this.insertFile('image');
+                            this.insertFile('select');
                         }));
+            } else {
+                buttons
+                    .append(Control
+                        .createByTag('li', {
+                            className: 'link',
+                            title: tinymce.i18n.translate('Insert link')
+                        })
+                        .text(tinymce.i18n.translate('Insert link'))
+                        .on('click', (e) => {
+                            e.preventDefault();
+                            this.insertFile('link');
+                        }));
+
+                if (this.file.getType() === 'image') {
+                    buttons
+                        .append(Control
+                            .createByTag('li', {
+                                className: 'image',
+                                title: tinymce.i18n.translate('Insert image')
+                            })
+                            .text(tinymce.i18n.translate('Insert image'))
+                            .on('click', (e) => {
+                                e.preventDefault();
+                                this.insertFile('image');
+                            }));
                 }
             }
+        } else {
+            buttons
+                .append(Control
+                    .createByTag('li', {
+                        className: 'open',
+                        title: tinymce.i18n.translate('Open')
+                    })
+                    .text(tinymce.i18n.translate('Open folder'))
+                    .on('click', (e) => {
+                        e.preventDefault();
+                        alert('opened folder');
+                    }));
         }
 
         buttons.append(Control

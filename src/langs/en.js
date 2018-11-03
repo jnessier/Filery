@@ -7,6 +7,8 @@ tinymce.addI18n('en', {
     'Insert link': 'Insert link',
     'Insert image': 'Insert image',
     'Cancel': 'Cancel',
+    'Open': 'Open',
+    'Open folder': 'Open folder',
 
     'Are you sure you want to delete "{0}"?': 'Are you sure you want to delete "{0}"?',
 
