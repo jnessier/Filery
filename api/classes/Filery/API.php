@@ -15,10 +15,14 @@ class API extends AbstractAPI
     {
         parent::__construct($config);
 
+        if (isset($_GET['dir'])) {
+            $this->config['base']['path'] .= mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '', $_GET['dir']);
+        }
+
         $this
             ->register('GET', ['dir'], [$this, 'read'])
-            ->register('DELETE', ['type', 'name'], [$this, 'delete'])
-            ->register('POST', [], [$this, 'upload']);
+            ->register('DELETE', ['dir', 'name'], [$this, 'delete'])
+            ->register('POST', ['dir'], [$this, 'upload']);
     }
 
     /**
@@ -29,7 +33,7 @@ class API extends AbstractAPI
     protected function read()
     {
         $data = [];
-        $this->config['base']['path'] .= mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '', $_GET['dir']);
+
         $fileNames = scandir($this->config['base']['path']);
 
         foreach ($fileNames as $fileName) {
@@ -56,18 +60,15 @@ class API extends AbstractAPI
      */
     protected function delete()
     {
-        if ('file' === $_GET['type']) {
-            $fileName = $_GET['name'];
-            $filePath = $this->config['base']['path'].'/'.basename($fileName);
+        $fileName = $_GET['name'];
+        $filePath = $this->config['base']['path'].'/'.basename($fileName);
 
-            if (basename($fileName) === $fileName && is_readable($filePath) && is_file($filePath)) {
-                if (unlink($filePath)) {
-                    return [];
-                }
+        if (is_readable($filePath)) {
+            if ((is_file($filePath) && unlink($filePath)) || rrmdir($filePath)) {
+                return [];
             }
-            throw new Exception('File does not exist or is not deletable.');
         }
-        throw new Exception('Unknown delete type.');
+        throw new Exception('File or folder does not exist nor is it deletable.');
     }
 
     /**

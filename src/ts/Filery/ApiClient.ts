@@ -62,12 +62,11 @@ export class ApiClient {
             .catch(this.handleError);
     }
 
-    static async delete(file: File, dir?: string) {
+    static async delete(file: File, dir: string = '') {
         return await request
             .delete(this.url)
             .set('X-Filery-Token', tinymce.settings.filery_api_token)
             .query({
-                'type': 'file',
                 'dir': dir,
                 'name': file.getName(),
             })

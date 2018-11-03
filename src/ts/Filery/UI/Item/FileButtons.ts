@@ -107,25 +107,27 @@ export class FileButtons extends Control {
                     .then(() => {
 
                         this.getParent().fadeOut(() => {
-                            this.config.editor.windowManager.confirm(tinymce.i18n.translate(['"{0}" successfully deleted. Do you want to remove the content with reference to the deleted file?', this.file.getName()]), (state) => {
-                                if (state) {
-                                    Control
-                                        .createBySelector('img', this.config.editor.getBody())
-                                        .forEach((img) => {
-                                            if (img.getAttribute('src').endsWith(this.file.getName())) {
-                                                img.remove();
-                                            }
-                                        });
+                            if (this.file.getType() !== 'folder') {
+                                this.config.editor.windowManager.confirm(tinymce.i18n.translate(['"{0}" successfully deleted. Do you want to remove the content with reference to the deleted file?', this.file.getName()]), (state) => {
+                                    if (state) {
+                                        Control
+                                            .createBySelector('img', this.config.editor.getBody())
+                                            .forEach((img) => {
+                                                if (img.getAttribute('src').endsWith(this.file.getName())) {
+                                                    img.remove();
+                                                }
+                                            });
 
-                                    Control
-                                        .createBySelector('a', this.config.editor.getBody())
-                                        .forEach((a) => {
-                                            if (a.getAttribute('href').endsWith(this.file.getName())) {
-                                                a.unwrap();
-                                            }
-                                        });
-                                }
-                            });
+                                        Control
+                                            .createBySelector('a', this.config.editor.getBody())
+                                            .forEach((a) => {
+                                                if (a.getAttribute('href').endsWith(this.file.getName())) {
+                                                    a.unwrap();
+                                                }
+                                            });
+                                    }
+                                });
+                            }
                         }, 30);
 
                     })
