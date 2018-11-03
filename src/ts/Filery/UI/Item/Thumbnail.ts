@@ -1,19 +1,19 @@
-import {Control} from './Control';
-import {File} from '../Model/File';
-import {PluginConfig} from '../Plugin';
+import {Control} from '../Control';
+import {File} from '../../Data/File';
+import {PluginConfig} from '../../Plugin';
 
-export class FileThumbnail extends Control {
+export class Thumbnail extends Control {
 
     constructor(file: File, config: PluginConfig) {
         super();
 
         this.element = Control.createElement('div', {
-            className: 'file-thumbnail'
+            className: 'thumbnail'
         });
 
         let fileThumbnailImage = Control
             .createByTag('span', {
-                className: 'file-thumbnail-image'
+                className: 'thumbnail-image'
             })
             .addClass(file.getType());
 

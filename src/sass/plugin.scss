@@ -45,8 +45,8 @@
       display: block;
     }
 
-    .file-title {
-      .file-title-name {
+    .title {
+      .title-name {
         transition: all .3s ease;
         margin: 20px 0 0 0;
       }
@@ -120,14 +120,14 @@
     }
   }
 
-  .file-thumbnail {
+  .thumbnail {
     float: left;
     width: 80px;
     height: 80px;
     position: relative;
     padding: 5px;
 
-    .file-thumbnail-image {
+    .thumbnail-image {
       background: url('../img/file.png') no-repeat center center;
       position: absolute;
       height: 80%;
@@ -161,16 +161,20 @@
       &.video {
         background-image: url('../img/video-file.png');
       }
+
+      &.folder {
+        background-image: url('../img/folder.png');
+      }
     }
   }
 
-  .file-title {
+  .title {
     float: left;
     width: calc(100% - 100px);
     height: 80px;
     padding: 5px;
 
-    .file-title-name {
+    .title-name {
       transition: all .3s ease;
       font-weight: bold;
       height: 20px;
@@ -181,7 +185,7 @@
       text-overflow: ellipsis;
     }
 
-    .file-title-meta {
+    .title-meta {
       margin: 0;
       height: 20px;
       padding: 0;

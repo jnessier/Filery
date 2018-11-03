@@ -16,8 +16,8 @@ class API extends AbstractAPI
         parent::__construct($config);
 
         $this
-            ->register('GET', [], [$this, 'read'])
-            ->register('DELETE', ['fileName'], [$this, 'delete'])
+            ->register('GET', ['dir'], [$this, 'read'])
+            ->register('DELETE', ['type', 'name'], [$this, 'delete'])
             ->register('POST', [], [$this, 'upload']);
     }
 
@@ -29,13 +29,17 @@ class API extends AbstractAPI
     protected function read()
     {
         $data = [];
+        $this->config['base']['path'] .= mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '', $_GET['dir']);
         $fileNames = scandir($this->config['base']['path']);
 
         foreach ($fileNames as $fileName) {
             $filePath = $this->config['base']['path'].'/'.$fileName;
-            if (is_file($filePath)) {
-                if ($this->config['showHiddenFiles'] || '.' !== $fileName[0]) {
-                    $data[] = $this->aggregateFileData($filePath);
+
+            if ($this->config['show']['folders'] || !is_dir($filePath)) {
+                if ($this->config['show']['hidden'] || '.' !== $fileName[0]) {
+                    if (!in_array($fileName, $this->config['hide'])) {
+                        $data[] = $this->aggregateFileData($filePath);
+                    }
                 }
             }
         }
@@ -52,15 +56,18 @@ class API extends AbstractAPI
      */
     protected function delete()
     {
-        $fileName = $_GET['fileName'];
-        $filePath = $this->config['base']['path'].'/'.basename($fileName);
+        if ('file' === $_GET['type']) {
+            $fileName = $_GET['name'];
+            $filePath = $this->config['base']['path'].'/'.basename($fileName);
 
-        if (basename($fileName) === $fileName && is_readable($filePath) && is_file($filePath)) {
-            if (unlink($filePath)) {
-                return [];
+            if (basename($fileName) === $fileName && is_readable($filePath) && is_file($filePath)) {
+                if (unlink($filePath)) {
+                    return [];
+                }
             }
+            throw new Exception('File does not exist or is not deletable.');
         }
-        throw new Exception('File does not exist or is not deletable.');
+        throw new Exception('Unknown delete type.');
     }
 
     /**

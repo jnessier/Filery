@@ -1,8 +1,8 @@
 import {Control} from './Control';
-import {File} from '../Model/File';
-import {FileThumbnail} from './FileThumbnail';
-import {FileTitle} from './FileTitle';
-import {FileButtons} from './FileButtons';
+import {File} from '../Data/File';
+import {Thumbnail} from './Item/Thumbnail';
+import {Title} from './Item/Title';
+import {FileButtons} from './Item/FileButtons';
 import {PluginConfig} from '../Plugin';
 
 export class Item extends Control {
@@ -42,8 +42,8 @@ export class Item extends Control {
         }
 
         itemBody
-            .append(new FileThumbnail(file, config))
-            .append(new FileTitle(file));
+            .append(new Thumbnail(file, config))
+            .append(new Title(file));
 
         this
             .append(itemBody)

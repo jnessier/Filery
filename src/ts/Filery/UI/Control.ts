@@ -41,7 +41,7 @@ export class Control {
 
     public getSiblings(): Array<Control> {
         let controls = new Array<Control>(),
-            element = this.element.parentElement.firstChild;
+            element = this.element.parentElement.firstChild as Node;
 
         for (; element; element = element.nextSibling) {
             if (element.nodeType !== 1 || element === this.element) continue;

@@ -1,6 +1,5 @@
 import * as request from 'superagent';
-import {File} from './Model/File';
-
+import {File} from './Data/File';
 
 declare var tinymce: any;
 
@@ -14,17 +13,16 @@ export class ApiClient {
 
     protected static handleError(error) {
         let message = error.message;
-        try {
+        if (error.response !== undefined) {
             message = JSON.parse(error.response.text).error;
-        } finally {
-            // Nothing
         }
+
         return Promise.reject(
             tinymce.i18n.translate(message)
         );
     }
 
-    static async read(dir?: string) {
+    static async read(dir: string = '') {
         return await request
             .get(this.url)
             .set('X-Filery-Token', tinymce.settings.filery_api_token)
@@ -36,6 +34,7 @@ export class ApiClient {
                 response.body.forEach((value) => {
                     files.push(new File(value.url, value.name, value.size, value.time, value.extension, value.type));
                 });
+
                 return files;
             })
             .catch(this.handleError);
@@ -68,8 +67,9 @@ export class ApiClient {
             .delete(this.url)
             .set('X-Filery-Token', tinymce.settings.filery_api_token)
             .query({
+                'type': 'file',
                 'dir': dir,
-                'fileName': file.getName(),
+                'name': file.getName(),
             })
             .then((response) => {
                 return true;

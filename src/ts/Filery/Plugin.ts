@@ -92,12 +92,11 @@ export class Plugin {
     public loadFiles() {
         ApiClient
             .read()
-            .then((files) => {
-
+            .then((list) => {
                 Control
                     .createBySelector('#filery-dialog-body', document)[0]
                     .html('')
-                    .append(new Container(files, this.config));
+                    .append(new Container(list, this.config));
 
             })
             .catch((error) => {
