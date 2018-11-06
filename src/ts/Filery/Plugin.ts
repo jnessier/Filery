@@ -9,6 +9,7 @@ export interface PluginConfig {
     callback: any;
     type: string;
     editor: any;
+    dir: string;
 }
 
 export class Plugin {
@@ -74,7 +75,7 @@ export class Plugin {
 
         input.on('change', (e) => {
             ApiClient
-                .upload(e.target.files[0])
+                .upload(e.target.files[0], this.config.dir)
                 .then((file) => {
                     this.config.editor.windowManager.alert(tinymce.i18n.translate(['"{0}" successfully uploaded.', file.getName()]), () => {
                         this.loadFiles();
@@ -91,7 +92,7 @@ export class Plugin {
 
     public loadFiles() {
         ApiClient
-            .read()
+            .read(this.config.dir)
             .then((list) => {
                 Control
                     .createBySelector('#filery-dialog-body', document)[0]

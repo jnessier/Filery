@@ -40,7 +40,7 @@ export class ApiClient {
             .catch(this.handleError);
     }
 
-    static async upload(fileData: any, dir?: string) {
+    static async upload(fileData: any, dir: string = '') {
 
         let formData = new FormData();
         if (typeof fileData.blob === 'function' && fileData.blob() instanceof Blob) {

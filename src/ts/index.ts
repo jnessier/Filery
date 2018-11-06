@@ -31,7 +31,8 @@ export function filePickerCallback(callback, value, meta) {
             return true;
         },
         type: 'select',
-        editor: tinymce.activeEditor
+        editor: tinymce.activeEditor,
+        dir: ''
     };
 
     let plugin = new Plugin(config);

@@ -15,14 +15,28 @@ class API extends AbstractAPI
     {
         parent::__construct($config);
 
-        if (isset($_GET['dir'])) {
-            $this->config['base']['path'] .= mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '', $_GET['dir']);
-        }
-
         $this
             ->register('GET', ['dir'], [$this, 'read'])
             ->register('DELETE', ['dir', 'name'], [$this, 'delete'])
             ->register('POST', ['dir'], [$this, 'upload']);
+    }
+
+    /**
+     * Call registered API action.
+     *
+     * @return mixed
+     */
+    protected function call()
+    {
+        if (isset($_GET['dir'])) {
+            $newBasePath = realpath($this->config['base']['path'].$_GET['dir']);
+            if ($newBasePath && 0 === strpos($newBasePath, $this->config['base']['path'])) {
+                $this->config['base']['path'] = $newBasePath;
+                $this->config['base']['url'] .= $_GET['dir'];
+            }
+        }
+
+        return parent::call();
     }
 
     /**
@@ -47,6 +61,14 @@ class API extends AbstractAPI
                 }
             }
         }
+
+        usort($data, function ($a, $b) {
+            if ($a['type'] === $b['type']) {
+                return 0;
+            }
+
+            return ('folder' !== $a['type']) ? +1 : -1;
+        });
 
         return $data;
     }

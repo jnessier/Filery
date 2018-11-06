@@ -36,7 +36,8 @@ export default function (editor: any, url: string) {
                     return true;
                 },
                 type: 'insert',
-                editor: editor
+                editor: editor,
+                dir: ''
             };
 
             let plugin = new Plugin(config);
