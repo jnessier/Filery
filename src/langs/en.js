@@ -10,6 +10,8 @@ tinymce.addI18n('en', {
     'Open': 'Open',
     'Open folder': 'Open folder',
 
+    'Directory': 'Directory',
+
     'Are you sure you want to delete "{0}"?': 'Are you sure you want to delete "{0}"?',
 
     'Upload failed.': 'Upload failed.',

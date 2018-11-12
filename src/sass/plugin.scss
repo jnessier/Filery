@@ -1,12 +1,19 @@
 #filery-dialog-body {
   background: #c5c5c5;
 
+  .filery-breadcrumbs {
+    display: block;
+    padding: 2px 4px;
+    background: #fff;
+
+    margin: 0 0 2px 0;
+  }
+
   .filery-container {
     position: relative;
     overflow: hidden;
     padding: 0 10px 0 0;
   }
-
 }
 
 .filery-container {
@@ -16,6 +23,38 @@
     float: left;
     display: block;
     position: relative;
+  }
+}
+
+.filery-breadcrumbs {
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 !important;
+  }
+
+  li {
+    padding: 3px 0 3px;
+    margin: 0;
+    display: inline-block;
+    font-size: 11px;
+
+    &.slash {
+      margin: 0 2px;
+    }
+
+    &:last-child {
+      font-style: italic;
+    }
+
+    &.folder {
+      cursor: pointer;
+      font-weight: bold;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 }
 

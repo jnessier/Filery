@@ -2,7 +2,6 @@ import {Control} from '../Control';
 import {File} from '../../Data/File';
 import {Plugin, PluginConfig} from '../../Plugin';
 import {ApiClient} from '../../ApiClient';
-import {Container} from "../Container";
 
 declare var tinymce: any;
 
@@ -96,18 +95,7 @@ export class Buttons extends Control {
     private openFolder(): this {
         this.config.dir += '/' + this.file.getName();
 
-        ApiClient
-            .read(this.config.dir)
-            .then((list) => {
-                Control
-                    .createBySelector('#filery-dialog-body', document)[0]
-                    .html('')
-                    .append(new Container(list, this.config));
-
-            })
-            .catch((error) => {
-                this.config.editor.windowManager.alert(tinymce.i18n.translate('Load failed.') + ' ' + error);
-            });
+        Plugin.loadFiles(this.config);
 
         return this;
     }

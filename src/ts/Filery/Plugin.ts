@@ -1,6 +1,7 @@
 import {ApiClient} from './ApiClient';
 import {Control} from './UI/Control';
 import {Container} from './UI/Container';
+import {Breadcrumbs} from "./UI/Breadcrumbs";
 
 declare var tinymce: any;
 
@@ -14,26 +15,20 @@ export interface PluginConfig {
 
 export class Plugin {
 
-    private readonly config: PluginConfig;
-
-    constructor(config: PluginConfig) {
-        this.config = config;
-    }
-
-    public openDialog() {
+    static openDialog(config: PluginConfig) {
 
         window.addEventListener('keydown', (e) => {
             if (e.code === 'Escape') {
-                this.config.editor.windowManager.close(window);
+                config.editor.windowManager.close(window);
             }
         });
 
         let height = 400;
-        if (this.config.editor.settings.filery_dialog_height) {
-            height = parseInt(this.config.editor.settings.filery_dialog_height);
+        if (config.editor.settings.filery_dialog_height) {
+            height = parseInt(config.editor.settings.filery_dialog_height);
         }
 
-        this.config.editor.windowManager.open({
+        config.editor.windowManager.open({
             title: tinymce.i18n.translate(['File manager']),
             id: 'filery-dialog',
             height: height,
@@ -45,7 +40,7 @@ export class Plugin {
                 classes: 'primary',
                 onClick: (e) => {
                     e.preventDefault();
-                    this.uploadFile();
+                    Plugin.uploadFile(config);
                 }
             }, {
                 text: tinymce.i18n.translate(['Cancel']),
@@ -53,21 +48,21 @@ export class Plugin {
             }],
             onOpen: (e) => {
                 e.preventDefault();
-                this.loadFiles();
+                Plugin.loadFiles(config);
             }
         });
     }
 
-    private uploadFile() {
+    static uploadFile(config: PluginConfig) {
         let input = Control
             .createByTag('input', {
                 'type': 'file',
-                'accept': this.config.filter + '/*'
+                'accept': config.filter + '/*'
             });
 
-        if (this.config.filter.length) {
+        if (config.filter.length) {
             let accept = [];
-            this.config.filter.forEach((filter) => {
+            config.filter.forEach((filter) => {
                 accept.push(filter + '/*');
             });
             input.setAttribute('accept', accept.join(','));
@@ -75,33 +70,32 @@ export class Plugin {
 
         input.on('change', (e) => {
             ApiClient
-                .upload(e.target.files[0], this.config.dir)
+                .upload(e.target.files[0], config.dir)
                 .then((file) => {
-                    this.config.editor.windowManager.alert(tinymce.i18n.translate(['"{0}" successfully uploaded.', file.getName()]), () => {
-                        this.loadFiles();
+                    config.editor.windowManager.alert(tinymce.i18n.translate(['"{0}" successfully uploaded.', file.getName()]), () => {
+                        Plugin.loadFiles(config);
                     });
                 })
                 .catch((error) => {
-                    this.config.editor.windowManager.alert(tinymce.i18n.translate('Upload failed.') + ' ' + error);
+                    config.editor.windowManager.alert(tinymce.i18n.translate('Upload failed.') + ' ' + error);
                 });
-        })
-            .get().click();
+        }).get().click();
 
         return this;
     }
 
-    public loadFiles() {
+    static loadFiles(config: PluginConfig) {
         ApiClient
-            .read(this.config.dir)
+            .read(config.dir)
             .then((list) => {
                 Control
                     .createBySelector('#filery-dialog-body', document)[0]
                     .html('')
-                    .append(new Container(list, this.config));
-
+                    .append(new Breadcrumbs(config))
+                    .append(new Container(list, config));
             })
             .catch((error) => {
-                this.config.editor.windowManager.alert(tinymce.i18n.translate('Load failed.') + ' ' + error);
+                config.editor.windowManager.alert(tinymce.i18n.translate('Load failed.') + ' ' + error);
             });
     }
 }

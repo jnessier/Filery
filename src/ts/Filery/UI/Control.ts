@@ -39,6 +39,16 @@ export class Control {
         return controls;
     }
 
+    public setData(key: string, value): this {
+        this.element.dataset[key] = value;
+
+        return this;
+    }
+
+    public getData(key: string): string {
+        return this.element.dataset[key];
+    }
+
     public getSiblings(): Array<Control> {
         let controls = new Array<Control>(),
             element = this.element.parentElement.firstChild as Node;

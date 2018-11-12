@@ -35,8 +35,7 @@ export function filePickerCallback(callback, value, meta) {
         dir: ''
     };
 
-    let plugin = new Plugin(config);
-    plugin.openDialog();
+    Plugin.openDialog(config);
 }
 
 export function imagesUploadHandler(blobInfo, success, failure) {

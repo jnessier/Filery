@@ -40,8 +40,7 @@ export default function (editor: any, url: string) {
                 dir: ''
             };
 
-            let plugin = new Plugin(config);
-            plugin.openDialog();
+            Plugin.openDialog(config);
         }
     });
 
