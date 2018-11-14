@@ -6,14 +6,14 @@ export class Control {
 
     public static createByElement(element: HTMLElement): Control {
         let control = new Control();
-        control.set(element);
+        control.setElement(element);
 
         return control;
     }
 
     public static createByTag(tagName: string, attributes?: {}): Control {
         let control = new Control();
-        control.set(Control.createElement(tagName, attributes));
+        control.setElement(Control.createElement(tagName, attributes));
 
         return control;
     }
@@ -124,11 +124,11 @@ export class Control {
         return this;
     }
 
-    public get(): HTMLElement {
+    public getElement(): HTMLElement {
         return this.element;
     }
 
-    public set(element: HTMLElement) {
+    public setElement(element: HTMLElement) {
         this.element = element;
 
         return this;
@@ -144,7 +144,7 @@ export class Control {
 
     public append(child: any): this {
         if (child instanceof Control) {
-            this.element.appendChild(child.get());
+            this.element.appendChild(child.getElement());
         } else if (typeof child === 'string') {
             this.element.insertAdjacentHTML('beforeend', child);
         }
@@ -160,7 +160,7 @@ export class Control {
 
     public prepend(child: any): this {
         if (child instanceof Control) {
-            this.element.insertAdjacentElement('afterbegin', child.get());
+            this.element.insertAdjacentElement('afterbegin', child.getElement());
         } else if (typeof child === 'string') {
             this.element.insertAdjacentHTML('afterbegin', child);
         }

@@ -17,14 +17,12 @@ export class Breadcrumbs extends Control {
             dir = '';
 
         folders.forEach((folder, index) => {
-            let breadcrumb = Control
-                .createByTag('li', {
-                    title: tinymce.i18n.translate('Directory')
-                })
-                .setData('dir', dir);
+            let breadcrumb = Control.createByTag('li');
 
             if (index === 0) {
-                breadcrumb.text(tinymce.i18n.translate('Directory'))
+                breadcrumb
+                    .text(tinymce.i18n.translate('Directory'))
+                    .setData('dir', dir)
             } else {
                 dir += '/' + folder;
                 breadcrumbs
@@ -37,12 +35,12 @@ export class Breadcrumbs extends Control {
                 breadcrumb
                     .text(folder)
                     .setAttribute('title', dir)
-                    .setData('dir', dir)
+                    .setData('dir', dir);
             }
 
             if (folders.length > 1 && index < (folders.length - 1)) {
                 breadcrumb
-                    .addClass('folder')
+                    .addClass('link')
                     .on('click', (e) => {
                         e.preventDefault();
                         config.dir = Control.createByElement(e.target).getData('dir');

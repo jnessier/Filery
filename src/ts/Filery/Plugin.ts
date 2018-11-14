@@ -79,7 +79,7 @@ export class Plugin {
                 .catch((error) => {
                     config.editor.windowManager.alert(tinymce.i18n.translate('Upload failed.') + ' ' + error);
                 });
-        }).get().click();
+        }).getElement().click();
 
         return this;
     }
