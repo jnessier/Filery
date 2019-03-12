@@ -25,6 +25,8 @@ class API extends AbstractAPI
      * Call registered API action.
      *
      * @return mixed
+     *
+     * @throws HttpException
      */
     protected function call()
     {

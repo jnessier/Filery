@@ -4,6 +4,7 @@ use Filery\API;
 
 // Include functions
 require_once 'functions/return_bytes.php';
+require_once 'functions/rrmdir.php';
 
 // Include classes
 require_once 'classes/Filery/AbstractAPI.php';

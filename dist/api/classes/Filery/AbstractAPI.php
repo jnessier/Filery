@@ -73,8 +73,10 @@ abstract class AbstractAPI
      */
     protected function register($method, $queryKeys, $callback)
     {
-        $key = $method.implode($queryKeys);
-        $this->actions[$key] = $callback;
+        $this->actions[$method] = [
+            'queryKeys' => $queryKeys,
+            'callback' => $callback,
+        ];
 
         return $this;
     }
@@ -161,10 +163,11 @@ abstract class AbstractAPI
      */
     protected function call()
     {
-        $key = $_SERVER['REQUEST_METHOD'].implode(array_keys($_GET));
+        $key = $_SERVER['REQUEST_METHOD'];
         if (isset($this->actions[$key])) {
-            $callback = $this->actions[$key];
-            if (is_callable($callback)) {
+            $callback = $this->actions[$key]['callback'];
+            $queryKeys = $this->actions[$key]['queryKeys'];
+            if (is_callable($callback) && count(array_intersect(array_keys($_GET), $queryKeys)) == count($queryKeys)) {
                 return call_user_func($callback, json_decode(file_get_contents('php://input'), true));
             }
         }
@@ -177,33 +180,34 @@ abstract class AbstractAPI
      * @param string $path File path
      *
      * @return array
-     *
-     * @throws Exception
      */
     protected function aggregateFileData($path)
     {
+        $name = basename($path);
+
         if (is_file($path)) {
             $type = 'file';
-            $name = basename($path);
             $extension = pathinfo($path, PATHINFO_EXTENSION);
-            $url = $this->config['base']['url'].'/'.$name;
-
+            $size = filesize($path);
             foreach ($this->config['fileTypes'] as $fileType => $extensions) {
                 if (in_array($extension, $extensions)) {
                     $type = $fileType;
                     break;
                 }
             }
-
-            return [
-                'url' => $url,
-                'name' => $name,
-                'extension' => $extension,
-                'time' => filemtime($path),
-                'size' => filesize($path),
-                'type' => $type,
-            ];
+        } else {
+            $type = 'folder';
+            $extension = '';
+            $size = 0;
         }
-        throw new Exception('File path is not valid.');
+
+        return [
+            'url' => $this->config['base']['url'].'/'.$name,
+            'name' => $name,
+            'extension' => $extension,
+            'time' => filemtime($path),
+            'size' => $size,
+            'type' => $type,
+        ];
     }
 }

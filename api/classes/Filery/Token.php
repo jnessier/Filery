@@ -73,6 +73,8 @@ class Token
      * @param array $data Custom data
      *
      * @return Token
+     *
+     * @throws Exception
      */
     public function create(array $data = []): self
     {

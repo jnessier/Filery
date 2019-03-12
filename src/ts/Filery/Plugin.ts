@@ -1,7 +1,7 @@
 import {ApiClient} from './ApiClient';
 import {Control} from './UI/Control';
 import {Container} from './UI/Container';
-import {Breadcrumbs} from "./UI/Breadcrumbs";
+import {Breadcrumbs} from './UI/Breadcrumbs';
 
 declare var tinymce: any;
 

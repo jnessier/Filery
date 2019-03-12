@@ -22,7 +22,7 @@ export class Breadcrumbs extends Control {
             if (index === 0) {
                 breadcrumb
                     .text(tinymce.i18n.translate('Directory'))
-                    .setData('dir', dir)
+                    .setData('dir', dir);
             } else {
                 dir += '/' + folder;
                 breadcrumbs
@@ -49,7 +49,7 @@ export class Breadcrumbs extends Control {
             }
 
             breadcrumbs.append(breadcrumb);
-        })
+        });
 
         this.append(breadcrumbs);
 

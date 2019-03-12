@@ -7,6 +7,10 @@ tinymce.addI18n('de', {
     'Insert link': 'Link einfügen',
     'Insert image': 'Bild einfügen',
     'Cancel': 'Abbrechen',
+    'Open': 'Öffnen',
+    'Open folder': 'Ordner öffnen',
+
+    'Directory': 'Verzeichnis',
 
     'Are you sure you want to delete "{0}"?': 'Bist du sicher, dass du "{0}" löschen willst?',
 

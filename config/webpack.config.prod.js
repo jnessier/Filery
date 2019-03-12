@@ -1,6 +1,6 @@
 const path = require("path"),
     CopyWebpackPlugin = require("copy-webpack-plugin"),
-    UglifyJsPlugin = require('uglifyjs-webpack-plugin'),
+    TerserPlugin = require('terser-webpack-plugin'),
     WebpackAutoInject = require('webpack-auto-inject-version'),
     CleanWebpackPlugin = require('clean-webpack-plugin'); //installed via npm
 
@@ -60,15 +60,14 @@ module.exports = {
         fs: 'empty'
     },
     optimization: {
-        minimize: true,
+        //minimize: false,
         minimizer: [
-            new UglifyJsPlugin({
+            new TerserPlugin({
                 include: /\.min\.js$/
             })
         ]
     },
     plugins: [
-
         new WebpackAutoInject({
             SHORT: 'Filery: A TinyMCE plugin',
             SILENT: true,
@@ -98,10 +97,8 @@ module.exports = {
                 ignore: ['config.php']
             }
         ]),
-        new CleanWebpackPlugin([
-            'dist'
-        ], {
-            root: path.join(__dirname, '..')
+        new CleanWebpackPlugin({
+            //   cleanOnceBeforeBuildPatterns: [path.join(__dirname, "../dist/**")],
         }),
     ]
 };
