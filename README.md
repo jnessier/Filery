@@ -1,5 +1,6 @@
 # This project is no longer maintained.
 Please use other solutions for the file management in TinyMCE.
+
 ------------------------------------------------------------
 
 ![A file manager plugin for TinyMCE](https://raw.githubusercontent.com/Neoflow/Filery/master/example.png "A file manager plugin for TinyMCE.")
